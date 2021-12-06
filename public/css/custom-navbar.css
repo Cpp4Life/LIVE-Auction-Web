@@ -1,12 +1,13 @@
+.colored-section {
+  background-color: #142f43;
+  color: #fff;
+}
+
 /* Bootstrap Navigation Bar */
 .navbar-brand {
   font-family: "MonteCarlo", cursive;
   font-size: 2.5rem;
   font-weight: bold;
-}
-
-.navbar {
-  padding: 0 0 4.5rem;
 }
 
 .nav-link {
