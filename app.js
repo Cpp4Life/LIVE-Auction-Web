@@ -9,7 +9,18 @@ app.use(express.urlencoded({ extended: true }));
 
 app.route('/')
     .get((req, res) => {
-        res.render('register');
+        res.render('home');
     });
+
+app.route('/login')
+    .get((req, res) => {
+        res.render('login')
+    })
+
+app.route('/register')
+    .get((req, res) => {
+        res.render('register')
+    })
+
 
 app.listen(3000, () => console.log('Server running on port 3000'));
