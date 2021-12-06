@@ -1,29 +1,45 @@
+body {
+  font-family: "Montserrat";
+  text-align: center;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+}
+
+p {
+  color: #8f8f8f;
+}
+
+/* Headings */
+.big-heading {
+  line-height: 1.5;
+  text-align: left;
+}
+
 /* Sections */
 .colored-section {
   background-color: #142f43;
   color: #fff;
 }
 
+/* Containers */
+.container-fluid {
+  padding: 7% 15%;
+}
+
+/* Title Section */
 #title .container-fluid {
-  padding: 3% 15% 7%;
+  padding: 3% 15%;
 }
 
-#title .navbar-brand {
-  font-family: "MonteCarlo", cursive;
-  font-size: 2.5rem;
-  font-weight: bold;
-}
-
-#title .nav-link {
-  font-size: 1.2rem;
-  font-family: "Montserrat";
-  font-weight: 400;
-}
-
-#title .nav-item {
-  padding: 0 18px;
-}
-
+/* Search bar */
 .form {
   position: relative;
 }
@@ -46,6 +62,26 @@
   border: none;
 }
 
-.button-custom {
-  margin: 0 10px;
+/* Features Section */
+.feature-title {
+  font-size: 1.5rem;
 }
+
+.icon {
+  color: #ffab4c;
+  margin-bottom: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 1028px) {
+  .login-section {
+    margin: 10px auto;
+  }
+
+  #title {
+    text-align: center;
+  }
+}
+
+/* Black: 142F43
+Yellow: FFAB4C */
