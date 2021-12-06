@@ -1,46 +1,50 @@
 <%- include('partials/header'); -%>
-    <section class="login-clean">
-        <form action="/login" method="POST">
-            <div class="intro">
-                <h1 class="text-login"> Đăng Nhập </h1>
-            </div>
+    <link rel="stylesheet" href="css/login.css">
+    </head>
 
-            <div class="form-group">
-                <label for="exampleInputEmail1">Email</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập Email của bạn">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-
-            <div class="form-group">
-                <label for="exampleInputPassword1">Mật Khẩu</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Nhập mật khẩu của bạn">
-            </div>
-
-            <div class="form-group">
-                <button type="submit" class="btn btn-outline-primary d-block w-100">Đănh Nhập</button>
-                <a class="forgot" href="google.com">Bạn quên mật khẩu ? lấy lại mật khẩu tại đây</a>
-            </div>
-
-            <div class="container-fluid text-center mt-5">
-                <div class="my-2">
-                    <a class="btn btn-width btn-google" href="#" role="button">
-                        <i class="fab fa-google"></i>
-                        Sign Up with Google
-                    </a>
+    <body>
+        <section class="login-clean">
+            <form action="/login" method="POST">
+                <div class="intro">
+                    <h1 class="text-login"> Đăng Nhập </h1>
                 </div>
-                <div class="my-2">
-                    <a class="btn btn-width btn-facebook" href="#" role="button">
-                        <i class="fab fa-facebook"></i>
-                        Sign Up with Facebook
-                    </a>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nhập Email của bạn">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
-            </div>
 
-            <div class="form-group text-center mt-5">
-                <a class="sign-up">Bạn chưa có tài khoản?</a>
-                <a class="sign_up_link" href="#">ĐĂNG KÝ</a>
-            </div>
-        </form>
-    </section>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Mật Khẩu</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Nhập mật khẩu của bạn">
+                </div>
 
-    <%- include('partials/footer'); -%>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-outline-primary d-block w-100">Đănh Nhập</button>
+                    <a class="forgot" href="google.com">Bạn quên mật khẩu ? lấy lại mật khẩu tại đây</a>
+                </div>
+
+                <div class="container-fluid text-center mt-5">
+                    <div class="my-2">
+                        <a class="btn btn-width btn-google" href="#" role="button">
+                            <i class="fab fa-google"></i>
+                            Sign Up with Google
+                        </a>
+                    </div>
+                    <div class="my-2">
+                        <a class="btn btn-width btn-facebook" href="#" role="button">
+                            <i class="fab fa-facebook"></i>
+                            Sign Up with Facebook
+                        </a>
+                    </div>
+                </div>
+
+                <div class="form-group text-center mt-5">
+                    <a class="sign-up">Bạn chưa có tài khoản?</a>
+                    <a class="sign_up_link" href="#">ĐĂNG KÝ</a>
+                </div>
+            </form>
+        </section>
+
+        <%- include('partials/footer'); -%>

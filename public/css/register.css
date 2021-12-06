@@ -1,0 +1,9 @@
+.btn-width {
+  width: 30%;
+}
+
+@media (max-width: 860px) {
+  .btn-width {
+    width: max-content;
+  }
+}

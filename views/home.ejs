@@ -1,4 +1,43 @@
 <%- include('partials/header'); -%>
-    <h1>LIVE Auction</h1>
+    <link rel="stylesheet" href="css/home.css">
+    </head>
 
-    <%- include('partials/footer'); -%>
+    <body>
+        <section class="colored-section" id="title">
+            <div class="container-fluid">
+                <!-- Nav Bar -->
+                <nav class="navbar navbar-expand-lg navbar-dark">
+                    <img src="images/auction.png" alt="logo">
+                    <a class="navbar-brand" href="">Auct Boi</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#footer">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#pricing">Category</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#cta">Products</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form">
+                            <i class="fas fa-search"></i><input type="text" class="form-control form-input" placeholder="Search anything...">
+                        </div>
+                    </div>
+                    <form action="" method="post">
+                        <button type="submit" class="btn btn-secondary button-custom">Log in</button>
+                    </form>
+                    <form action="" method="post">
+                        <button type="submit" class="btn btn-primary button-custom">Sign up</button>
+                    </form>
+                </nav>
+            </div>
+        </section>
+
+        <%- include('partials/footer'); -%>
