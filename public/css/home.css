@@ -101,11 +101,11 @@ p {
 
 #newyear-carousel .section-heading {
   font-family: "Corinthia";
-  font-size: 6.5rem;
+  font-size: 6rem;
 }
 
 /* Responsive */
-@media (max-width: 1028px) {
+@media (max-width: 860px) {
   .login-section {
     margin: 10px auto;
   }
@@ -114,8 +114,12 @@ p {
     text-align: center;
   }
 
-  .carousel-item .row .section-heading {
+  #christmas-carousel .section-heading {
     font-size: 1rem;
+  }
+
+  #newyear-carousel .section-heading {
+    font-size: 2rem;
   }
 }
 
