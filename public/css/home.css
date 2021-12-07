@@ -119,5 +119,11 @@ p {
   }
 }
 
+/* Press Section */
+.press-logo {
+  width: 15%;
+  margin: 20px 20px 40px;
+}
+
 /* Black: 142F43
 Yellow: FFAB4C */
