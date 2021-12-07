@@ -22,6 +22,11 @@ p {
   line-height: 1.5;
 }
 
+.section-heading {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
 /* Sections */
 .colored-section {
   background-color: #142f43;
@@ -72,6 +77,33 @@ p {
   margin-bottom: 1rem;
 }
 
+.icon:hover {
+  color: #142f43;
+}
+
+/* Testimonials Section */
+.carousel-item.container-fluid {
+  padding: 0;
+}
+
+.carousel-item .row {
+  position: absolute;
+  top: 15%;
+}
+
+#christmas-carousel .section-heading {
+  color: #292c6d;
+}
+
+#christmas-carousel p {
+  font-family: "Corinthia";
+}
+
+#newyear-carousel .section-heading {
+  font-family: "Corinthia";
+  font-size: 6.5rem;
+}
+
 /* Responsive */
 @media (max-width: 1028px) {
   .login-section {
@@ -80,6 +112,10 @@ p {
 
   #title {
     text-align: center;
+  }
+
+  .carousel-item .row .section-heading {
+    font-size: 1rem;
   }
 }
 
