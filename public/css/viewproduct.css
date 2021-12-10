@@ -215,7 +215,7 @@ h1 {
 }
 /* chi tiet sp*/
 .view-product .chitietsp,
-.view-product .motachitietsp {
+.view-product .motachitietsp ,.view-product .top5 {
   width: 100%;
   padding: 43px;
 }
