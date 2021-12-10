@@ -1,357 +1,386 @@
 <%- include('partials/header'); -%>
-<link rel="stylesheet" href="css/viewproduct.css">
-<link rel="stylesheet" href="js/viewproduct.js">
-<script src="js/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://hocwebgiare.com/cpadmin/css/xzoom.css" media="all"><script type="text/javascript" src="js/xzoom.min.js"></script>
-</head>
+    <link rel="stylesheet" href="css/viewproduct.css">
+    <link rel="stylesheet" type="text/css" href="https://hocwebgiare.com/cpadmin/css/xzoom.css" media="all">
+    <!-- <link rel="stylesheet" href="js/viewproduct.js"> -->
+    <!-- <script src="js/jquery.min.js"></script> -->
+    <!-- <script type="text/javascript" src="js/xzoom.min.js"></script> -->
+    <script type="text/javascript" src="js/home.js"></script>
+    </head>
 
-<body>
+    <body>
+        <div>
+            <section class="colored-section" style="padding:0 15%;">
+                <%- include('partials/navbar'); -%>
+            </section>
+            <section class="view-product">
+                <form action="/viewproduct" method="POST">
+                    <div class="feature">
+                        <div class="image">
+                            <div id="demo" class="carousel slide" data-ride="carousel">
+                                <ul class="carousel-indicators">
+                                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                                    <li data-target="#demo" data-slide-to="1"></li>
+                                    <li data-target="#demo" data-slide-to="2"></li>
+                                    <li data-target="#demo" data-slide-to="3"></li>
+                                </ul>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active ">
+                                        <img src="images/logo-clock/image1.png" alt="" width="1100" height="500">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="images/logo-clock/image2.png" alt="" width="1100" height="500">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="images/logo-clock/image3.png" alt="" width="1100" height="500">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="images/logo-clock/image4.png" alt="" width="1100" height="500">
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                </a>
+                                <a class="carousel-control-next" href="#demo" data-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                </a>
 
-<div>
-    <section class="view-product">
-        <form action="/viewproduct" method="POST">
-        <div class="feature">
-        <div class="image">
-            <div id="demo" class="carousel slide" data-ride="carousel">
-                <ul class="carousel-indicators">
-                    <li data-target="#demo" data-slide-to="0" class="active"></li>
-                    <li data-target="#demo" data-slide-to="1"></li>
-                    <li data-target="#demo" data-slide-to="2"></li>
-                    <li data-target="#demo" data-slide-to="3"></li>
-                </ul>
-                <div class="carousel-inner">
-                    <div class="carousel-item active ">
-                        <img src="images/logo-clock/image1.png" alt="" width="1100" height="500">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="images/logo-clock/image2.png" alt="" width="1100" height="500">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="images/logo-clock/image3.png" alt="" width="1100" height="500">
-                     </div>
-                    <div class="carousel-item">
-                        <img src="images/logo-clock/image4.png" alt="" width="1100" height="500">
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                </a>
-                <a class="carousel-control-next" href="#demo" data-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                </a>
+                            </div>
+                            <div class="image-small">
+                                <div class="row">
+                                    <div class="col-2 mb-3" style="height: 50px;">
+                                        <div class="carousel-item active " role="group" aria-label="3/4" style="width: 102.3333px;margin-right: 38px;">
+                                            <img src="images/logo-clock/image1.png" alt="..." class="img-thumbnail">
+                                        </div>
+                                    </div>
+                                    <div class="col-2 mb-3" style="height: 50px;">
+                                        <div class="carousel-item  active" role="group" aria-label="3/4" style="width: 102.3333px;margin-right: 38px;">
+                                            <img src="images/logo-clock/image2.png" alt="..." class="img-thumbnail">
+                                        </div>
+                                    </div>
+                                    <div class="col-2 mb-3" style="height: 50px;">
+                                        <div class="carousel-item  active" role="group" aria-label="3/4" style="width: 102.3333px;margin-right: 38px;">
+                                            <img src="images/logo-clock/image3.png" alt="..." class="img-thumbnail">
+                                        </div>
+                                    </div>
+                                    <div class="col-2 mb-3" style="height: 50px;">
+                                        <div class="carousel-item  active" role="group" aria-label="3/4" style="width: 102.3333px;margin-right: 38px;">
+                                            <img src="images/logo-clock/image4.png" alt="..." class="img-thumbnail">
+                                        </div>
+                                    </div>
 
-            </div>
-            <div class="image-small">
-                <div class="row">
-                    <div class="col-2 mb-3"  style="height: 50px;">
-                        <div class="carousel-item active " role="group" aria-label="3/4" style="width: 102.3333px;margin-right: 38px;">
-                            <img src="images/logo-clock/image1.png" alt="..." class="img-thumbnail">
-                        </div>
-                    </div>
-                    <div class="col-2 mb-3"  style="height: 50px;">
-                        <div class="carousel-item  active" role="group" aria-label="3/4" style="width: 102.3333px;margin-right: 38px;">
-                            <img src="images/logo-clock/image2.png" alt="..." class="img-thumbnail">
-                        </div>
-                    </div>
-                    <div class="col-2 mb-3"  style="height: 50px;">
-                        <div class="carousel-item  active" role="group" aria-label="3/4" style="width: 102.3333px;margin-right: 38px;">
-                            <img src="images/logo-clock/image3.png" alt="..." class="img-thumbnail">
-                        </div>
-                    </div>
-                    <div class="col-2 mb-3"  style="height: 50px;">
-                        <div class="carousel-item  active" role="group" aria-label="3/4" style="width: 102.3333px;margin-right: 38px;">
-                            <img src="images/logo-clock/image4.png" alt="..." class="img-thumbnail">
-                        </div>
-                    </div>
+                                </div>
+                            </div>
 
-                </div>
-            </div>
+                        </div>
+                        <div class="info">
+                            <h1 class="product-detail-name">K10GF金張りジャガールクルト JAEGER LECOULTRE メモボックス MEMOVOX アンティーク1960年代 手巻 メンズ 動作良好 極美品 本物 価格高騰中</h1>
+                            <div class="info time">
+                                <div class="countdown">
+                                    <div id='titles'></div>
+                                    <div class="labels" style="text-align: center;">
+                                        <li>Days</li>
+                                        <li>Hours</li>
+                                        <li>Mins</li>
+                                        <li>Secs</li>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info product_detail__box">
+                                <div class="product_detail__box_current_price">
+                                    <strong>
+                                        <span style="text-align: center;">Giá hiện tại:</span>
+                                    </strong>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="price">
+                                            <span> 7,161,000 &nbsp;VND</span>
+                                            <br>
+                                        </div>
+                                        <div>
+                                            <strong class="color_note">Thuế: <span class="color_text_primary">0 %</span></strong>
+                                        </div>
+                                        <div>
+                                            <strong class="color_note">Phí vận chuyển nội địa: <span class="color_text_primary">Không</span></strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid">
+                                            Đấu giá
+                                        </button>
+                                        <div box-cancel-bid-last-time="">
+                                        </div>
+                                    </div>
 
-        </div>
-        <div class="info">
-            <h1 class="product-detail-name" >K10GF金張りジャガールクルト JAEGER LECOULTRE メモボックス MEMOVOX アンティーク1960年代 手巻 メンズ 動作良好 極美品 本物 価格高騰中</h1>
-            <div class="info time">
-                <div class="countdown">
-                    <div id='tiles'></div>
-                    <div class="labels" style="text-align: center;">
-                        <li>Days</li>
-                        <li>Hours</li>
-                        <li>Mins</li>
-                        <li>Secs</li>
-                    </div>
-                </div>
-            </div>
-            <div class="info product_detail__box"  >
-                <div class="product_detail__box_current_price">
-                    <strong>
-                        <span style="text-align: center;">Giá hiện tại:</span>
-                    </strong>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div  class="price">
-                            <span> 7,161,000 &nbsp;VND</span>
-                            <br>
-                        </div>
-                        <div>
-                            <strong class="color_note">Thuế: <span class="color_text_primary">0 %</span></strong>
-                        </div>
-                        <div>
-                            <strong class="color_note">Phí vận chuyển nội địa: <span class="color_text_primary">Không</span></strong>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <button type="button" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid">
-                            Đấu giá
-                        </button>
-                        <div box-cancel-bid-last-time="">
-                        </div>
-                    </div>
+                                </div>
 
-                </div>
-
-            </div>
-            <div class="info product_detail__box"  >
-                <div class="product_detail__box_current_price">
-                    <strong>
-                        <span style="text-align: center;">Mua ngay:</span>
-                    </strong>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div  class="price">
-                            <span> 10,161,000 &nbsp;VND</span>
-                            <br>
+                            </div>
+                            <div class="info product_detail__box">
+                                <div class="product_detail__box_current_price">
+                                    <strong>
+                                        <span style="text-align: center;">Mua ngay:</span>
+                                    </strong>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="price">
+                                            <span> 10,161,000 &nbsp;VND</span>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid">
+                                            Mua ngay
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <button type="button" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid">
-                            Mua ngay
-                        </button>
+                    <div class="share_fb">
+                        <div class="social" style="padding-bottom: 0px;">
+                            <span class="font-size1"> Chia sẻ : </span>
+                            <a class="btn btn-width btn-facebook" href="#" role="button">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a class="btn btn-width btn-facebook" href="#" role="button">
+                                <i class="fab fa-facebook-messenger"></i>
+                            </a>
+                            <a href="#" id="favorite-product" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
+                                <i class="far fa-heart"></i>
+                                <span class="font-size1" style="padding-left: 10px;color: black;"> Đã thích : 156 </span>
+                            </a>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="share_fb">
-             <div class="social" style="padding-bottom: 0px;">
-                 <span class="font-size1"> Chia sẻ : </span>
-                 <a class="btn btn-width btn-facebook" href="#" role="button">
-                    <i class="fab fa-facebook"></i>
-                  </a>
-                  <a class="btn btn-width btn-facebook" href="#" role="button">
-                    <i class="fab fa-facebook-messenger"></i>
-                  </a>
-                 <a href="#" id="favorite-product" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
-                     <i class="far fa-heart" ></i>
-                     <span class="font-size1" style="padding-left: 10px;color: black;"> Đã thích : 156 </span>
-                 </a>
-           </div>
-        </div>
-        <div class="row" >
-        <div class="info_seller">
-            <h1 class="infor_details" style="margin-bottom: 20px;font-size: 1.335rem; background-color: #EBF2EB; border-radius: 5px">Thông tin người bán </h1>
-            <div class="storeinfodata">
-                <a class="storeinfoavarta" href="#">
-                    <img src="images/David.png" lazyloading="" style="height: 100px;width: 100px;">
-                </a>
-                <div class="store_info__center" style="padding-left: 30px;">
-                    <h4 class="store_info__name">
-                        <a href="#">David</a>
-                    </h4>
-                    <div class="color_note">
-                        <strong class="color_text_primary">536 đánh giá</strong> (96% Đánh giá uy tín)
-                    </div>
-                </div>
-                <a href="#" id="favorite-seller" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
-                    <i class="far fa-heart" ></i>
-                </a>
-            </div>
-            <div>
-                <div class="mb-3">
                     <div class="row">
-                        <div class="col-md-4">
-                            <strong class="font_size1">150</strong>
-                            <br>
-                            <span class="color_note">Tốt</span>
+                        <div class="info_seller">
+                            <h1 class="infor_details" style="margin-bottom: 20px;font-size: 1.335rem; background-color: #EBF2EB; border-radius: 5px">Thông tin người bán </h1>
+                            <div class="storeinfodata">
+                                <a class="storeinfoavarta" href="#">
+                                    <img src="images/David.png" lazyloading="" style="height: 100px;width: 100px;">
+                                </a>
+                                <div class="store_info__center" style="padding-left: 30px;">
+                                    <h4 class="store_info__name">
+                                        <a href="#">David</a>
+                                    </h4>
+                                    <div class="color_note">
+                                        <strong class="color_text_primary">536 đánh giá</strong> (96% Đánh giá uy tín)
+                                    </div>
+                                </div>
+                                <a href="#" id="favorite-seller" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
+                                    <i class="far fa-heart"></i>
+                                </a>
+                            </div>
+                            <div>
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <strong class="font_size1">150</strong>
+                                            <br>
+                                            <span class="color_note">Tốt</span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <strong class="font_size1">0</strong>
+                                            <br>
+                                            <span class="color_note">Bình thường</span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <strong class="font_size1">1</strong>
+                                            <br>
+                                            <span class="color_note">Không tốt</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            <strong class="font_size1">0</strong>
-                            <br>
-                            <span class="color_note">Bình thường</span>
-                        </div>
-                        <div class="col-md-4">
-                            <strong class="font_size1">1</strong>
-                            <br>
-                            <span class="color_note">Không tốt</span>
+                        <div class="info-buy_hight" style="padding-left: 100px;">
+                            <h1 class="infor_details" style=" text-align:center; margin-bottom: 20px;font-size: 1.335rem; background-color: #EBF2EB; border-radius: 5px; width: 480px">Thông tin người đặt giá cao nhất </h1>
+                            <div class="storeinfodata">
+                                <a class="storeinfoavarta" href="#">
+                                    <img src="images/Adam.png" lazyloading="" style="height: 100px;width: 100px;">
+                                </a>
+                                <div class="store_info__center" style="padding-left: 30px;">
+                                    <h4 class="store_info__name">
+                                        <a href="#">Adam123</a>
+                                    </h4>
+                                    <div class="color_note">
+                                        <strong class="color_text_primary">400 đánh giá</strong> (96% Đánh giá uy tín)
+                                    </div>
+                                </div>
+                                <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
+                                    <i class="far fa-heart"></i>
+                                </a>
+                            </div>
+                            <div>
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <strong class="font_size1">350</strong>
+                                            <br>
+                                            <span class="color_note">Tốt</span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <strong class="font_size1">25</strong>
+                                            <br>
+                                            <span class="color_note">Bình thường</span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <strong class="font_size1">25</strong>
+                                            <br>
+                                            <span class="color_note">Không tốt</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="info-buy_hight" style="padding-left: 100px;">
-            <h1 class="infor_details" style=" text-align:center; margin-bottom: 20px;font-size: 1.335rem; background-color: #EBF2EB; border-radius: 5px; width: 480px">Thông tin người đặt giá cao nhất </h1>
-            <div class="storeinfodata">
-                <a class="storeinfoavarta" href="#">
-                    <img src="images/Adam.png" lazyloading="" style="height: 100px;width: 100px;">
-                </a>
-                <div class="store_info__center" style="padding-left: 30px;">
-                    <h4 class="store_info__name">
-                        <a href="#">Adam123</a>
-                    </h4>
-                    <div class="color_note">
-                        <strong class="color_text_primary">400 đánh giá</strong> (96% Đánh giá uy tín)
+                    <div class="chitietsp">
+                        <h1 class="infor_details" style="  margin-bottom: 20px;font-size: 1.5rem; width: 480px">Mô tả sản phẩm </h1>
+                        <div class="row">
+                            <div class="col-2 mb-3">
+                                <div class="mb-1">
+                                    <h1 class="color_note1">Thời gian bắt đầu</h1>
+                                </div>
+                                <div>2021.12.11 (Sat) 21:19 </div>
+                            </div>
+                            <div class="col-2 mb-3">
+                                <div class="mb-1">
+                                    <h1 class="color_note1">Thời gian kết thúc</h1>
+                                </div>
+                                <div>2021.16.11 (Sat) 21:19 </div>
+                            </div>
+                            <div class="col-2 mb-3">
+                                <div class="mb-1">
+                                    <h1 class="color_note1">Kết thúc sớm</h1>
+                                </div>
+                                <div>Không </div>
+                            </div>
+                            <div class="col-2 mb-3">
+                                <div class="mb-1">
+                                    <h1 class="color_note1">Thêm thời gian đấu giá</h1>
+                                </div>
+                                <div>Có </div>
+                            </div>
+                            <div class="col-2 mb-3">
+                                <div class="mb-1">
+                                    <h1 class="color_note1">Giá khởi điểm</h1>
+                                </div>
+                                <div>100.000 vnd </div>
+                            </div>
+                            <div class="col-2 mb-3">
+                                <div class="mb-1">
+                                    <h1 class="color_note1">Số lượng</h1>
+                                </div>
+                                <div>1 </div>
+                            </div>
+                            <div class="col-2 mb-3">
+                                <div class="mb-1">
+                                    <h1 class="color_note1">Tình trạng</h1>
+                                </div>
+                                <div>đã qua sử dụng </div>
+                            </div>
+                            <div class="col-2 mb-3">
+                                <div class="mb-1">
+                                    <h1 class="color_note1">Thương hiệu</h1>
+                                </div>
+                                <div>Rolex</div>
+                            </div>
+                            <div class="col-2 mb-3">
+                                <div class="mb-1">
+                                    <h1 class="color_note1">Hoàn trả</h1>
+                                </div>
+                                <div>có</div>
+                            </div>
+                            <div class="col-2 mb-3">
+                                <div class="mb-1">
+                                    <h1 class="color_note1">Chính sách bảo hành</h1>
+                                </div>
+                                <div>hết thời hạn</div>
+                            </div>
+                            <div class="col-2 mb-3">
+                                <div class="mb-1">
+                                    <h1 class="color_note1">Giá cao nhất</h1>
+                                </div>
+                                <div>6000000 vnd</div>
+                            </div>
+                            <div class="col-2 mb-3">
+                                <div class="mb-1">
+                                    <h1 class="color_note1">ID</h1>
+                                </div>
+                                <div>n12345</div>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-                <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
-                    <i class="far fa-heart" ></i>
-                </a>
-            </div>
-            <div>
-                <div class="mb-3">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <strong class="font_size1">350</strong>
-                            <br>
-                            <span class="color_note">Tốt</span>
-                        </div>
-                        <div class="col-md-4">
-                            <strong class="font_size1">25</strong>
-                            <br>
-                            <span class="color_note">Bình thường</span>
-                        </div>
-                        <div class="col-md-4">
-                            <strong class="font_size1">25</strong>
-                            <br>
-                            <span class="color_note">Không tốt</span>
+                    <div class="motachitietsp">
+                        <h1 class="infor_details" style="  margin-bottom: 20px;font-size: 1.5rem; width: 480px">Mô tả chi tiết sản phẩm </h1>
+                        <h1 style="font-size: 16px;">K10 GOLD FILLED </h1>
+                        <h2 style="font-size: 16px;">最高級時計の風格を感じさせる逸品です。</h2>
+
+                        <p class="text1">
+                            Đèn LED
+                            Công tắc đèn tự động, thời lượng chiếu sáng có thể lựa chọn (1,5 giây hoặc 3 giây), phát sáng sau
+                            Giờ thế giới
+                            29 múi giờ (48 thành phố + giờ phối hợp quốc tế), bật/tắt tiết kiệm ánh sáng ban ngày, chuyển đổi Giờ địa phương/Giờ thế giới<span class="dots"> ...</span>
+                            <span class="moreText1" class="show-more">
+                                Đồng hồ bấm giờ 1/1000 giây
+                                Khả năng đo: 99:59’59.999”
+                                Chế độ đo: Thời gian đã trôi qua, thời gian vòng chạy, ngắt giờ
+                                Khác: Tốc độ (0 đến 1998 đơn vị / giờ), Nhập khoảng cách (0,0 đến 99,9)
+                                Đồng hồ đếm ngược
+                                Đơn vị đo: 1 giây
+                                Khoảng đếm ngược: 24 giờ
+                                Khoảng cài đặt thời gian bắt đầu đếm ngược: 1 phút đến 24 giờ (khoảng tăng 1 phút và khoảng tăng 1 giờ)
+                                Khác: Tự động lặp lại
+                                5 chế độ báo thức hàng ngày (với 1 chế độ báo lặp)
+                                Tín hiệu thời gian hàng giờ
+                                Lịch hoàn toàn tự động (đến năm 2099)
+                                Định dạng giờ 12/24
+                                Giờ hiện hành thông thường
+                                Đồng hồ kim: 2 kim (giờ, phút (kim di chuyển 20 giây một lần)), 1 mặt số (tốc độ)
+                                Đồng hồ số: Giờ, phút, giây, chiều, tháng, ngày, thứ
+                                Độ chính xác: ±15 giây một tháng
+                                Tuổi thọ pin xấp xỉ: 2 năm với pin CR1220
+                                Tín hiệu thời gian hàng giờ
+                            </span>
+                        </p>
+                        <div style="text-align: center; color: red" class="read-more-btn">
+                            <a>Xem thêm</a>
                         </div>
                     </div>
-                </div>
-            </div>
+                </form>
+            </section>
         </div>
-        </div>
-        <div class="chitietsp">
-            <h1 class="infor_details" style="  margin-bottom: 20px;font-size: 1.5rem; width: 480px">Mô tả sản phẩm </h1>
-            <div class="row">
-                <div class="col-2 mb-3">
-                    <div class="mb-1"> <h1 class="color_note1">Thời gian bắt đầu</h1> </div>
-                    <div>2021.12.11 (Sat) 21:19 </div>
-                </div>
-                <div class="col-2 mb-3">
-                    <div class="mb-1"> <h1 class="color_note1">Thời gian kết thúc</h1> </div>
-                    <div>2021.16.11 (Sat) 21:19 </div>
-                </div>
-                <div class="col-2 mb-3">
-                    <div class="mb-1"> <h1 class="color_note1">Kết thúc sớm</h1> </div>
-                    <div>Không </div>
-                </div>
-                <div class="col-2 mb-3">
-                    <div class="mb-1"> <h1 class="color_note1">Thêm thời gian đấu giá</h1> </div>
-                    <div>Có </div>
-                </div>
-                <div class="col-2 mb-3">
-                    <div class="mb-1"> <h1 class="color_note1">Giá khởi điểm</h1> </div>
-                    <div>100.000 vnd </div>
-                </div>
-                <div class="col-2 mb-3">
-                    <div class="mb-1"> <h1 class="color_note1">Số lượng</h1> </div>
-                    <div>1 </div>
-                </div>
-                <div class="col-2 mb-3">
-                    <div class="mb-1"> <h1 class="color_note1">Tình trạng</h1> </div>
-                    <div>đã qua sử dụng </div>
-                </div>
-                <div class="col-2 mb-3">
-                    <div class="mb-1"> <h1 class="color_note1">Thương hiệu</h1> </div>
-                    <div>Rolex</div>
-                </div>
-                <div class="col-2 mb-3">
-                    <div class="mb-1"> <h1 class="color_note1">Hoàn trả</h1> </div>
-                    <div>có</div>
-                </div>
-                <div class="col-2 mb-3">
-                    <div class="mb-1"> <h1 class="color_note1">Chính sách bảo hành</h1> </div>
-                    <div>hết thời hạn</div>
-                </div>
-                <div class="col-2 mb-3">
-                    <div class="mb-1"> <h1 class="color_note1">Giá cao nhất</h1> </div>
-                    <div>6000000 vnd</div>
-                </div>
-                <div class="col-2 mb-3">
-                    <div class="mb-1"> <h1 class="color_note1">ID</h1> </div>
-                    <div>n12345</div>
-                </div>
-
-            </div>
-        </div>
-        <div class ="motachitietsp">
-            <h1 class="infor_details" style="  margin-bottom: 20px;font-size: 1.5rem; width: 480px">Mô tả chi tiết sản phẩm </h1>
-            <h1 style="font-size: 16px;">K10 GOLD FILLED </h1>
-            <h2 style="font-size: 16px;">最高級時計の風格を感じさせる逸品です。</h2>
-
-            <p class="text1">
-                Đèn LED
-                Công tắc đèn tự động, thời lượng chiếu sáng có thể lựa chọn (1,5 giây hoặc 3 giây), phát sáng sau
-                Giờ thế giới
-                29 múi giờ (48 thành phố + giờ phối hợp quốc tế), bật/tắt tiết kiệm ánh sáng ban ngày, chuyển đổi Giờ địa phương/Giờ thế giới<span class="dots"> ...</span>
-                <span class="moreText1" class="show-more">
-                    Đồng hồ bấm giờ 1/1000 giây
-                    Khả năng đo: 99:59’59.999”
-                    Chế độ đo: Thời gian đã trôi qua, thời gian vòng chạy, ngắt giờ
-                    Khác: Tốc độ (0 đến 1998 đơn vị / giờ), Nhập khoảng cách (0,0 đến 99,9)
-                    Đồng hồ đếm ngược
-                    Đơn vị đo: 1 giây
-                    Khoảng đếm ngược: 24 giờ
-                    Khoảng cài đặt thời gian bắt đầu đếm ngược: 1 phút đến 24 giờ (khoảng tăng 1 phút và khoảng tăng 1 giờ)
-                    Khác: Tự động lặp lại
-                    5 chế độ báo thức hàng ngày (với 1 chế độ báo lặp)
-                    Tín hiệu thời gian hàng giờ
-                    Lịch hoàn toàn tự động (đến năm 2099)
-                    Định dạng giờ 12/24
-                    Giờ hiện hành thông thường
-                    Đồng hồ kim: 2 kim (giờ, phút (kim di chuyển 20 giây một lần)), 1 mặt số (tốc độ)
-                    Đồng hồ số: Giờ, phút, giây, chiều, tháng, ngày, thứ
-                    Độ chính xác: ±15 giây một tháng
-                    Tuổi thọ pin xấp xỉ: 2 năm với pin CR1220
-                     Tín hiệu thời gian hàng giờ
-                </span></p><div style="text-align: center; color: red" class="read-more-btn">
-                <a >Xem thêm</a>
-            </div>
-        </div>
-        </form>
-    </section>
-    <script>
-        var target_date = new Date().getTime() + (1000*3600*48);
-        var days, hours, minutes, seconds;
-        var countdown = document.getElementById("tiles");
-        getCountdown();
-        setInterval(function () { getCountdown(); }, 1000);
-        function getCountdown(){
-            var current_date = new Date().getTime();
-            var seconds_left = (target_date - current_date) / 1000;
-            days = pad( parseInt(seconds_left / 86400) );
-            seconds_left = seconds_left % 86400;
-            hours = pad( parseInt(seconds_left / 3600) );
-            seconds_left = seconds_left % 3600;
-            minutes = pad( parseInt(seconds_left / 60) );
-            seconds = pad( parseInt( seconds_left % 60 ) );
-            countdown.innerHTML = "<span>" + days + "</span><span>" + hours + "</span><span>" + minutes + "</span><span>" + seconds + "</span>";
-        }
-        function pad(n) {
-            return (n < 10 ? '0' : '') + n;
-        }
-        const readMoreBtn = document.querySelector(".read-more-btn");
-        const text1 = document.querySelector(".text1");
-
-        readMoreBtn.addEventListener("click", (e) => {
-            text1.classList.toggle("show-more");
-            if (readMoreBtn.innerText === "Xem thêm") {
-                readMoreBtn.innerText = "Thu gọn";
-            } else {
-                readMoreBtn.innerText = "Xem thêm";
+        <script>
+            var target_date = new Date().getTime() + (1000 * 3600 * 48);
+            var days, hours, minutes, seconds;
+            var countdown = document.getElementById("titles");
+            getCountdown();
+            setInterval(function () { getCountdown(); }, 1000);
+            function getCountdown() {
+                var current_date = new Date().getTime();
+                var seconds_left = (target_date - current_date) / 1000;
+                days = pad(parseInt(seconds_left / 86400));
+                seconds_left = seconds_left % 86400;
+                hours = pad(parseInt(seconds_left / 3600));
+                seconds_left = seconds_left % 3600;
+                minutes = pad(parseInt(seconds_left / 60));
+                seconds = pad(parseInt(seconds_left % 60));
+                countdown.innerHTML = "<span>" + days + "</span><span>" + hours + "</span><span>" + minutes + "</span><span>" + seconds + "</span>";
             }
-        });
-    </script>
-</div>
-<%- include('partials/footer'); -%>
+            function pad(n) {
+                return (n < 10 ? '0' : '') + n;
+            }
+            const readMoreBtn = document.querySelector(".read-more-btn");
+            const text1 = document.querySelector(".text1");
 
+            readMoreBtn.addEventListener("click", (e) => {
+                text1.classList.toggle("show-more");
+                if (readMoreBtn.innerText === "Xem thêm") {
+                    readMoreBtn.innerText = "Thu gọn";
+                } else {
+                    readMoreBtn.innerText = "Xem thêm";
+                }
+            });
+        </script>
+        <%- include('partials/footer'); -%>
