@@ -56,7 +56,10 @@
   flex: 0 0 16.66667%;
   max-width: 16.66667%;
 }
-
+.col-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
 .view-product .image .image-small .row {
   width: 100%;
   height: 100%;
@@ -66,7 +69,7 @@
 }
 /*info*/
 .view-product .info {
-  width: 59%;
+  width: 100%;
   min-height: 100px;
   background-color: white;
 }
@@ -141,7 +144,7 @@ h1 {
   width: 100%;
 }
 .product_detail__box_current_price {
-  padding-top: 15px;
+  padding-top: 60px;
   font-size: 1.5rem;
 }
 .product_detail__box_current_price span {
@@ -155,7 +158,7 @@ h1 {
 }
 .row .col-6 .price {
   padding-top: 12px;
-  padding-left: 166px;
+  /*padding-left: 166px;*/
   font-size: 1.25rem;
   color: red;
 }
@@ -176,9 +179,9 @@ h1 {
 }
 
 /* info seller and info buy_hight*/
-.view-product .info_seller {
+.view-product .info_seller , .view-product .info-buy_hight{
   max-width: 1206px;
-  width: 40%;
+  width: 100%;
   padding: 43px;
   color: #505e6c;
 }
@@ -208,11 +211,11 @@ h1 {
   font-size: 14px;
   font-style: inherit;
 }
-.view-product .info-buy_hight {
-  max-width: 1206px;
-  width: 58%;
-  padding: 43px;
-}
+/*.view-product .info-buy_hight {*/
+/*  max-width: 1206px;*/
+/*  width: 58%;*/
+/*  padding: 43px;*/
+/*}*/
 /* chi tiet sp*/
 .view-product .chitietsp,
 .view-product .motachitietsp ,.view-product .top5 {
@@ -244,4 +247,35 @@ h1 {
 }
 .text1.show-more .dots {
   display: none;
+}
+
+
+img {
+  width: 100%;
+  display: block;
+}
+.img-display{
+  overflow: hidden;
+}
+.img-showcase{
+  display: flex;
+  width: 100%;
+  transition: all 0.5s ease;
+}
+.img-showcase img{
+  min-width: 100%;
+}
+.img-select{
+  display: flex;
+}
+.img-item{
+  margin: 0.3rem;
+}
+.img-item:nth-child(1),
+.img-item:nth-child(2),
+.img-item:nth-child(3){
+  margin-right: 0;
+}
+.img-item:hover{
+  opacity: 0.8;
 }
