@@ -37,6 +37,7 @@ const productSchema = new mongoose.Schema({
     boughtPrice: Number,
     currentPrice: Number,
     brand: String,
+    subBrand: String,
     owner: userSchema,
     bidders: [userBidSchema],
     timeStart: Date,
@@ -44,8 +45,18 @@ const productSchema = new mongoose.Schema({
     description: String
 });
 
+const brandSchema = new mongoose.Schema({
+    brand: String,
+    subBrand: [String]
+});
+
+const categorySchema = new mongoose.Schema({
+    list: [brandSchema]
+});
+
 // Initialize models corresponding to schemas
 const User = mongoose.model('User', userSchema);
 const Product = mongoose.model('Product', productSchema);
+const Category = mongoose.model('Category', categorySchema);
 
-module.exports = { User, Product };
+module.exports = { User, Product, Category };
