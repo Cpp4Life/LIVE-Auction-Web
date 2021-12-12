@@ -13,8 +13,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(authRoutes);
 app.use(guestRoutes);
 
-app.get('/postproduct', (req, res) => {
-    res.render('postproduct');
-})
+// app.get('/postproduct', (req, res) => {
+//     res.render('postproduct');
+// })
+
+// app.get('/viewproduct', (req, res) => {
+//     res.render('viewproduct');
+// })
 
 app.listen(3000, () => console.log('Server running on port 3000'));
