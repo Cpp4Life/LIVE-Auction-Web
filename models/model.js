@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     reviewPoint: Number
 });
 
-const userBidSchema = new mongoose.Schema({
+const bidLogSchema = new mongoose.Schema({
     bidTime: Date,
     user: userSchema,
     bidPrice: Number
@@ -39,9 +39,9 @@ const productSchema = new mongoose.Schema({
     brand: String,
     subBrand: String,
     owner: userSchema,
-    bidders: [userBidSchema],
+    bidders: [bidLogSchema],
     timeStart: Date,
-    timeEnd: Date,
+    timeRemaining: Date,
     description: String
 });
 
@@ -58,5 +58,7 @@ const categorySchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 const Product = mongoose.model('Product', productSchema);
 const Category = mongoose.model('Category', categorySchema);
+const BidLog = mongoose.model('BidLog', bidLogSchema);
+const Brand = mongoose.model('Brand', brandSchema);
 
-module.exports = { User, Product, Category };
+module.exports = { User, Product, Category, BidLog, Brand };

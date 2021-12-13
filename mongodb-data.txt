@@ -1,0 +1,40 @@
+// const item1 = new dbModel.Brand({
+//     brand: 'Điện tử',
+//     subBrand: ['Điện thoại di động', 'Máy tính xách tay', 'Tivi', 'Loa', 'Tai nghe']
+// });
+
+// item1.save();
+
+// const item2 = new dbModel.Brand({
+//     brand: 'Thời trang',
+//     subBrand: ['Quần', 'Áo', 'Giày', 'Túi xách', 'Đồng hồ']
+// });
+
+// item2.save();
+
+// const item3 = new dbModel.Brand({
+//     brand: 'Thiết bị gia dụng',
+//     subBrand: ['Tủ lạnh', 'Quạt máy', 'Bếp', 'Máy hút bụi', 'Máy lạnh']
+// });
+
+// item3.save();
+
+// const item4 = new dbModel.Brand({
+//     brand: 'Phương tiện xe',
+//     subBrand: ['Xe đạp', 'Xe máy', 'Ô tô', 'Xe điện', 'Siêu xe']
+// });
+
+// item4.save();
+
+// const defaultItems = [item1, item2, item3, item4];
+
+// const list = new dbModel.Category({
+//     list: defaultItems
+// });
+
+// list.save(err => {
+//     if (err)
+//         console.log(err);
+//     else
+//         console.log('Success');
+// })

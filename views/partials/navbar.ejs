@@ -9,46 +9,20 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Category</a>
                 <ul class="dropdown-menu multi-level" role="menu">
-                    <li class="dropdown-submenu">
-                        <a class="dropdown-item" href="#">Điện tử</a>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Điện thoại di động</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Máy tính xách tay</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Tivi</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Loa</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Tai nghe</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="dropdown-item" href="#">Thời trang</a>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Quần</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Áo</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Giày</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Túi xách</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Đồng hồ</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="dropdown-item" href="#">Thiết bị gia dụng</a>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Tủ lạnh</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Quạt máy</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Bếp</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Máy hút bụi</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Máy lạnh</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown-submenu">
-                        <a class="dropdown-item" href="#">Phương tiện xe</a>
-                        <ul class="dropdown-menu">
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Xe đạp</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Xe máy</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Ô tô</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Xe điện</a></li>
-                            <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">Siêu xe</a></li>
-                        </ul>
-                    </li>
+                    <% Category.forEach(element=> { %>
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item">
+                                <%= element.brand %>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <% element.subBrand.forEach(itemType=> { %>
+                                    <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">
+                                            <%= itemType %>
+                                        </a></li>
+                                    <% }) %>
+                            </ul>
+                        </li>
+                        <% }) %>
                 </ul>
             </li>
             <li class="nav-item">

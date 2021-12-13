@@ -1,5 +1,11 @@
-const { Product } = require("../models/model");
+const dbModel = require('../models/model');
 
 exports.getHomePage = (req, res) => {
-    res.render('home');
+    dbModel.Category.find({}, (err, foundList) => {
+        if (err)
+            console.log(err);
+        else {
+            res.render('home', { Category: foundList[0].list });
+        }
+    })
 }
