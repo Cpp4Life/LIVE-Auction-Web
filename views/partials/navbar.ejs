@@ -16,7 +16,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <% element.subBrand.forEach(itemType=> { %>
-                                    <li class="dropdown-item"><a href="#" class="text-decoration-none text-dark">
+                                    <li class="dropdown-item"><a href="/<%= _.snakeCase(element.brand.normalize('NFD').replace(/[\u0300-\u036f]/g, '')) %>/<%= _.snakeCase(itemType.normalize('NFD').replace(/[\u0300-\u036f]/g, '')) %>" class="text-decoration-none text-dark">
                                             <%= itemType %>
                                         </a></li>
                                     <% }) %>
