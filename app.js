@@ -14,6 +14,7 @@ require('./config/passport')(passport);
 
 const authRoutes = require('./routes/auth');
 const guestRoutes = require('./routes/guest');
+const sellerRoutes = require('./routes/seller');
 
 app.locals._ = _;
 
@@ -42,6 +43,7 @@ app.use(function (req, res, next) {
 
 app.use(authRoutes);
 app.use(guestRoutes);
+app.use(sellerRoutes);
 
 mongoose.connect('mongodb://localhost:27017/auctionDB');
 

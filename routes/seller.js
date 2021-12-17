@@ -1,8 +1,8 @@
 const express = require('express');
-const guestController = require('../controllers/guest');
+const sellerController = require('../controllers/seller');
 const isAuth = require('../middleware/auth');
 const router = express.Router();
 
-router.get('/', guestController.getHomePage);
+router.get('/seller/post-product', isAuth, sellerController.getPostProduct);
 
 module.exports = router;
