@@ -1,7 +1,10 @@
-const dbModel = require('../models/model');
+const { User, Category } = require('../models/model');
+const passport = require('passport');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 exports.getLoginPage = (req, res) => {
-    dbModel.Category.find({}, (err, foundList) => {
+    Category.find({}, (err, foundList) => {
         if (err)
             console.log(err);
         else {
@@ -11,11 +14,90 @@ exports.getLoginPage = (req, res) => {
 }
 
 exports.getRegisterPage = (req, res) => {
-    dbModel.Category.find({}, (err, foundList) => {
+    Category.find({}, (err, foundList) => {
         if (err)
             console.log(err);
         else {
             res.render('register', { Category: foundList[0].list });
         }
     })
+}
+
+exports.postRegister = async (req, res, next) => {
+    const categoryList = await Category.find({});
+    const { name, email, password, password2 } = req.body;
+    const errors = [];
+
+    if (!name || !email || !password || !password2) {
+        errors.push({ msg: 'Please enter all fields' });
+    }
+
+    if (password != password2) {
+        errors.push({ msg: 'Passwords do not match' });
+    }
+
+    if (password.length < 6) {
+        errors.push({ msg: 'Password must be at least 6 characters' });
+    }
+
+    if (errors.length > 0) {
+        res.render('register', {
+            errors,
+            name,
+            email,
+            password,
+            password2,
+            Category: categoryList[0].list
+        });
+    } else {
+        User.findOne({ email: email }).then(user => {
+            if (user) {
+                errors.push({ msg: 'Email already exists' });
+                res.render('register', {
+                    errors,
+                    name,
+                    email,
+                    password,
+                    password2,
+                    Category: categoryList[0].list
+                });
+            } else {
+                const newUser = new User({
+                    name,
+                    email,
+                    password,
+                    role: 'bidder',
+                    reviewPoint: 0
+                });
+
+                bcrypt.genSalt(saltRounds, (err, salt) => {
+                    bcrypt.hash(newUser.password, salt, (err, hash) => {
+                        if (err) throw err;
+                        newUser.password = hash;
+                        newUser
+                            .save()
+                            .then(user => {
+                                req.flash('success_msg', 'You are now registered and can log in');
+                                res.redirect('/user/login');
+                            })
+                            .catch(err => console.log(err));
+                    });
+                });
+            }
+        });
+    }
+}
+
+exports.postLogin = (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/post-product',
+        failureRedirect: '/user/login',
+        failureFlash: true
+    })(req, res, next);
+}
+
+exports.getLogout = (req, res, next) => {
+    req.logout();
+    req.flash('success_msg', 'You are logged out');
+    res.redirect('/');
 }
