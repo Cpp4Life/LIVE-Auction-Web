@@ -130,10 +130,6 @@ p {
 
 /* Responsive */
 @media (max-width: 860px) {
-  .login-section {
-    margin: 10px auto;
-  }
-
   #title {
     text-align: center;
   }

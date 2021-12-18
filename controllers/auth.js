@@ -90,7 +90,7 @@ exports.postRegister = async (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/post-product',
+        successRedirect: '/',
         failureRedirect: '/user/login',
         failureFlash: true
     })(req, res, next);
