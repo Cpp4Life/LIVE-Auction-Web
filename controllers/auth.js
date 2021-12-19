@@ -1,7 +1,12 @@
-const { User, Category } = require('../models/model');
+require('dotenv').config();
+const https = require('https');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+
+
+const { User, Category } = require('../models/model');
+const { response } = require('express');
 
 exports.getLoginPage = (req, res) => {
     Category.find({}, (err, foundList) => {
@@ -26,18 +31,28 @@ exports.getRegisterPage = (req, res) => {
 exports.postRegister = async (req, res, next) => {
     const categoryList = await Category.find({});
     const { name, email, password, password2 } = req.body;
+    const captcha = req.body['g-recaptcha-response'];
     const errors = [];
 
     if (!name || !email || !password || !password2) {
         errors.push({ msg: 'Please enter all fields' });
     }
 
+    if (name.length > 20) {
+        errors.push({ msg: 'Name in maximum of 20 characters' });
+    }
+
     if (password != password2) {
         errors.push({ msg: 'Passwords do not match' });
     }
 
-    if (password.length < 6) {
+    if (password === undefined || password.length < 6) {
         errors.push({ msg: 'Password must be at least 6 characters' });
+    }
+
+    if (captcha === undefined || captcha === '' || captcha === null) {
+        errors.push({ msg: 'Please check captcha box' });
+        // return res.json({ 'success': false });
     }
 
     if (errors.length > 0) {
@@ -50,6 +65,11 @@ exports.postRegister = async (req, res, next) => {
             Category: categoryList[0].list
         });
     } else {
+        const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+        const response = captcha;
+        const remoteip = req.connection.remoteAddress;
+        const verifyURL = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${response}&remoteip=${remoteip}`;
+
         User.findOne({ email: email }).then(user => {
             if (user) {
                 errors.push({ msg: 'Email already exists' });
@@ -62,25 +82,50 @@ exports.postRegister = async (req, res, next) => {
                     Category: categoryList[0].list
                 });
             } else {
-                const newUser = new User({
-                    name,
-                    email,
-                    password,
-                    role: 'bidder',
-                    reviewPoint: 0
-                });
+                https.get(verifyURL, (response) => {
+                    console.log('statusCode:', response.statusCode);
+                    console.log('headers:', response.headers);
 
-                bcrypt.genSalt(saltRounds, (err, salt) => {
-                    bcrypt.hash(newUser.password, salt, (err, hash) => {
-                        if (err) throw err;
-                        newUser.password = hash;
-                        newUser
-                            .save()
-                            .then(user => {
-                                req.flash('success_msg', 'You are now registered and can log in');
-                                res.redirect('/user/login');
-                            })
-                            .catch(err => console.log(err));
+                    response.on('data', (data) => {
+                        const reCaptchaData = JSON.parse(data);
+                        console.log(reCaptchaData);
+                        const successCode = reCaptchaData.success;
+
+                        // Not successful
+                        if (successCode !== undefined && !successCode) {
+                            errors.push({ msg: 'Failed captcha verification' });
+                            res.render('register', {
+                                errors,
+                                name,
+                                email,
+                                password,
+                                password2,
+                                Category: categoryList[0].list
+                            });
+                        } else {
+                            // Successfully passed all verifications
+                            const newUser = new User({
+                                name,
+                                email,
+                                password,
+                                role: 'bidder',
+                                reviewPoint: 0
+                            });
+
+                            bcrypt.genSalt(saltRounds, (err, salt) => {
+                                bcrypt.hash(newUser.password, salt, (err, hash) => {
+                                    if (err) throw err;
+                                    newUser.password = hash;
+                                    newUser
+                                        .save()
+                                        .then(user => {
+                                            req.flash('success_msg', 'You are now registered and can log in');
+                                            res.redirect('/user/login');
+                                        })
+                                        .catch(err => console.log(err));
+                                });
+                            });
+                        }
                     });
                 });
             }
@@ -90,10 +135,11 @@ exports.postRegister = async (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/',
+        successRedirect: req.session.returnTo,
         failureRedirect: '/user/login',
         failureFlash: true
     })(req, res, next);
+    delete req.session.redirectTo;
 }
 
 exports.getLogout = (req, res, next) => {

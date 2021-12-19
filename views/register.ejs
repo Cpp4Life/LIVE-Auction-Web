@@ -1,5 +1,6 @@
 <%- include('partials/header'); -%>
     <link rel="stylesheet" href="/css/register.css">
+    <script async src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
 
     <body>
@@ -8,7 +9,7 @@
         </section>
         <div class="container my-5 px-5">
             <%- include ('partials/messages'); -%>
-                <form action="/user/register" method="POST">
+                <form id="registerForm" action="/user/register" method="POST">
                     <h3 class="font-weight-bold text-center">ĐĂNG KÝ</h3>
                     <p class="py-3 font-weight-light text-center">Nếu bạn chưa có tài khoản, hãy điền thông tin đăng ký tại đây</p>
                     <div class="form-group">
@@ -21,7 +22,7 @@
                         <input type="email" class="form-control" id="email" name="email" placeholder="Nhập Email của bạn" value="<%= typeof email != 'undefined' ? email : '' %>">
                     </div>
 
-                    <div class="form-row">
+                    <div class="form-group form-row">
                         <div class="form-group col-md-6">
                             <label for="password" class="font-weight-bold">Mật khẩu</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu của bạn" value="<%= typeof password != 'undefined' ? password : '' %>">
@@ -30,6 +31,9 @@
                             <label for="password2" class="font-weight-bold">Xác minh</label>
                             <input type="password" class="form-control" id="password2" name="password2" placeholder="Xác minh lại mật khẩu" value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="6Le1-LEdAAAAAD9Y_HYwdvgVppiVBrVm2ee_lFdP"></div>
                     </div>
                     <div class="container-fluid text-center mt-5">
                         <button type="submit" class="btn btn-primary btn-lg">Đăng ký</button>

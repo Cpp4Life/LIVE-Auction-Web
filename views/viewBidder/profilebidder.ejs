@@ -1,0 +1,619 @@
+<%- include('partials/header'); -%>
+    <link rel="stylesheet" href="css/profilebidder.css">
+
+    <script src="js/product.js"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+
+    <!------ Include the above in your HEAD tag ---------->
+
+
+    </head>
+
+    <body>
+        <hr>
+        <div class="container bootstrap snippet">
+            <div class="row">
+                <div class="col-sm-3">
+
+
+                    <!--            <div class="text-center">-->
+                    <!--                <img src="images/Adam.png" class="avatar img-circle img-thumbnail" alt="avatar">-->
+                    <!--                <div class="col-sm-10" style="text-align: center; font-style: italic; padding-top: 10px;"><h1>Adam</h1></div>-->
+                    <!--                -->
+                    <!--                <input type="file" class="text-center center-block file-upload">-->
+
+                    <!--            </div>-->
+                    <img src="images/Adam.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                    <h1 style="text-align: center;">Adam</h1>
+
+                    </hr><br>
+
+                    <ul class="list-group">
+                        <li class="list-group-item text-muted" style="font-size: 15px;">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+                        <li class="list-group-item text-right" style="font-size: 13px;"><span class="pull-left"><strong>Bidding</strong></span> 125</li>
+                        <li class="list-group-item text-right" style="font-size: 13px;"><span class="pull-left"><strong>Items bought</strong></span> 13</li>
+                        <li class="list-group-item text-right" style="font-size: 13px;"><span class="pull-left"><strong>Reviews</strong></span> 37</li>
+                    </ul>
+
+
+
+                </div>
+                <!--/col-3-->
+                <div class="col-sm-9">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#home">Profile</a></li>
+                        <!--                <li><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#password">Change password</a></li>-->
+                        <li><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#messages">Review</a></li>
+                        <li><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#settings">Favorites</a></li>
+                        <li><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#biddings">Bidding</a></li>
+                        <li><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#wonbids">Successful bids</a></li>
+                        <li><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#upgrade">Upgrade</a></li>
+
+
+                    </ul>
+
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="home">
+                            <hr>
+                            <form class="form" action="##" method="post" id="registrationForm">
+
+                                <div class="form-group">
+
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;margin-top: 20px;">
+                                        <img src="images/Adam.png" alt="avatar" class="img-thumbnail" style="width: 139.981132px;height: 123.981132px;border-radius: 29px;margin-right: 20px;">
+
+                                        <label for="first_name" class="font_size1"><span>Adam</span></label>
+
+                                        <input type="file" class="text-center center-block file-upload" style="margin-left: 0px; margin-top: 10px;">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;margin-top: 20px;">
+                                        <label for="first_name" class="font_size1"><span>First name</span></label>
+                                        <input style="font-size: 14px;" type="text" class="form-control" name="first_name" id="first_name" value="Adam" title="enter your first name if any.">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
+                                        <label for="last_name" class="font_size1"><span>Last name</span></label>
+                                        <input style="font-size: 14px;" type="text" class="form-control" name="last_name" id="last_name" value="David" title="enter your last name if any.">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
+                                        <label for="email" class="font_size1"><span>Email</span></label>
+                                        <input style="font-size: 14px;" type="email" class="form-control" name="email" id="email" value="123456@gmail.com" title="enter your email.">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
+                                        <label for="last_name" class="font_size1"><span>Phone number</span></label>
+                                        <input style="font-size: 14px;" type="text" class="form-control" name="mobile" id="mobile" value="113" title="enter mobile if any.">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
+                                        <label for="last_name" class="font_size1"><span>Address</span></label>
+                                        <input style="font-size: 14px;" type="text" class="form-control" name="last_name" id="last_name" value="Tp Ho Chi Minh" title="enter address if any.">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
+                                        <label for="last_name" class="font_size1"><span>Password</span></label>
+                                        <input style="font-size: 14px;" type="text" class="form-control" name="mobile" id="mobile" value="******" title="enter mobile if any.">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
+                                        <div class="row text-center">
+                                            <a style="margin-left: 15px;" href="#" class="btn btn-lg btn-danger" data-toggle="modal" data-target="#smallModal">change password</a>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="smallModal" tabindex="-1" role="dialog" aria-labelledby="smallModal" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="myModalLabel"></h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="tab-pane" id="password">
+                                                        <div class="form-group">
+                                                            <div class="col-xs-12" style="width: 100%;margin-bottom: 20px;margin-top: 20px;">
+                                                                <label for="password" class="font_size1"><span>Current password</span></label>
+                                                                <input style="font-size: 14px;" type="password" class="form-control" placeholder="*******" title="enter your password.">
+                                                            </div>
+                                                            <div class="col-xs-12" style="width: 100%;margin-bottom: 20px;">
+                                                                <label for="password" class="font_size1"><span>New password</span></label>
+                                                                <input style="font-size: 14px;" type="password" class="form-control" placeholder="*******" title="enter your password.">
+                                                            </div>
+                                                            <div class="col-xs-12" style="width: 100%;margin-bottom: 20px;">
+                                                                <label for="password" class="font_size1"><span>Reconfirm new password</span></label>
+                                                                <input style="font-size: 14px;" type="password" class="form-control" placeholder="*******" title="enter your password.">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-xs-12" style="width: 100%;margin-bottom: 20px;">
+                                                                    <br>
+                                                                    <button type="button" name="submit_change_pasword" class="btn btn-primary btn-lg btn-block" style="background-color: green;">Change password</button>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <br>
+                                        <!--                                <button type="button" class="btn btn-lg btn-success" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-ok-sign"></i>Save</button>-->
+                                        <button type="button" class="btn btn-primary btn-lg btn-block" style="background-color: green;" data-toggle="modal" data-target="#myModal">Save</button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                            <hr>
+
+                        </div>
+                        <!--/tab-pane-->
+
+                        <div class="tab-pane" id="messages">
+                            <hr>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <strong class="font_size2">350</strong>
+                                        <br>
+                                        <span class="color_note">Tốt</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong class="font_size2">25</strong>
+                                        <br>
+                                        <span class="color_note">Bình thường</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong class="font_size2">25</strong>
+                                        <br>
+                                        <span class="color_note">Không tốt</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container" style="margin-top: 40px;">
+
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Rating</th>
+                                            <th>Review</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><a class="info_ava" href="#"> <img src="images/Adam.png" lazyloading="" style="height: 30px;width: 30px; border-radius: 15px"> </a> Marcos Llorente </td>
+                                            <td>+1</td>
+                                            <td>Thân thiện</td>
+                                        </tr>
+                                        <tr>
+                                            <td><a class="info_ava" href="#"> <img src="images/Adam.png" lazyloading="" style="height: 30px;width: 30px; border-radius: 15px"> </a> Reus</td>
+                                            <td>+1</td>
+                                            <td>nhiệt tình.</td>
+                                        </tr>
+                                        <tr>
+                                            <td> <a class="info_ava" href="#"> <img src="images/Adam.png" lazyloading="" style="height: 30px;width: 30px; border-radius: 15px"> </a> Ronaldo</td>
+                                            <td>+1</td>
+                                            <td>chốt đơn nhanh .</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--/tab-pane-->
+
+
+                        <div class="tab-pane" id="settings">
+                            <h4 class="card-header " style="text-align: center;">
+                                Favorites product
+                            </h4>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-4 mb-3">
+                                        <div class="card h-100">
+                                            <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Rolex</h5>
+                                                <p class="card-text">Giá hiện tại: $</p>
+                                                <p class="card-text">Giá mua ngay: $</p>
+                                                <p class="card-text">Ngày đăng: 1/1/2022</p>
+                                                <p class="card-text">
+
+                                                <div class="info time">
+                                                    <div class="countdown">
+
+                                                        <div class="far fa-clock" id='hehe2'>
+                                                            <script>
+                                                                var target_date = new Date().getTime() + (1000 * 3600 * 48);
+                                                                var days, hours, minutes, seconds;
+                                                                var countdown = document.getElementById("hehe2");
+                                                                getCountdown();
+                                                                setInterval(function () { getCountdown(); }, 1000);
+                                                                function getCountdown() {
+                                                                    var current_date = new Date().getTime();
+                                                                    var seconds_left = (target_date - current_date) / 1000;
+                                                                    days = pad(parseInt(seconds_left / 86400));
+                                                                    seconds_left = seconds_left % 86400;
+                                                                    hours = pad(parseInt(seconds_left / 3600));
+                                                                    seconds_left = seconds_left % 3600;
+                                                                    minutes = pad(parseInt(seconds_left / 60));
+                                                                    seconds = pad(parseInt(seconds_left % 60));
+                                                                    countdown.innerHTML = "<span>" + " " + days + "d " + "</span><span>" + hours + "h " + "</span><span>" + minutes + "' " + "</span><span>" + seconds + "s " + "</span>";
+                                                                }
+                                                                function pad(n) {
+                                                                    return (n < 10 ? '0' : '') + n;
+                                                                }
+                                                            </script>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </p>
+                                                <p class="card-text">Số lượt ra giá: 10</p>
+                                            </div>
+                                            <div class="card-footer text-muted">
+                                                <a class="btn btn-sm btn-outline-primary" href="#" role="button">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                    Details
+                                                </a>
+                                                <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
+                                                    <i class="far fa-heart"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 mb-3">
+                                        <div class="card h-100">
+                                            <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Rolex</h5>
+                                                <p class="card-text">Giá hiện tại: $</p>
+                                                <p class="card-text">Giá mua ngay: $</p>
+                                                <p class="card-text">Ngày đăng: 1/1/2022</p>
+                                                <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
+                                                <p class="card-text">Số lượt ra giá: 10</p>
+                                            </div>
+                                            <div class="card-footer text-muted">
+                                                <a class="btn btn-sm btn-outline-primary" href="#" role="button">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                    Details
+                                                </a>
+                                                <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
+                                                    <i class="far fa-heart"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 mb-3">
+                                        <div class="card h-100">
+                                            <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Rolex</h5>
+                                                <p class="card-text">Giá hiện tại: $</p>
+                                                <p class="card-text">Giá mua ngay: $</p>
+                                                <p class="card-text">Ngày đăng: 1/1/2022</p>
+                                                <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
+                                                <p class="card-text">Số lượt ra giá: 10</p>
+                                            </div>
+                                            <div class="card-footer text-muted">
+                                                <a class="btn btn-sm btn-outline-primary" href="#" role="button">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                    Details
+                                                </a>
+                                                <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
+                                                    <i class="far fa-heart"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 mb-3">
+                                        <div class="card h-100">
+                                            <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Rolex</h5>
+                                                <p class="card-text">Giá hiện tại: $</p>
+                                                <p class="card-text">Giá mua ngay: $</p>
+                                                <p class="card-text">Ngày đăng: 1/1/2022</p>
+                                                <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
+                                                <p class="card-text">Số lượt ra giá: 10</p>
+                                            </div>
+                                            <div class="card-footer text-muted">
+                                                <a class="btn btn-sm btn-outline-primary" href="#" role="button">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                    Details
+                                                </a>
+                                                <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
+                                                    <i class="far fa-heart"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-end">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">Previous</a>
+                                        </li>
+
+                                        <li class="page-item active">
+                                            <a class="page-link" href="javascript:;">1</a>
+                                        </li>
+
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{value}}">2</a>
+                                        </li>
+
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">Next</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="tab-pane" id="biddings">
+                            <hr>
+                            <h4 class="card-header " style="text-align: center;">
+                                Bidding
+                            </h4>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-4 mb-3">
+                                        <div class="card h-100">
+                                            <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Rolex</h5>
+                                                <p class="card-text">Giá hiện tại: 50.000</p>
+                                                <p class="card-text">Giá bạn đấu: 70.000</p>
+                                                <p class="card-text">Giá mua ngay: $</p>
+                                                <p class="card-text">Người bán: Adam</p>
+                                                <p class="card-text">
+
+                                                <div class="info time">
+                                                    <div class="countdown">
+                                                        <div class="far fa-clock" id='hihi1'>
+                                                            <script>
+                                                                var target_date = new Date().getTime() + (1000 * 3600 * 48);
+                                                                var days, hours, minutes, seconds;
+                                                                var countdown = document.getElementById("hihi1");
+                                                                getCountdown();
+                                                                setInterval(function () { getCountdown(); }, 1000);
+                                                                function getCountdown() {
+                                                                    var current_date = new Date().getTime();
+                                                                    var seconds_left = (target_date - current_date) / 1000;
+                                                                    days = pad(parseInt(seconds_left / 86400));
+                                                                    seconds_left = seconds_left % 86400;
+                                                                    hours = pad(parseInt(seconds_left / 3600));
+                                                                    seconds_left = seconds_left % 3600;
+                                                                    minutes = pad(parseInt(seconds_left / 60));
+                                                                    seconds = pad(parseInt(seconds_left % 60));
+                                                                    countdown.innerHTML = "<span>" + " " + days + "d " + "</span><span>" + hours + "h " + "</span><span>" + minutes + "' " + "</span><span>" + seconds + "s " + "</span>";
+                                                                }
+                                                                function pad(n) {
+                                                                    return (n < 10 ? '0' : '') + n;
+                                                                }
+                                                            </script>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </p>
+                                                <p class="card-text">Số lượt ra giá: 10</p>
+                                            </div>
+                                            <div class="card-footer text-muted">
+                                                <a class="btn btn-sm btn-outline-primary" href="#" role="button">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                    Details
+                                                </a>
+                                                <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
+                                                    <i class="far fa-heart"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 mb-3">
+                                        <div class="card h-100">
+                                            <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Rolex</h5>
+                                                <p class="card-text">Giá hiện tại: 50.000</p>
+                                                <p class="card-text">Giá bạn đấu: 70.000</p>
+                                                <p class="card-text">Giá mua ngay: $</p>
+                                                <p class="card-text">Người bán: Adam</p>
+                                                <p class="card-text">
+
+                                                <div class="info time">
+                                                    <div class="countdown">
+                                                        <div class="far fa-clock" id='hihi3'>
+                                                            <script>
+                                                                var target_date = new Date().getTime() + (1000 * 3600 * 48);
+                                                                var days, hours, minutes, seconds;
+                                                                var countdown = document.getElementById("hihi3");
+                                                                getCountdown();
+                                                                setInterval(function () { getCountdown(); }, 1000);
+                                                                function getCountdown() {
+                                                                    var current_date = new Date().getTime();
+                                                                    var seconds_left = (target_date - current_date) / 1000;
+                                                                    days = pad(parseInt(seconds_left / 86400));
+                                                                    seconds_left = seconds_left % 86400;
+                                                                    hours = pad(parseInt(seconds_left / 3600));
+                                                                    seconds_left = seconds_left % 3600;
+                                                                    minutes = pad(parseInt(seconds_left / 60));
+                                                                    seconds = pad(parseInt(seconds_left % 60));
+                                                                    countdown.innerHTML = "<span>" + " " + days + "d " + "</span><span>" + hours + "h " + "</span><span>" + minutes + "' " + "</span><span>" + seconds + "s " + "</span>";
+                                                                }
+                                                                function pad(n) {
+                                                                    return (n < 10 ? '0' : '') + n;
+                                                                }
+                                                            </script>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </p>
+                                                <p class="card-text">Số lượt ra giá: 10</p>
+                                            </div>
+                                            <div class="card-footer text-muted">
+                                                <a class="btn btn-sm btn-outline-primary" href="#" role="button">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                    Details
+                                                </a>
+                                                <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
+                                                    <i class="far fa-heart"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="wonbids">
+                            <hr>
+                            <div class="container">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Category</th>
+                                            <th>Seller</th>
+                                            <th>Bid for</th>
+                                            <th>Upvote</th>
+                                            <th>Downvote</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="width:9%">IphoneX</td>
+                                            <td style="width:9%">mobile</td>
+                                            <td style="width:9%">Adam</td>
+                                            <td style="width:9%">100000$</td>
+                                            <td><button type="button" class="btn btn-primary active" data-toggle="modal" data-target="#review">+1</button></td>
+                                            <td><button type="button" class="btn btn-primary disabled" data-toggle="modal" data-target="#review">-1</button></td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane" id="upgrade">
+                            <hr>
+                            <h2>Upgrade from bidder to seller on Online Auction.</h2>
+
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <br>
+
+                                    <button type="button" class="btn btn-primary btn-lg btn-block" style="background-color: green;" data-toggle="modal" data-target="#request">Send request.</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                    <!--/tab-pane-->
+                </div>
+                <!--/tab-content-->
+
+            </div>
+            <!--/col-9-->
+        </div>
+        <!--/row-->
+
+        <div class="modal fade" id="request">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title mx-auto"> We will respond within 7 business days.</h3>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" name="submit" class="btn btn-lg">Ok</button>
+
+                        <button class="btn btn-lg" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title mx-auto">We need your password to make these changes!</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label class="font-weight-bold">Password <span class="text-danger">*</span></label>
+                                <input type="password" name="password" id="password" class="form-control" placeholder="***********" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" name="submit" class="btn btn-lg">Ok</button>
+
+                                <button class="btn btn-lg" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="review">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title mx-auto">We need your password to make these changes!</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <td><input placeholder="Write your review here" style="width:100%;max-width: 473px;"></input></td>
+                        </form>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" name="submit" class="btn btn-lg">Ok</button>
+
+                        <button class="btn btn-lg" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+
+        </script>
+
+
+        <%- include('partials/footer'); -%>
