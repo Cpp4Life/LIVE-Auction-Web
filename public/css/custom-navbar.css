@@ -73,11 +73,6 @@ a.signup {
   box-shadow: none;
 }
 
-.login-section .username {
-  text-align: right;
-  margin-bottom: 0;
-}
-
 @media (max-width: 1280px) {
   .login-section {
     text-align: right;

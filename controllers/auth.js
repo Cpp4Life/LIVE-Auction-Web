@@ -135,11 +135,11 @@ exports.postRegister = async (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: req.session.returnTo,
+        successRedirect: req.session.returnTo || '/',
         failureRedirect: '/user/login',
         failureFlash: true
     })(req, res, next);
-    delete req.session.redirectTo;
+    delete req.session.returnTo;
 }
 
 exports.getLogout = (req, res, next) => {
