@@ -13,7 +13,7 @@ exports.getLoginPage = (req, res) => {
 exports.getRegisterPage = (req, res) => {
     dbModel.Category.find({}, (err, foundList) => {
         if (err)
-            console.log(err);
+            console.log(err)    ;
         else {
             res.render('register', { Category: foundList[0].list });
         }

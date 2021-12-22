@@ -43,15 +43,35 @@
             </div>
 
             <!--    <textarea class="container" id="editor"></textarea>-->
-            <div class="container">
+            <div class="container form-group">
                 <label class="font-weight-bold pl-3">Mô tả sản phẩm</label>
                 <div id="editor"> </div>
             </div>
             <script>
                 ClassicEditor.create(document.querySelector('#editor')).catch(error => { console.error(error) });
             </script>
-
-            <div class="container form-group my-3">
+            <div class="container form-group">
+                <label class="font-weight-bold pl-3" for="inputState">Loại sản phẩm</label>
+                <select id="inputState" class="form-control">
+                    <% Category.forEach(element=> {%>
+                        <option><%= element.brand%> </option>
+                    <% }) %>
+                </select>
+            </div>
+            <script>
+                console.log($('#inputState').val());
+            </script>
+            <div class="container form-group">
+                <label class="font-weight-bold pl-3" for="inputState">Loại sản phẩm</label>
+                <select id="inputState2" class="form-control">
+                    <% Bra.forEach(element=> {%>
+                    <%element.forEach(i=> {%>
+                        <option><%= i.subBrand%> </option>
+                    <%})%>
+                    <%})%>
+                </select>
+            </div>
+            <div class="container form-group mt-3">
                 <input class="ml-3" type="checkbox">
                 <label class="font-weight-bold pl-3">Sản phẩm tự gia hạn</label>
 

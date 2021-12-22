@@ -8,6 +8,8 @@ const app = express();
 
 const authRoutes = require('./routes/auth');
 const guestRoutes = require('./routes/guest');
+const sellerRoutes = require('./routes/seller')
+// const guestController = require("../controllers/guest");
 
 app.locals._ = _;
 
@@ -17,7 +19,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(authRoutes);
 app.use(guestRoutes);
+app.use(sellerRoutes);
 
 mongoose.connect('mongodb://localhost:27017/auctionDB');
 
 app.listen(3000, () => console.log('Server running on port 3000'));
+
