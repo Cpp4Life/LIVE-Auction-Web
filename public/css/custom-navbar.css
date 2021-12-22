@@ -52,3 +52,37 @@
   margin-top: 5px;
   margin-right: -10px;
 }
+
+/* Before Login */
+.login-section {
+  padding: 10px;
+  text-align: center;
+}
+
+a.login {
+  margin: 0px 5px;
+}
+
+a.signup {
+  margin: 0px 5px;
+}
+
+/* After Login */
+#userIconBtn {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+@media (max-width: 1280px) {
+  .login-section {
+    text-align: right;
+  }
+
+  a.login {
+    margin: 5px 5px;
+  }
+
+  a.signup {
+    margin: 5px 5px;
+  }
+}

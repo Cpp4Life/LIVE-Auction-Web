@@ -1,21 +1,52 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const dbModel = require('./models/model');
 const _ = require('lodash');
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
+
 const helper = require('./helpers/helper');
 
 const app = express();
 
+// passport config
+require('./config/passport')(passport);
+
 const authRoutes = require('./routes/auth');
 const guestRoutes = require('./routes/guest');
+<<<<<<< HEAD
 const sellerRoutes = require('./routes/seller')
 // const guestController = require("../controllers/guest");
+=======
+const sellerRoutes = require('./routes/seller');
+>>>>>>> d181341dfd4c6978302d3a690e68f8cb8673ee6b
 
 app.locals._ = _;
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+    secret: "Online Auction",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(flash());
+
+// Global variables
+app.use(function (req, res, next) {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    if (req.user) { res.locals.user = req.user; }
+    next();
+});
 
 app.use(authRoutes);
 app.use(guestRoutes);

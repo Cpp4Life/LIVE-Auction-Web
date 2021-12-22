@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 // Specify possible schemas for database
 const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+
     email: {
         type: String,
         required: true
@@ -10,11 +15,6 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    },
-
-    fullName: {
-        type: String,
-        required: true,
     },
 
     role: String,
