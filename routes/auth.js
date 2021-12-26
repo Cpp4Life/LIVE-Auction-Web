@@ -12,4 +12,8 @@ router.post('/user/register', authController.postRegister);
 
 router.get('/user/logout', authController.getLogout);
 
+router.post('/user/verify-otp', authController.postVerifyOtp);
+
+router.post('/user/resend-otp', authController.postResendOtp);
+
 module.exports = router;

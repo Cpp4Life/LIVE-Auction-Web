@@ -4,9 +4,7 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-
 const { User, Category } = require('../models/model');
-const { response } = require('express');
 
 exports.getLoginPage = (req, res) => {
     Category.find({}, (err, foundList) => {
@@ -21,16 +19,21 @@ exports.getLoginPage = (req, res) => {
 exports.getRegisterPage = (req, res) => {
     Category.find({}, (err, foundList) => {
         if (err)
-            console.log(err)    ;
+            console.log(err);
         else {
             res.render('register', { Category: foundList[0].list });
         }
     })
 }
 
+var name, email, password, password2;
+
 exports.postRegister = async (req, res, next) => {
+    name = req.body.name;
+    email = req.body.email;
+    password = req.body.password;
+    password2 = req.body.password2;
     const categoryList = await Category.find({});
-    const { name, email, password, password2 } = req.body;
     const captcha = req.body['g-recaptcha-response'];
     const errors = [];
 
@@ -120,7 +123,7 @@ exports.postRegister = async (req, res, next) => {
                                         .save()
                                         .then(user => {
                                             req.flash('success_msg', 'You are now registered and can log in');
-                                            res.redirect('/user/login');
+                                            // res.redirect('/user/login');
                                         })
                                         .catch(err => console.log(err));
                                 });
@@ -146,4 +149,12 @@ exports.getLogout = (req, res, next) => {
     req.logout();
     req.flash('success_msg', 'You are logged out');
     res.redirect('/');
+}
+
+exports.postVerifyOtp = (req, res, next) => {
+    console.log(`${name} ${email}`);
+}
+
+exports.postResendOtp = (req, res, next) => {
+
 }
