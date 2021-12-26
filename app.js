@@ -15,12 +15,7 @@ require('./config/passport')(passport);
 
 const authRoutes = require('./routes/auth');
 const guestRoutes = require('./routes/guest');
-<<<<<<< HEAD
-const sellerRoutes = require('./routes/seller')
-// const guestController = require("../controllers/guest");
-=======
 const sellerRoutes = require('./routes/seller');
->>>>>>> d181341dfd4c6978302d3a690e68f8cb8673ee6b
 
 app.locals._ = _;
 
