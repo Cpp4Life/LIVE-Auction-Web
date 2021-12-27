@@ -80,6 +80,14 @@
         </div>
 
         <script>
+            $(document).ready(function () {
+                $(window).keydown(function (event) {
+                    if (event.keyCode == 13) {
+                        event.preventDefault();
+                        return false;
+                    }
+                });
+            });
             $('.digit-group').find('input').each(function () {
                 $(this).attr('maxlength', 1);
                 $(this).on('keyup', function (e) {
@@ -108,7 +116,6 @@
                 $('#registerBtn').click(function () {
                     $('#otp').css('display', 'block');
                 });
-
             });
             $('#resendOtpBtn').click(() => {
                 alert('New OTP code has been sent to your email');
