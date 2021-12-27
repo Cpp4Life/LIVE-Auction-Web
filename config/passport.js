@@ -1,4 +1,6 @@
+require('dotenv').config();
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require('bcrypt');
 
 const { User } = require('../models/model');
@@ -35,4 +37,32 @@ module.exports = (passport) => {
             done(err, user);
         });
     });
+
+    passport.use(new GoogleStrategy({
+        clientID: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        callbackURL: 'http://localhost:3000/auth/google/home'
+    }, (accessToken, refreshToken, profile, cb) => {
+        console.log(profile);
+        User.findOne({ googleId: profile.id }, (err, user) => {
+            if (err) {
+                return done(err);
+            }
+            if (!user) {
+                user = new User({
+                    name: profile.displayName,
+                    email: profile.emails[0].value,
+                    password: 'user123',
+                    googleId: profile.id
+                });
+                user.save((err) => {
+                    if (err) console.log(err);
+                    return cb(err, user);
+                });
+            } else {
+                return cb(err, user);
+            }
+        });
+    }
+    ));
 };

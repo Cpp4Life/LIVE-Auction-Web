@@ -6,7 +6,6 @@ const saltRounds = 10;
 
 const helper = require('../helpers/helper');
 const { User, Category } = require('../models/model');
-const { errors } = require('passport-local-mongoose');
 
 exports.getLoginPage = (req, res) => {
     Category.find({}, (err, foundList) => {
@@ -174,6 +173,17 @@ exports.postResendOtp = (req, res, next) => {
     otpGeneratedCode = (Math.floor(100000 + Math.random() * 900000)).toString();
     console.log(`resend ${otpGeneratedCode}`);
     helper.sendMail(email, otpGeneratedCode);
+}
+
+exports.getGoogleAuth = passport.authenticate('google', { scope: ['profile', 'email'] });
+
+exports.getHomeAfterGoogleAuth = (req, res, next) => {
+    passport.authenticate('google', {
+        successRedirect: req.session.returnTo || '/',
+        failureRedirect: '/user/login',
+        failureFlash: true
+    })(req, res, next);
+    delete req.session.returnTo;
 }
 
 exports.postLogin = (req, res, next) => {

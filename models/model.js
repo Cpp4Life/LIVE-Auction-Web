@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
 
+    googleId: String,
     role: String,
     address: String,
     reviewPoint: Number
