@@ -38,14 +38,14 @@
                     </div>
 
                     <div class="container-fluid text-center mt-5">
-                        <button type="submit" class="btn btn-primary btn-lg" id="registerBtn">Đăng ký</button>
+                        <button type="submit" class="btn btn-primary btn-lg" id="registerBtn" style="width: 8.5rem;">Đăng ký</button>
                     </div>
                 </form>
                 <div class="text-center" id="otp">
                     <div class="prompt">
                         Enter the OTP code sent to according email to register!
                     </div>
-                    <div class="digit-group" style="margin-bottom: 20px;" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+                    <form action="/user/register/verify-otp" class="digit-group" style="margin-bottom: 20px;" data-group-name="digits" data-autosubmit="false" autocomplete="off" method="POST">
                         <input type="text" id="digit-1" name="digit-1" data-next="digit-2" />
                         <input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
                         <input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
@@ -53,13 +53,13 @@
                         <input type="text" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" />
                         <input type="text" id="digit-5" name="digit-5" data-next="digit-6" data-previous="digit-4" />
                         <input type="text" id="digit-6" name="digit-6" data-previous="digit-5" />
-                    </div>
+                        <div class="otp-footer" style="margin-top: 25px;">
+                            <button class="btn btn-primary" type="submit" id="verifOtpBtn">Verify OTP</button>
+                        </div>
+                    </form>
                     <div class="otp-footer">
-                        <form action="/user/verify-otp" method="POST">
-                            <button class="btn btn-primary" type="submit">Verify</button>
-                        </form>
-                        <form action="/user/resend-otp" method="POST">
-                            <button class="btn btn-primary" type="submit">Resend OTP</button>
+                        <form action="/user/register/resend-otp" method="POST">
+                            <button class="btn btn-primary" type="submit" id="resendOtpBtn">Resend OTP</button>
                         </form>
                     </div>
                 </div>
@@ -109,6 +109,9 @@
                     $('#otp').css('display', 'block');
                 });
 
+            });
+            $('#resendOtpBtn').click(() => {
+                alert('New OTP code has been sent to your email');
             });
         </script>
         <%- include('partials/footer'); -%>

@@ -4,7 +4,9 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+const helper = require('../helpers/helper');
 const { User, Category } = require('../models/model');
+const { errors } = require('passport-local-mongoose');
 
 exports.getLoginPage = (req, res) => {
     Category.find({}, (err, foundList) => {
@@ -26,15 +28,16 @@ exports.getRegisterPage = (req, res) => {
     })
 }
 
-var name, email, password, password2;
+var otpGeneratedCode;
+var name, email, password, password2, captcha;
 
 exports.postRegister = async (req, res, next) => {
     name = req.body.name;
     email = req.body.email;
     password = req.body.password;
     password2 = req.body.password2;
+    captcha = req.body['g-recaptcha-response'];
     const categoryList = await Category.find({});
-    const captcha = req.body['g-recaptcha-response'];
     const errors = [];
 
     if (!name || !email || !password || !password2) {
@@ -107,33 +110,70 @@ exports.postRegister = async (req, res, next) => {
                             });
                         } else {
                             // Successfully passed all verifications
-                            const newUser = new User({
-                                name,
-                                email,
-                                password,
-                                role: 'bidder',
-                                reviewPoint: 0
-                            });
-
-                            bcrypt.genSalt(saltRounds, (err, salt) => {
-                                bcrypt.hash(newUser.password, salt, (err, hash) => {
-                                    if (err) throw err;
-                                    newUser.password = hash;
-                                    newUser
-                                        .save()
-                                        .then(user => {
-                                            req.flash('success_msg', 'You are now registered and can log in');
-                                            // res.redirect('/user/login');
-                                        })
-                                        .catch(err => console.log(err));
-                                });
-                            });
+                            otpGeneratedCode = (Math.floor(100000 + Math.random() * 900000)).toString();
+                            helper.sendMail(email, otpGeneratedCode);
                         }
                     });
                 });
             }
         });
     }
+}
+
+
+exports.postVerifyOtp = async (req, res, next) => {
+    const resOtp = req.body['digit-1'] + req.body['digit-2'] + req.body['digit-3'] + req.body['digit-4'] + req.body['digit-5'] + req.body['digit-6'];
+    const errors = [];
+    const categoryList = await Category.find({});
+
+    if (!resOtp) {
+        errors.push({ msg: 'Please enter OTP code' });
+    } else if (resOtp.length != 6) {
+        errors.push({ msg: 'OTP code must have 6 digits' });
+    } else if (!resOtp.match(/^[0-9]+$/)) {
+        errors.push({ msg: 'OTP contains only digits' });
+    } else if (resOtp !== otpGeneratedCode) {
+        errors.push({ msg: 'OTP codes do not match. Please check OTP code sent to your email again!' });
+    }
+
+    if (errors.length > 0) {
+        res.render('register', {
+            errors,
+            name,
+            email,
+            password,
+            password2,
+            Category: categoryList[0].list
+        });
+    } else {
+        const newUser = new User({
+            name,
+            email,
+            password,
+            role: 'bidder',
+            reviewPoint: 0
+        });
+
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+                if (err) throw err;
+                newUser.password = hash;
+                newUser
+                    .save()
+                    .then(user => {
+                        req.flash('success_msg', 'You are now registered and can log in');
+                        res.redirect('/user/login');
+                    })
+                    .catch(err => console.log(err));
+            });
+        });
+    }
+}
+
+exports.postResendOtp = (req, res, next) => {
+    otpGeneratedCode = (Math.floor(100000 + Math.random() * 900000)).toString();
+    console.log(`resend ${otpGeneratedCode}`);
+    helper.sendMail(email, otpGeneratedCode);
 }
 
 exports.postLogin = (req, res, next) => {
@@ -149,12 +189,4 @@ exports.getLogout = (req, res, next) => {
     req.logout();
     req.flash('success_msg', 'You are logged out');
     res.redirect('/');
-}
-
-exports.postVerifyOtp = (req, res, next) => {
-    console.log(`${name} ${email}`);
-}
-
-exports.postResendOtp = (req, res, next) => {
-
 }

@@ -43,6 +43,9 @@ app.use(function (req, res, next) {
     next();
 });
 
+// const str = _.snakeCase(helper.normalizeText('Thiết bị gia dụng'));
+// console.log(str);
+
 app.use(authRoutes);
 app.use(guestRoutes);
 app.use(sellerRoutes);
