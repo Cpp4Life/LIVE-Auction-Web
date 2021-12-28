@@ -32,7 +32,7 @@ var name, email, password, password2, captcha;
 
 exports.postRegister = async (req, res, next) => {
     name = req.body.name;
-    email = req.body.email;
+    email = (req.body.email).toLowerCase();
     password = req.body.password;
     password2 = req.body.password2;
     captcha = req.body['g-recaptcha-response'];
@@ -41,23 +41,14 @@ exports.postRegister = async (req, res, next) => {
 
     if (!name || !email || !password || !password2) {
         errors.push({ msg: 'Please enter all fields' });
-    }
-
-    if (name.length > 20) {
+    } else if (name.length > 20) {
         errors.push({ msg: 'Name in maximum of 20 characters' });
-    }
-
-    if (password != password2) {
-        errors.push({ msg: 'Passwords do not match' });
-    }
-
-    if (password === undefined || password.length < 6) {
+    } else if (password === undefined || password.length < 6) {
         errors.push({ msg: 'Password must be at least 6 characters' });
-    }
-
-    if (captcha === undefined || captcha === '' || captcha === null) {
+    } else if (password != password2) {
+        errors.push({ msg: 'Passwords do not match' });
+    } else if (captcha === undefined || captcha === '' || captcha === null) {
         errors.push({ msg: 'Please check captcha box' });
-        // return res.json({ 'success': false });
     }
 
     if (errors.length > 0) {

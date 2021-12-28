@@ -21,7 +21,7 @@ exports.sendMail = (email, otp) => {
         const mailOptions = {
             from: 'Mailing System <auctionboi@gmail.com>',
             to: email,
-            subject: "OTP for registration is",
+            subject: "OTP Account Verification",
             html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + otp + "</h1>" // html body
         };
 
