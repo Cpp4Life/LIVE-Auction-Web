@@ -93,3 +93,15 @@ b, strong {
 .nav-item {
     padding: 0px 2px;
 }
+.table-bordered>tbody>tr>td {
+    font-size: 13px;
+    font-style: inherit;
+    color: black;
+    text-align: center;
+}
+.table>thead:first-child>tr:first-child>th {
+    font-size: 15px;
+    font-style: inherit;
+    color: black;
+    text-align: center;
+}

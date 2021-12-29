@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+// <<<<<<< HEAD
 
 const dbModel = require('../models/model');
 const {Category, Brand, Product} = require("../models/model");
@@ -121,11 +121,11 @@ exports.getPostProductPage = async (req, res) => {
 //     const categoryList = await Category.find({});
 //     res.render('postproduct', { Category: categoryList[0].list });
 // }
-=======
-const { Category } = require('../models/model');
+// =======
+// const { Category } = require('../models/model');
 
 exports.getPostProduct = async (req, res) => {
     const categoryList = await Category.find({});
     res.render('postproduct', { Category: categoryList[0].list });
 }
->>>>>>> b2d7bec151cb3e871648cad6dc8090fe8ecdf2ca
+// >>>>>>> b2d7bec151cb3e871648cad6dc8090fe8ecdf2ca

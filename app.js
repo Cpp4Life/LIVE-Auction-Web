@@ -15,16 +15,16 @@ require('./config/passport')(passport);
 
 const authRoutes = require('./routes/auth');
 const guestRoutes = require('./routes/guest');
-<<<<<<< HEAD
 
-const sellerRoutes = require('./routes/seller')
+
+
 // const guestController = require("../controllers/guest");
 
 //const sellerRoutes = require('./routes/seller');
 
-=======
+
 const sellerRoutes = require('./routes/seller');
->>>>>>> b2d7bec151cb3e871648cad6dc8090fe8ecdf2ca
+
 
 app.locals._ = _;
 
@@ -37,6 +37,14 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
+app.get('/profile', (req, res) => {
+    res.render('profilebidder');
+});
+
+app.get('/profileseller', (req, res) => {
+    res.render('profileseller');
+});
 
 app.use(passport.initialize());
 app.use(passport.session());
