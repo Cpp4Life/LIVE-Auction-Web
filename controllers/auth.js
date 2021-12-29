@@ -112,17 +112,17 @@ exports.postRegister = async (req, res, next) => {
 
 
 exports.postVerifyOtp = async (req, res, next) => {
-    const resOtp = req.body['digit-1'] + req.body['digit-2'] + req.body['digit-3'] + req.body['digit-4'] + req.body['digit-5'] + req.body['digit-6'];
+    const submittedOtp = req.body['digit-1'] + req.body['digit-2'] + req.body['digit-3'] + req.body['digit-4'] + req.body['digit-5'] + req.body['digit-6'];
     const errors = [];
     const categoryList = await Category.find({});
 
-    if (!resOtp) {
+    if (!submittedOtp) {
         errors.push({ msg: 'Please enter OTP code' });
-    } else if (resOtp.length != 6) {
+    } else if (submittedOtp.length != 6) {
         errors.push({ msg: 'OTP code must have 6 digits' });
-    } else if (!resOtp.match(/^[0-9]+$/)) {
+    } else if (!submittedOtp.match(/^[0-9]+$/)) {
         errors.push({ msg: 'OTP contains only digits' });
-    } else if (resOtp !== otpGeneratedCode) {
+    } else if (submittedOtp !== otpGeneratedCode) {
         errors.push({ msg: 'OTP codes do not match. Please check OTP code sent to your email again!' });
     }
 
