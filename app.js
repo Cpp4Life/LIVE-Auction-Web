@@ -10,7 +10,6 @@ const helper = require('./helpers/helper');
 const app = express();
 
 // passport config
-require('./config/passport')(passport);
 
 const authRoutes = require('./routes/auth');
 const guestRoutes = require('./routes/guest');
@@ -19,11 +18,11 @@ const guestRoutes = require('./routes/guest');
 //const sellerRoutes = require('./routes/seller')
 // const guestController = require("../controllers/guest");
 
-//const sellerRoutes = require('./routes/seller');
-
-
 const sellerRoutes = require('./routes/seller');
 
+
+
+const bidderRoutes = require('./routes/bidder');
 
 app.locals._ = _;
 
@@ -31,7 +30,7 @@ app.set('view engine', 'ejs');
 app.use('/public', express.static('public'));
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json({extended: true}));
+app.use(express.json({ extended: true }));
 app.use(session({
     secret: "Online Auction",
     resave: false,
@@ -58,6 +57,7 @@ app.use(function (req, res, next) {
 app.use(authRoutes);
 app.use(guestRoutes);
 app.use(sellerRoutes);
+app.use(bidderRoutes);
 
 mongoose.connect('mongodb://localhost:27017/auctionDB');
 

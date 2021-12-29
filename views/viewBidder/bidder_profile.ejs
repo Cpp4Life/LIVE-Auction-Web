@@ -1,64 +1,76 @@
-<%- include('partials/header'); -%>
+<%- include('../partials/header'); -%>
     <link rel="stylesheet" href="css/profilebidder.css">
-
     <script src="js/product.js"></script>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
-
     <!------ Include the above in your HEAD tag ---------->
-
-
     </head>
 
     <body>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" href="/"><img src="/images/auction-logo.png" alt="logo" class="d-inline-block align-top">Auct Boi</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
+                <ul class="nav navbar-nav" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Profile</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="profile" aria-selected="false">Review</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="contact" aria-selected="false">Favorites</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#biddings" role="tab" aria-controls="contact" aria-selected="false">Bidding</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#wonbids" role="tab" aria-controls="contact" aria-selected="false">Successful bids</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#upgrade" role="tab" aria-controls="contact" aria-selected="false">Upgrade</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
         <hr>
-        <div class="container bootstrap snippet">
-            <div class="row">
+        <div class="container-fluid bootstrap snippet">
+
+            <div class="row" style="margin-bottom: 200px;">
                 <div class="col-sm-3">
-
-
-                    <!--            <div class="text-center">-->
-                    <!--                <img src="images/Adam.png" class="avatar img-circle img-thumbnail" alt="avatar">-->
-                    <!--                <div class="col-sm-10" style="text-align: center; font-style: italic; padding-top: 10px;"><h1>Adam</h1></div>-->
-                    <!--                -->
-                    <!--                <input type="file" class="text-center center-block file-upload">-->
-
-                    <!--            </div>-->
                     <img src="images/Adam.png" class="avatar img-circle img-thumbnail" alt="avatar">
                     <h1 style="text-align: center;">Adam</h1>
-
                     </hr><br>
 
                     <ul class="list-group">
                         <li class="list-group-item text-muted" style="font-size: 15px;">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-                        <li class="list-group-item text-right" style="font-size: 13px;"><span class="pull-left"><strong>Bidding</strong></span> 125</li>
-                        <li class="list-group-item text-right" style="font-size: 13px;"><span class="pull-left"><strong>Items bought</strong></span> 13</li>
-                        <li class="list-group-item text-right" style="font-size: 13px;"><span class="pull-left"><strong>Reviews</strong></span> 37</li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Bidding
+                            <span class="badge  badge-pill">125</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Items bought
+                            <span class="badge  badge-pill">2</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Reviews
+                            <span class="badge  badge-pill">1</span>
+                        </li>
                     </ul>
 
 
 
                 </div>
                 <!--/col-3-->
+
                 <div class="col-sm-9">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#home">Profile</a></li>
-                        <!--                <li><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#password">Change password</a></li>-->
-                        <li><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#messages">Review</a></li>
-                        <li><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#settings">Favorites</a></li>
-                        <li><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#biddings">Bidding</a></li>
-                        <li><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#wonbids">Successful bids</a></li>
-                        <li><a style="padding-left: 25px; padding-right: 25px;" class="font_size" data-toggle="tab" href="#upgrade">Upgrade</a></li>
 
 
-                    </ul>
 
-
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="home">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <hr>
                             <form class="form" action="##" method="post" id="registrationForm">
 
@@ -171,11 +183,8 @@
                             </form>
 
                             <hr>
-
                         </div>
-                        <!--/tab-pane-->
-
-                        <div class="tab-pane" id="messages">
+                        <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="profile-tab">
                             <hr>
                             <div class="container">
                                 <div class="row">
@@ -226,10 +235,7 @@
                                 </table>
                             </div>
                         </div>
-                        <!--/tab-pane-->
-
-
-                        <div class="tab-pane" id="settings">
+                        <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="contact-tab">
                             <h4 class="card-header " style="text-align: center;">
                                 Favorites product
                             </h4>
@@ -376,11 +382,8 @@
                                 </nav>
 
                             </div>
-
                         </div>
-
-
-                        <div class="tab-pane" id="biddings">
+                        <div class="tab-pane fade" id="biddings" role="tabpanel" aria-labelledby="contact-tab">
                             <hr>
                             <h4 class="card-header " style="text-align: center;">
                                 Bidding
@@ -400,7 +403,7 @@
 
                                                 <div class="info time">
                                                     <div class="countdown">
-                                                        <div class="far fa-clock" id='hihi1'>
+                                                        <div class="far fa-clock">
                                                             <script>
                                                                 var target_date = new Date().getTime() + (1000 * 3600 * 48);
                                                                 var days, hours, minutes, seconds;
@@ -440,64 +443,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4 mb-3">
-                                        <div class="card h-100">
-                                            <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Rolex</h5>
-                                                <p class="card-text">Giá hiện tại: 50.000</p>
-                                                <p class="card-text">Giá bạn đấu: 70.000</p>
-                                                <p class="card-text">Giá mua ngay: $</p>
-                                                <p class="card-text">Người bán: Adam</p>
-                                                <p class="card-text">
-
-                                                <div class="info time">
-                                                    <div class="countdown">
-                                                        <div class="far fa-clock" id='hihi3'>
-                                                            <script>
-                                                                var target_date = new Date().getTime() + (1000 * 3600 * 48);
-                                                                var days, hours, minutes, seconds;
-                                                                var countdown = document.getElementById("hihi3");
-                                                                getCountdown();
-                                                                setInterval(function () { getCountdown(); }, 1000);
-                                                                function getCountdown() {
-                                                                    var current_date = new Date().getTime();
-                                                                    var seconds_left = (target_date - current_date) / 1000;
-                                                                    days = pad(parseInt(seconds_left / 86400));
-                                                                    seconds_left = seconds_left % 86400;
-                                                                    hours = pad(parseInt(seconds_left / 3600));
-                                                                    seconds_left = seconds_left % 3600;
-                                                                    minutes = pad(parseInt(seconds_left / 60));
-                                                                    seconds = pad(parseInt(seconds_left % 60));
-                                                                    countdown.innerHTML = "<span>" + " " + days + "d " + "</span><span>" + hours + "h " + "</span><span>" + minutes + "' " + "</span><span>" + seconds + "s " + "</span>";
-                                                                }
-                                                                function pad(n) {
-                                                                    return (n < 10 ? '0' : '') + n;
-                                                                }
-                                                            </script>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                </p>
-                                                <p class="card-text">Số lượt ra giá: 10</p>
-                                            </div>
-                                            <div class="card-footer text-muted">
-                                                <a class="btn btn-sm btn-outline-primary" href="#" role="button">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                                    Details
-                                                </a>
-                                                <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
-                                                    <i class="far fa-heart"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="tab-pane" id="wonbids">
+                        <div class="tab-pane fade" id="wonbids" role="tabpanel" aria-labelledby="contact-tab">
                             <hr>
                             <div class="container">
                                 <table class="table table-hover table-bordered">
@@ -527,9 +476,7 @@
                                 </table>
                             </div>
                         </div>
-
-
-                        <div class="tab-pane" id="upgrade">
+                        <div class="tab-pane fade" id="upgrade" role="tabpanel" aria-labelledby="contact-tab">
                             <hr>
                             <h2>Upgrade from bidder to seller on Online Auction.</h2>
 
@@ -541,12 +488,7 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
                     </div>
-                    <!--/tab-pane-->
                 </div>
                 <!--/tab-content-->
 
@@ -562,7 +504,9 @@
                         <h3 class="modal-title mx-auto"> We will respond within 7 business days.</h3>
                     </div>
                     <div class="form-group">
-                        <button type="submit" name="submit" class="btn btn-lg">Ok</button>
+
+                        <button type="submit" name="submit_request" class="btn btn-lg">Ok</button>
+
 
                         <button class="btn btn-lg" data-dismiss="modal">Cancel</button>
                     </div>
@@ -583,7 +527,7 @@
                                 <input type="password" name="password" id="password" class="form-control" placeholder="***********" required>
                             </div>
                             <div class="form-group">
-                                <button type="submit" name="submit" class="btn btn-lg">Ok</button>
+                                <button type="submit" name="submit_password" class="btn btn-lg">Ok</button>
 
                                 <button class="btn btn-lg" data-dismiss="modal">Cancel</button>
                             </div>
@@ -604,7 +548,8 @@
                         </form>
                     </div>
                     <div class="form-group">
-                        <button type="submit" name="submit" class="btn btn-lg">Ok</button>
+
+                        <button type="submit" name="submit_review" class="btn btn-lg">Ok</button>
 
                         <button class="btn btn-lg" data-dismiss="modal">Cancel</button>
                     </div>
@@ -616,4 +561,4 @@
         </script>
 
 
-        <%- include('partials/footer'); -%>
+        <%- include('../partials/footer'); -%>
