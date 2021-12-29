@@ -1,8 +1,5 @@
-// <<<<<<< HEAD
-
-const dbModel = require('../models/model');
-const {Category, Brand, Product} = require("../models/model");
-const {MongoClient: mongoClient} = require("mongodb");
+const { Category, Brand, Product } = require("../models/model");
+const { MongoClient: mongoClient } = require("mongodb");
 
 //const { Category } = require('../models/model');
 //     const listBrand = await dbModel.Brand.find();
@@ -14,7 +11,7 @@ const {MongoClient: mongoClient} = require("mongodb");
 //         BrandCollection: listBrand,
 //     });
 exports.postProduct = async (req, res) => {
-    const categoryList = await dbModel.Category.find({});
+    const categoryList = await Category.find({});
     console.log(req.body);
     const { name, startPrice, stepPrice, endPrice, decription, brand, subBrand, autoExtend, period } = req.body;
     const errors = [];
@@ -24,14 +21,14 @@ exports.postProduct = async (req, res) => {
     if (name.length > 20) {
         errors.push({ msg: 'Name in maximum of 20 characters' });
     }
-    if(startPrice < 0|| endPrice < 0|| stepPrice < 0 || period < 0){
-        errors.push({msg: 'You can not enter negative number'});
+    if (startPrice < 0 || endPrice < 0 || stepPrice < 0 || period < 0) {
+        errors.push({ msg: 'You can not enter negative number' });
     }
-    if(endPrice < startPrice){
-        errors.push({msg: 'Invalid!! Giá mua ngay không thể nhỏ hơn giá ban đầu'});
+    if (endPrice < startPrice) {
+        errors.push({ msg: 'Invalid!! Giá mua ngay không thể nhỏ hơn giá ban đầu' });
     }
-    if(period > 7){
-        errors.push({msg: 'Không thể đăng một sản phẩm quá 7 ngày'});
+    if (period > 7) {
+        errors.push({ msg: 'Không thể đăng một sản phẩm quá 7 ngày' });
     }
     if (errors.length > 0) {
         res.render('postproduct', {
@@ -42,8 +39,8 @@ exports.postProduct = async (req, res) => {
     else {
         var mongoClient = require('mongodb').MongoClient;
         var url = "mongodb://localhost:27017/";
-        mongoClient.connect(url, function (err, db){
-            if(err) throw err;
+        mongoClient.connect(url, function (err, db) {
+            if (err) throw err;
             var dbo = db.db("auctionDB");
             var newProduct = new Product({
                 name: name,
@@ -53,8 +50,8 @@ exports.postProduct = async (req, res) => {
                 subBrand: subBrand,
                 description: decription
             })
-            dbo.collection("products").insertOne(newProduct, function (err, res){
-                if(err) throw err;
+            dbo.collection("products").insertOne(newProduct, function (err, res) {
+                if (err) throw err;
                 console.log('1 product inserted');
                 db.close();
 
@@ -68,26 +65,6 @@ exports.postProduct = async (req, res) => {
 
 
     }
-//     dbModel.Category.find({}, (err, foundList) => {
-//
-//         if (err)
-//             console.log(err);
-//         else {
-//             dbModel.Brand.find({}, function (err, allBrand){
-//                 console.log(allBrand[0].brand)
-//                 if(err){
-//                     console.log(err);
-//                 }
-//
-//                 else {
-//                     res.render('postproduct', {
-//                         Category: foundList[0].list,
-//                         AllBrand: allBrand});
-//                 }
-//             })
-//
-//         }
-// })
 }
 
 exports.getPostProductPage = async (req, res) => {
@@ -97,16 +74,17 @@ exports.getPostProductPage = async (req, res) => {
         if (err)
             console.log(err);
         else {
-            dbModel.Brand.find({}, function (err, allBrand){
+            dbModel.Brand.find({}, function (err, allBrand) {
                 console.log(allBrand[0].brand)
-                if(err){
+                if (err) {
                     console.log(err);
                 }
 
                 else {
                     res.render('postproduct', {
                         Category: foundList[0].list,
-                        AllBrand: allBrand});
+                        AllBrand: allBrand
+                    });
                 }
             })
 
