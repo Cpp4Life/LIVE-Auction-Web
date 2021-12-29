@@ -1,7 +1,6 @@
 require('dotenv').config();
 const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const FacebookStrategy = require('passport-facebook').Strategy;
 const bcrypt = require('bcrypt');
 
 const { User } = require('../models/model');
@@ -64,34 +63,6 @@ module.exports = (passport) => {
                 return cb(err, user);
             }
         });
-    }
-    ));
-
-    passport.use(new FacebookStrategy({
-        clientID: process.env.FB_CLIENT_ID,
-        clientSecret: process.env.FB_CLIENT_SECRET,
-        callbackURL: 'http://localhost:3000/auth/facebook/home'
-    }, (accessToken, refreshToken, profile, cb) => {
-        console.log(profile);
-        // User.findOne({ facebookId: profile.id }, (err, user) => {
-        //     if (err) {
-        //         return done(err);
-        //     }
-        //     if (!user) {
-        //         user = new User({
-        //             name: profile.displayName,
-        //             email: profile.emails[0].value,
-        //             password: 'password',
-        //             facebookId: profile.id
-        //         });
-        //         user.save((err) => {
-        //             if (err) console.log(err);
-        //             return cb(err, user);
-        //         });
-        //     } else {
-        //         return cb(err, user);
-        //     }
-        // });
     }
     ));
 };

@@ -18,7 +18,6 @@ const userSchema = new mongoose.Schema({
     },
 
     googleId: String,
-    facebookId: String,
     role: String,
     address: String,
     reviewPoint: Number

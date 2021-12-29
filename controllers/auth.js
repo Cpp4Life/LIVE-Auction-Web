@@ -177,18 +177,6 @@ exports.getHomeAfterGoogleAuth = (req, res, next) => {
     delete req.session.returnTo;
 }
 
-exports.getFacebookAuth = passport.authenticate('facebook', { scope: 'email' });
-
-exports.getHomeAfterFacebookAuth = (req, res, next) => {
-    console.log(req.body);
-    passport.authenticate('facebook', {
-        successRedirect: req.session.returnTo || '/',
-        failureRedirect: '/user/login',
-        failureFlash: true
-    })(req, res, next);
-    delete req.session.returnTo;
-}
-
 exports.postLogin = (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: req.session.returnTo || '/',
