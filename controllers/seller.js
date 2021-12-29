@@ -1,13 +1,19 @@
 const { Category, Brand, Product } = require("../models/model");
 const { MongoClient: mongoClient } = require("mongodb");
 
+exports.getPostProductPage = async (req, res) => {
+    const categoryList = await Category.find({});
+    const brandList = await Brand.find({});
+    res.render('viewSeller/post_product', { Category: categoryList[0].list });
+}
+
 exports.postProduct = async (req, res) => {
     const categoryList = await Category.find({});
     console.log(req.body);
     const { name, startPrice, stepPrice, endPrice, decription, brand, subBrand, autoExtend, period } = req.body;
     const errors = [];
     if (!name || !startPrice || !stepPrice || !brand || !subBrand || !period) {
-        errors.push({ msg: 'Please enter all fields requied' });
+        errors.push({ msg: 'Please enter all fields' });
     }
     if (name.length > 20) {
         errors.push({ msg: 'Name in maximum of 20 characters' });
@@ -22,7 +28,7 @@ exports.postProduct = async (req, res) => {
         errors.push({ msg: 'Không thể đăng một sản phẩm quá 7 ngày' });
     }
     if (errors.length > 0) {
-        res.render('postproduct', {
+        res.render('viewSeller/post_product', {
             errors,
             Category: categoryList[0].list
         });
@@ -47,54 +53,9 @@ exports.postProduct = async (req, res) => {
                 db.close();
 
             })
-            res.render('postproduct', {
+            res.render('viewSeller/post_produc', {
                 Category: categoryList[0].list
             });
-        })
-
-
-
-
+        });
     }
 }
-
-exports.getPostProductPage = async (req, res) => {
-
-    dbModel.Category.find({}, (err, foundList) => {
-
-        if (err)
-            console.log(err);
-        else {
-            dbModel.Brand.find({}, function (err, allBrand) {
-                console.log(allBrand[0].brand)
-                if (err) {
-                    console.log(err);
-                }
-
-                else {
-                    res.render('postproduct', {
-                        Category: foundList[0].list,
-                        AllBrand: allBrand
-                    });
-                }
-            })
-
-        }
-    })
-    // const cate = await dbModel.Category[0].list.find();
-
-}
-
-
-// exports.getPostProduct = async (req, res) => {
-//     const categoryList = await Category.find({});
-//     res.render('postproduct', { Category: categoryList[0].list });
-// }
-// =======
-// const { Category } = require('../models/model');
-
-exports.getPostProduct = async (req, res) => {
-    const categoryList = await Category.find({});
-    res.render('postproduct', { Category: categoryList[0].list });
-}
-// >>>>>>> b2d7bec151cb3e871648cad6dc8090fe8ecdf2ca

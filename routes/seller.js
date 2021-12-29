@@ -3,8 +3,8 @@ const sellerController = require('../controllers/seller');
 const isAuth = require('../middleware/auth');
 const router = express.Router();
 
-router.get('/seller/post-product', isAuth, sellerController.getPostProduct);
+router.get('/seller/post_product', sellerController.getPostProductPage);
 
-router.post('/seller/post-product', isAuth, sellerController.postProduct)
+router.post('/seller/post_product', isAuth, sellerController.postProduct)
 
 module.exports = router;
