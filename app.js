@@ -5,7 +5,6 @@ const _ = require('lodash');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
-
 const helper = require('./helpers/helper');
 
 const app = express();
@@ -15,20 +14,21 @@ require('./config/passport')(passport);
 
 const authRoutes = require('./routes/auth');
 const guestRoutes = require('./routes/guest');
-<<<<<<< HEAD
 
-const sellerRoutes = require('./routes/seller')
+
+//const sellerRoutes = require('./routes/seller')
 // const guestController = require("../controllers/guest");
 
 //const sellerRoutes = require('./routes/seller');
 
-=======
+
 const sellerRoutes = require('./routes/seller');
->>>>>>> b2d7bec151cb3e871648cad6dc8090fe8ecdf2ca
+
 
 app.locals._ = _;
 
 app.set('view engine', 'ejs');
+app.use('/public', express.static('public'));
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({extended: true}));

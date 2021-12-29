@@ -4,5 +4,5 @@ const isAuth = require('../middleware/auth');
 const router = express.Router();
 
 router.get('/', guestController.getHomePage);
-
+router.get('/viewlistproduct', guestController.getListView);
 module.exports = router;
