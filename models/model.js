@@ -36,6 +36,7 @@ const productSchema = new mongoose.Schema({
     originalBidPrice: Number,
     boughtPrice: Number,
     currentPrice: Number,
+    stepPrice: Number,
     brand: String,
     subBrand: String,
     owner: userSchema,

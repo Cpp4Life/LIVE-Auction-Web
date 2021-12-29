@@ -8,78 +8,118 @@
         <section class="colored-section" style="padding:0 15%;">
             <%- include('partials/navbar'); -%>
         </section>
-        <div class="container my-5 px-5">
-            <h3 class="container font-weight-bold text-center">ĐĂNG SẢN PHẨM ĐẤU GIÁ</h3>
-            <div class="container form-group">
-                <label class="font-weight-bold pl-3"> Tên sản phẩm </label>
-                <input type="text" class="form-control " placeholder="Nhập tên sản phẩm đấu giá" autofocus>
-            </div>
-            <div class="container">
-                <div class="card ">
-                    <div class="card-header d-flex justify-content-between " style="background-color: #ffffff">
-                        <label class="font-weight-bold">Ảnh sản phẩm</label>
-                        <form class="form" action="#" method="post" id="form">
-                            <input type="file" name="Image" id="image" multiple="" class="d-none" onchange="image_select()">
-                            <button class="btn btn-sm btn-primary" type="button" onclick="document.getElementById('image').click()">Choose Images</button>
-                        </form>
-                    </div>
-                    <div class="card-body d-flex flex-wrap justify-content-start" id="container">
-                        <!-- Image will be show here-->
-                    </div>
+        <form method="post">
+            <div class="container my-5 px-5" >
+                <%- include ('partials/messages'); -%>
+                <h3 class="container font-weight-bold text-center">ĐĂNG SẢN PHẨM ĐẤU GIÁ</h3>
+                <div class="container form-group">
+                    <label class="font-weight-bold pl-3"> Tên sản phẩm </label>
+                    <input type="text" class="form-control " id="name" name="name" placeholder="Nhập tên sản phẩm đấu giá" autofocus>
                 </div>
-            </div>
-            <div class="container form-group">
-                <label class="font-weight-bold pl-3">Giá khởi điểm</label>
-                <input type="number" min="1" step="1" class="form-control" placeholder="Nhập giá khởi điểm của sản phảm" id="inputPrice">
-            </div>
-            <div class="container form-group">
-                <label class="font-weight-bold pl-3">Bước giá</label>
-                <input type="number" min="1" step="1" class="form-control" placeholder="Nhập bước giá" id="stepPrice">
-            </div>
+<!--                <div class="container">-->
+<!--                    <div class="card ">-->
+<!--                        <div class="card-header d-flex justify-content-between " style="background-color: #ffffff">-->
+<!--                            <label class="font-weight-bold">Ảnh sản phẩm</label>-->
+<!--                            <form class="form" action="#" method="post" id="form">-->
+<!--                                <input type="file" name="Image" id="image" multiple="" class="d-none" onchange="image_select()">-->
+<!--                                <button class="btn btn-sm btn-primary" type="button" onclick="document.getElementById('image').click()">Choose Images</button>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                        <div class="card-body d-flex flex-wrap justify-content-start" id="container">-->
+<!--                            &lt;!&ndash; Image will be show here&ndash;&gt;-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="container form-group">
+                    <label class="font-weight-bold pl-3">Giá khởi điểm</label>
+                    <input type="number" min="1" step="1" class="form-control" id="startPrice" name="startPrice" placeholder="Nhập giá khởi điểm của sản phảm" id="inputPrice">
+                </div>
+                <div class="container form-group">
+                    <label class="font-weight-bold pl-3">Bước giá</label>
+                    <input type="number" min="1" step="1" class="form-control" id="stepPrice" name="stepPrice" placeholder="Nhập bước giá" id="stepPrice">
+                </div>
 
-            <div class="container form-group">
-                <label class="font-weight-bold pl-3">Giá mua ngay</label>
-                <input type="number" min="1" step="1" class="form-control" placeholder="Nhập giá mua ngay (nếu có)" id="nowPrice">
-            </div>
+                <div class="container form-group">
+                    <label class="font-weight-bold pl-3">Giá mua ngay</label>
+                    <input type="number" min="1" step="1" class="form-control" id="endPrice" name="endPrice" placeholder="Nhập giá mua ngay (nếu có)" id="nowPrice">
+                </div>
 
-            <!--    <textarea class="container" id="editor"></textarea>-->
-            <div class="container form-group">
-                <label class="font-weight-bold pl-3">Mô tả sản phẩm</label>
-                <div id="editor"> </div>
-            </div>
-            <script>
-                ClassicEditor.create(document.querySelector('#editor')).catch(error => { console.error(error) });
-            </script>
-            <div class="container form-group">
-                <label class="font-weight-bold pl-3" for="inputState">Loại sản phẩm</label>
-                <select id="inputState" class="form-control">
-                    <% Category.forEach(element=> {%>
-                        <option><%= element.brand%> </option>
-                    <% }) %>
-                </select>
-            </div>
-            <script>
-                console.log($('#inputState').val());
-            </script>
-            <div class="container form-group">
-                <label class="font-weight-bold pl-3" for="inputState">Loại sản phẩm</label>
-                <select id="inputState2" class="form-control">
-                    <% Bra.forEach(element=> {%>
-                    <%element.forEach(i=> {%>
-                        <option><%= i.subBrand%> </option>
-                    <%})%>
-                    <%})%>
-                </select>
-            </div>
-            <div class="container form-group mt-3">
-                <input class="ml-3" type="checkbox">
-                <label class="font-weight-bold pl-3">Sản phẩm tự gia hạn</label>
+                <div class="container form-group">
+                    <label class="font-weight-bold pl-3">Mô tả sản phẩm</label>
+                    <textarea class="container" id="decription" name="decription"></textarea>
+                    <div id="decription"> </div>
+                </div>
+                <script>
+                    ClassicEditor.create(document.querySelector('#decription')).catch(error => { console.error(error) });
+                </script>
+                <div class="container form-group">
+                    <label class="font-weight-bold pl-3" for="inputState">Loại sản phẩm</label>
+                    <select id="inputState" class="form-control" id="brand" name="brand" onchange="populate(this.id, 'inputState2')">
+                        <option></option>
+                        <% Category.forEach(element=> {%>
+                            <option><%= element.brand%> </option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="container form-group">
+                    <label class="font-weight-bold pl-3" for="inputState">Loại sản phẩm</label>
+                    <select id="inputState2" class="form-control" id="subBrand" name="subBrand">
+
+                    </select>
+                </div>
+                <script>
+                    function populate(s1,s2){
+                        var s1 = document.getElementById(s1);
+                        var s2 = document.getElementById(s2);
+                        while(s2.options.length > 0){
+                            s2.options.remove(0);
+                        }
+                        if(s1.value == "Điện tử"){
+                            var optionArray = ["điện thoại di động|Điện thoại di động","máy tính|Máy tính xách tay",
+                                "tivi|Tivi", "loa|Loa", "tai nghe| Tai nghe"];
+                        } else if(s1.value == "Thời trang"){
+                            var optionArray = ["quần|Quần","áo|Áo","giày|Giày", "túi xách|Túi xách",
+                                "đồng hồ|Đồng hồ"];
+                        } else if(s1.value == "Thiết bị gia dụng"){
+                            var optionArray = ["tủ lạnh|Tủ lạnh","quạt máy|Quạt máy","bếp|Bếp",
+                                "máy hút bụi|Máy hút bụi", "máy lạnh|Máy lạnh"];}
+                        else if(s1.value == "Phương tiện xe"){
+                            var optionArray = ["xe đạp|Xe đạp","xe máy|Xe máy","ô tô|Ô tô", "xe điện|Xe điện",
+                                "siêu xe| Siêu xe"];
+                        }
+                        for(var option in optionArray){
+                            var pair = optionArray[option].split("|");
+                            var newOption = document.createElement("option");
+                            newOption.value = pair[0];
+                            newOption.innerHTML = pair[1];
+                            s2.options.add(newOption);
+                        }
+
+                    }
+                </script>
+                <div class="container form-group mt-3">
+<!--                    <form>-->
+<!--                        <input class="ml-3" type="checkbox" id="autoExtend" name="autoExtend">-->
+<!--                        <label class="font-weight-bold pl-3">Sản phẩm tự gia hạn</label>-->
+
+
+<!--                    </form>-->
+                    <form>
+                        <label for="datetime" class="font-weight-bold">Time:</label>
+                        <input type="datetime-local" id="datetime" name="datetime" >
+                    </form>
+
+
+                </div>
+                <div class="container form-group">
+                    <label class="font-weight-bold pl-3">Khoảng thời gian (ngày)</label>
+                    <input type="number" min="1" step="1" class="form-control" id="period" name="period" placeholder="Nhập giá khoảng thời gian (Không quá 7 ngày)" id="nowPrice">
+                </div>
+                <div class="container form-group text-center my-5">
+                    <button type="submit" class="btn btn-primary btn-lg font-weight-bold"> ĐĂNG SẢN PHẨM </button>
+                </div>
 
             </div>
-
-            <div class="container form-group text-center my-5">
-                <button type="button" class="btn btn-primary btn-lg font-weight-bold"> ĐĂNG SẢN PHẨM </button>
-            </div>
-        </div>
+        </form>
 
         <%- include('partials/footer'); -%>

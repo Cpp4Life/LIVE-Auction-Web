@@ -15,19 +15,19 @@ require('./config/passport')(passport);
 
 const authRoutes = require('./routes/auth');
 const guestRoutes = require('./routes/guest');
-<<<<<<< HEAD
+
 const sellerRoutes = require('./routes/seller')
 // const guestController = require("../controllers/guest");
-=======
-const sellerRoutes = require('./routes/seller');
->>>>>>> d181341dfd4c6978302d3a690e68f8cb8673ee6b
+
+//const sellerRoutes = require('./routes/seller');
+
 
 app.locals._ = _;
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.json({extended: true}));
 app.use(session({
     secret: "Online Auction",
     resave: false,

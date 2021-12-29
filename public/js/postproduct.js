@@ -53,3 +53,27 @@ function get_image_data() {
     }
     return form;
 }
+// function getSelectInput(s1, s2){
+//     var s1 = document.getElementById(s1);
+//     var s2 = document.getElementById(s2);
+//     for(var i = 0 ; i < BrandCollection.length; i++){
+//         if(BrandCollection[i].brand == d){
+//             var option = BrandCollection[i].subBrand.list;
+//             var newOption = document.createElement("option");
+//
+//         }
+//     }
+// }
+// var s1 = document.getElementById('inputState');
+// var s2 = document.getElementById('inputState2');
+// s1.addEventListener('change', function (){
+   // var selected_option = BrandCollection[this.value];
+   // while(s2.options.length >0){
+   //     s2.options.remove(0);
+   // }
+   // Array.from(selected_option).forEach(function (el){
+   //     let option = new Option(el, el);
+   //     s2.appendChild(option);
+   // })
+
+// });
