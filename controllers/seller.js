@@ -1,15 +1,6 @@
 const { Category, Brand, Product } = require("../models/model");
 const { MongoClient: mongoClient } = require("mongodb");
 
-//const { Category } = require('../models/model');
-//     const listBrand = await dbModel.Brand.find();
-//     const listCaregory = await dbModel.Category.find();
-//     console.log(listBrand[0]);
-//     console.log(listCaregory[0])
-//     res.render('postproduct', {
-//         Category: listCaregory[0].list,
-//         BrandCollection: listBrand,
-//     });
 exports.postProduct = async (req, res) => {
     const categoryList = await Category.find({});
     console.log(req.body);

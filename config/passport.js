@@ -53,7 +53,8 @@ module.exports = (passport) => {
                     name: profile.displayName,
                     email: profile.emails[0].value,
                     password: 'password',
-                    googleId: profile.id
+                    googleId: profile.id,
+                    role: 'bidder'
                 });
                 user.save((err) => {
                     if (err) console.log(err);

@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get('/seller/post-product', isAuth, sellerController.getPostProduct);
 
-router.post('/post-product', isAuth, sellerController.postProduct)
+router.post('/seller/post-product', isAuth, sellerController.postProduct)
 
 module.exports = router;
