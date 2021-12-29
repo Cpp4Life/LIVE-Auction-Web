@@ -20,4 +20,8 @@ router.get('/auth/google', authController.getGoogleAuth);
 
 router.get('/auth/google/home', authController.getHomeAfterGoogleAuth);
 
+router.get('/auth/facebook', authController.getFacebookAuth);
+
+router.get('/auth/facebook/home', authController.getHomeAfterFacebookAuth);
+
 module.exports = router;
