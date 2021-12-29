@@ -15,12 +15,16 @@ require('./config/passport')(passport);
 
 const authRoutes = require('./routes/auth');
 const guestRoutes = require('./routes/guest');
+<<<<<<< HEAD
 
 const sellerRoutes = require('./routes/seller')
 // const guestController = require("../controllers/guest");
 
 //const sellerRoutes = require('./routes/seller');
 
+=======
+const sellerRoutes = require('./routes/seller');
+>>>>>>> b2d7bec151cb3e871648cad6dc8090fe8ecdf2ca
 
 app.locals._ = _;
 
@@ -47,6 +51,9 @@ app.use(function (req, res, next) {
     if (req.user) { res.locals.user = req.user; }
     next();
 });
+
+// const str = _.snakeCase(helper.normalizeText('Thiết bị gia dụng'));
+// console.log(str);
 
 app.use(authRoutes);
 app.use(guestRoutes);

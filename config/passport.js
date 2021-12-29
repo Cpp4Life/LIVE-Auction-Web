@@ -1,4 +1,6 @@
+require('dotenv').config();
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require('bcrypt');
 
 const { User } = require('../models/model');
@@ -7,7 +9,7 @@ module.exports = (passport) => {
     passport.use(
         new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
             User.findOne({
-                email: email
+                email: email.toLowerCase()
             }).then(user => {
                 if (!user) {
                     return done(null, false, { message: 'That email is not registered' });
@@ -35,4 +37,32 @@ module.exports = (passport) => {
             done(err, user);
         });
     });
+
+    passport.use(new GoogleStrategy({
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: 'http://localhost:3000/auth/google/home'
+    }, (accessToken, refreshToken, profile, cb) => {
+        console.log(profile);
+        User.findOne({ googleId: profile.id }, (err, user) => {
+            if (err) {
+                return done(err);
+            }
+            if (!user) {
+                user = new User({
+                    name: profile.displayName,
+                    email: profile.emails[0].value,
+                    password: 'password',
+                    googleId: profile.id
+                });
+                user.save((err) => {
+                    if (err) console.log(err);
+                    return cb(err, user);
+                });
+            } else {
+                return cb(err, user);
+            }
+        });
+    }
+    ));
 };

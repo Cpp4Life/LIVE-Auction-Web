@@ -12,4 +12,12 @@ router.post('/user/register', authController.postRegister);
 
 router.get('/user/logout', authController.getLogout);
 
+router.post('/user/register/verify-otp', authController.postVerifyOtp);
+
+router.post('/user/register/resend-otp', authController.postResendOtp);
+
+router.get('/auth/google', authController.getGoogleAuth);
+
+router.get('/auth/google/home', authController.getHomeAfterGoogleAuth);
+
 module.exports = router;
