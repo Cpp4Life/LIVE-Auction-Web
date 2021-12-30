@@ -38,35 +38,6 @@ module.exports = (passport) => {
         });
     });
 
-<<<<<<< HEAD
-    // passport.use(new GoogleStrategy({
-    //     clientID: process.env.GOOGLE_CLIENT_ID,
-    //     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    //     callbackURL: 'http://localhost:3000/auth/google/home'
-    // }, (accessToken, refreshToken, profile, cb) => {
-    //     console.log(profile);
-    //     User.findOne({ googleId: profile.id }, (err, user) => {
-    //         if (err) {
-    //             return done(err);
-    //         }
-    //         if (!user) {
-    //             user = new User({
-    //                 name: profile.displayName,
-    //                 email: profile.emails[0].value,
-    //                 password: 'password',
-    //                 googleId: profile.id
-    //             });
-    //             user.save((err) => {
-    //                 if (err) console.log(err);
-    //                 return cb(err, user);
-    //             });
-    //         } else {
-    //             return cb(err, user);
-    //         }
-    //     });
-    // }
-    // ));
-=======
     passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -95,5 +66,4 @@ module.exports = (passport) => {
         });
     }
     ));
->>>>>>> 9db8dfa1e8258781b7fb630fb349fb3e54066efd
 };

@@ -1,12 +1,5 @@
 const express = require('express');
 const sellerController = require('../controllers/seller');
-
-
-//const router = express.Router();
-
-
-
-
 const isAuth = require('../middleware/auth');
 const router = express.Router();
 
