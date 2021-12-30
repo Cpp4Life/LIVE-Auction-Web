@@ -56,7 +56,7 @@
                         <select id="inputState" class="form-control" id="brand" name="brand">
                             <option selected disabled hidden>Choose a brand</option>
                             <% Category.forEach(element=> {%>
-                                <option value="<%= element.brand %> ">
+                                <option value='<%= element.brand %>'>
                                     <%= element.brand%>
                                 </option>
                                 <% }) %>
@@ -65,56 +65,38 @@
                     <div class=" container form-group">
                         <label class="font-weight-bold pl-3" for="inputState2">Loại sản phẩm</label>
                         <select id="inputState2" class="form-control" id="subBrand" name="subBrand">
-                            <% Category.forEach(element=>{ %>
-                                <script>
-                                    const selectElement = document.querySelector('#inputState');
-                                    selectElement.addEventListener('change', (event) => {
-                                        console.log(event.target.value);
-                                        const selectedBrand = event.target.value;
-                                        var currentBrand = '<%= element.brand %>';
-                                        console.log(currentBrand);
-                                        console.log(typeof selectedBrand + ' ' + typeof currentBrand);
-                                        if (selectedBrand.localeCompare(currentBrand) == 0) {
-                                            const subBrands = '<%= element.subBrand %>';
-                                            console.log(subBrands);
+                            <script>
+                                const selectElement = document.querySelector('#inputState');
+                                selectElement.addEventListener('change', (event) => {
+                                    var selectedBrand = event.target.value;
+                                    var currentBrand, subBrands;
+                                    '<% Category.forEach(element => { %>'
+                                    currentBrand = '<%=element.brand%>';
+                                    if (currentBrand === selectedBrand) {
+                                        subBrands = '<%=element.subBrand%>'
+                                    }
+                                    '<% }) %>'
+                                    const subBrandList = subBrands.split(',');
+
+                                    const selectElement2 = document.querySelector('#inputState2');
+                                    const selectElement2Size = selectElement2.length;
+                                    if (selectElement2Size != 0) {
+                                        for (var i = selectElement2Size - 1; i >= 0; i--) {
+                                            selectElement2.remove(i);
                                         }
-                                    });
-                                </script>
-                                <% }) %>
+                                    }
+                                    for (var item in subBrandList) {
+                                        var optionTag = document.createElement('option');
+                                        optionTag.value = subBrandList[item];
+                                        optionTag.innerHTML = subBrandList[item];
+                                        selectElement2.options.add(optionTag);
+                                    }
+                                });
+                            </script>
                         </select>
                     </div>
                     <script>
 
-                        // function populate(s1, s2) {
-                        //     const s1 = document.getElementById(s1);
-                        //     const s2 = document.getElementById(s2);
-                        //     console.log(s1);
-                        //     while (s2.options.length > 0) {
-                        //         s2.options.remove(0);
-                        //     }
-                        //     if (s1.value == "Điện tử") {
-                        //         var optionArray = ["điện thoại di động|Điện thoại di động", "máy tính|Máy tính xách tay",
-                        //             "tivi|Tivi", "loa|Loa", "tai nghe| Tai nghe"];
-                        //     } else if (s1.value == "Thời trang") {
-                        //         var optionArray = ["quần|Quần", "áo|Áo", "giày|Giày", "túi xách|Túi xách",
-                        //             "đồng hồ|Đồng hồ"];
-                        //     } else if (s1.value == "Thiết bị gia dụng") {
-                        //         var optionArray = ["tủ lạnh|Tủ lạnh", "quạt máy|Quạt máy", "bếp|Bếp",
-                        //             "máy hút bụi|Máy hút bụi", "máy lạnh|Máy lạnh"];
-                        //     }
-                        //     else if (s1.value == "Phương tiện xe") {
-                        //         var optionArray = ["xe đạp|Xe đạp", "xe máy|Xe máy", "ô tô|Ô tô", "xe điện|Xe điện",
-                        //             "siêu xe| Siêu xe"];
-                        //     }
-                        //     for (var option in optionArray) {
-                        //         var pair = optionArray[option].split("|");
-                        //         var newOption = document.createElement("option");
-                        //         newOption.value = pair[0];
-                        //         newOption.innerHTML = pair[1];
-                        //         s2.options.add(newOption);
-                        //     }
-
-                        // }
                     </script>
                     <div class="container form-group mt-3">
                         <!--                    <form>-->

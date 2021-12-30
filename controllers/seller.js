@@ -5,7 +5,6 @@ const { MongoClient: mongoClient } = require("mongodb");
 
 exports.getPostProductPage = async (req, res) => {
     const categoryList = await Category.find({});
-    // const brandList = await Brand.find({});
     res.render('viewSeller/post_product', { Category: categoryList[0].list });
 }
 
@@ -15,20 +14,20 @@ exports.postProduct = async (req, res) => {
     //Tạo biến datetime
     // const d = new Date();
 
-    const {name, startPrice, stepPrice, endPrice, decription, brand, subBrand, date} = req.body;
+    const { name, startPrice, stepPrice, endPrice, decription, brand, subBrand, date } = req.body;
     const errors = [];
     if (!name || !startPrice || !stepPrice || !brand || !subBrand) {
-        errors.push({msg: 'Please enter all fields requied'});
+        errors.push({ msg: 'Please enter all fields requied' });
     }
     if (name.length > 20) {
-        errors.push({msg: 'Name in maximum of 20 characters'});
+        errors.push({ msg: 'Name in maximum of 20 characters' });
     }
 
     if (startPrice < 0 || endPrice < 0 || stepPrice < 0 || period < 0) {
-        errors.push({msg: 'You can not enter negative number'});
+        errors.push({ msg: 'You can not enter negative number' });
     }
     if (endPrice < startPrice) {
-        errors.push({msg: 'Invalid!! Giá mua ngay không thể nhỏ hơn giá ban đầu'});
+        errors.push({ msg: 'Invalid!! Giá mua ngay không thể nhỏ hơn giá ban đầu' });
     }
 
     // if(period > 7){
@@ -73,70 +72,9 @@ exports.postProduct = async (req, res) => {
                 db.close();
 
             })
-            res.render('viewSeller/postproduct', {
+            res.render('viewSeller/post_product', {
                 Category: categoryList[0].list
             });
         });
     }
 }
-//     dbModel.Category.find({}, (err, foundList) => {
-//
-//         if (err)
-//             console.log(err);
-//         else {
-//             dbModel.Brand.find({}, function (err, allBrand){
-//                 console.log(allBrand[0].brand)
-//                 if(err){
-//                     console.log(err);
-//                 }
-//
-//                 else {
-//                     res.render('postproduct', {
-//                         Category: foundList[0].list,
-//                         AllBrand: allBrand});
-//                 }
-//             })
-//
-//         }
-// })
-//}
-
-exports.getPostProductPage = async (req, res) => {
-
-    dbModel.Category.find({}, (err, foundList) => {
-
-        if (err)
-            console.log(err);
-        else {
-            dbModel.Brand.find({}, function (err, allBrand){
-                console.log(allBrand[0].brand)
-                if(err){
-                    console.log(err);
-                }
-
-                else {
-                    res.render('viewSeller/postproduct', {
-                        Category: foundList[0].list,
-                        AllBrand: allBrand});
-                }
-            })
-
-        }
-    })
-    // const cate = await dbModel.Category[0].list.find();
-
-}
-
-
-// exports.getPostProduct = async (req, res) => {
-//     const categoryList = await Category.find({});
-//     res.render('postproduct', { Category: categoryList[0].list });
-// }
-
-// const { Category } = require('../models/model');
-//
-// exports.getPostProduct = async (req, res) => {
-//     const categoryList = await Category.find({});
-//     res.render('viewSeller/postproduct', {Category: categoryList[0].list});
-// }
-

@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer')
-const  numeral = require('numeral');
+const numeral = require('numeral');
 
 exports.normalizeText = (text) => {
     return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -42,6 +42,7 @@ exports.formatter = new Intl.NumberFormat('vi-VN', {
     style: 'currency',
     currency: 'VND'
 });
+
 exports.format_number = (val) => {
     return numeral(val).format('0,0');
 }
