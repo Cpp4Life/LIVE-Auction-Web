@@ -54,3 +54,28 @@ mongoose.connect('mongodb://localhost:27017/auctionDB');
 
 app.listen(3000, () => console.log('Server running on port 3000'));
 
+const {User} = require('./models/model.js')
+
+const user = {
+    name:"lyly",
+
+    email: "123@gmail.com",
+
+    password: "1234",
+
+    googleId:"1234",
+    role: "bidder",
+    address: "tpHCM",
+    reviewPoint: 10,
+}
+async function add() {
+    const U = await User(user);
+    await U.save();
+}
+add()
+
+
+
+
+
+
