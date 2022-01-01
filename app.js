@@ -15,6 +15,7 @@ const authRoutes = require('./routes/auth');
 const guestRoutes = require('./routes/guest');
 const sellerRoutes = require('./routes/seller');
 const bidderRoutes = require('./routes/bidder');
+const adminRoutes = require('./routes/admin');
 
 app.locals._ = _;
 
@@ -49,6 +50,7 @@ app.use(authRoutes);
 app.use(guestRoutes);
 app.use(sellerRoutes);
 app.use(bidderRoutes);
+app.use('/admin', adminRoutes);
 
 mongoose.connect('mongodb://localhost:27017/auctionDB');
 
