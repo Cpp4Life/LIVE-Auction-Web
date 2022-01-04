@@ -2,6 +2,7 @@
     <link rel="stylesheet" href="/css/register.css">
     <link rel="stylesheet" href="/css/otp.css">
     <script async src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script defer src="/js/otp.js"></script>
     </head>
 
     <body>
@@ -49,7 +50,7 @@
                     <form action="/user/register/verify-otp" class="digit-group" style="margin-bottom: 20px;" data-group-name="digits" data-autosubmit="false" autocomplete="off" method="POST">
                         <%- include('partials/otp'); -%>
                             <div class="otp-footer" style="margin-top: 25px;">
-                                <button class="btn btn-primary" type="submit" id="verifOtpBtn">Verify OTP</button>
+                                <button class="btn btn-primary" type="submit" id="verifyOtpBtn">Verify OTP</button>
                             </div>
                     </form>
                     <div class="otp-footer">
@@ -81,30 +82,6 @@
                     if (event.keyCode == 13) {
                         event.preventDefault();
                         return false;
-                    }
-                });
-            });
-            $('.digit-group').find('input').each(function () {
-                $(this).attr('maxlength', 1);
-                $(this).on('keyup', function (e) {
-                    var parent = $($(this).parent());
-
-                    if (e.keyCode === 8 || e.keyCode === 37) {
-                        var prev = parent.find('input#' + $(this).data('previous'));
-
-                        if (prev.length) {
-                            $(prev).select();
-                        }
-                    } else if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
-                        var next = parent.find('input#' + $(this).data('next'));
-
-                        if (next.length) {
-                            $(next).select();
-                        } else {
-                            if (parent.data('autosubmit')) {
-                                parent.submit();
-                            }
-                        }
                     }
                 });
             });

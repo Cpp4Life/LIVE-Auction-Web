@@ -4,7 +4,7 @@ const isAuth = require('../middleware/auth');
 const router = express.Router();
 
 router.get('/bidder/profile', isAuth, (req, res) => {
-    res.render('viewBidder/bidder_profile');
+    res.render('viewBidder/bidder-profile');
 });
 
 

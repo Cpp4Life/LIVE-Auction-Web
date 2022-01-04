@@ -1,5 +1,7 @@
 <%- include('partials/header'); -%>
     <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/otp.css">
+    <script defer src="/js/otp.js"></script>
     </head>
 
     <body>
@@ -29,9 +31,21 @@
 
                     <div class="form-group">
                         <button type="submit" class="btn btn-outline-primary d-block w-100">Đănh Nhập</button>
-                        <a class="forgot" href="google.com">Bạn quên mật khẩu ? lấy lại mật khẩu <strong style="color:black;">tại đây</strong></a>
+                        <a class="forgot" href="#">Bạn quên mật khẩu ? lấy lại mật khẩu <strong style="color:black;">tại đây</strong></a>
                     </div>
-                    <span class="d-block text-center text-muted my-4">— or —</span>
+                    <div class="digit-group text-center" id="otp" style="display:none;">
+                        <div class="prompt">
+                            Enter the OTP code sent to according email to register!
+                        </div>
+                        <%- include('partials/otp'); -%>
+                            <div class="otp-footer my-3" style="margin-top: 25px;">
+                                <a class="btn btn-primary" id="verifyOtpBtn" href="/user/login/forgot-password/verify-otp" role="button">Verify OTP</a>
+                            </div>
+                            <div class="otp-footer my-3">
+                                <a class="btn btn-primary" id="resendOtpBtn" href="/user/login/forgot-password/resend-otp" role="button">Resend OTP</a>
+                            </div>
+                    </div>
+                    <span class=" d-block text-center text-muted my-4">— or —</span>
                     <div class="container-fluid text-center">
                         <div class="my-2">
                             <a class="btn btn-width btn-google" href="/auth/google" role="button">
@@ -46,13 +60,25 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="form-group text-center mt-5">
                         <a class="sign-up">Bạn chưa có tài khoản?</a>
                         <a class="sign_up_link" href="register">ĐĂNG KÝ</a>
                     </div>
             </form>
         </section>
+        <script>
+            $(document).ready(() => {
+                $('.forgot').click(() => {
+                    const email = $('#email').val();
+                    console.log(email);
+                    if (!email) {
+                        alert('Please enter email to get OTP code');
+                    } else {
+                        $('#otp').css('display', 'block');
+                    }
+                })
+            })
+        </script>
         <script>
             if (window.parent && window.parent.parent) {
                 window.parent.parent.postMessage(["resultsFrame", {

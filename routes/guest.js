@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get('/', guestController.getHomePage);
 
-router.get('/view_list_product', guestController.getListView);
+router.get('/view-product-list', guestController.getListView);
 
 module.exports = router;
