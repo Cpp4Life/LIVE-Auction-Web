@@ -100,8 +100,9 @@ exports.postRegister = async (req, res, next) => {
                             });
                         } else {
                             // Successfully passed all verifications
-                            otpGeneratedCode = (Math.floor(100000 + Math.random() * 900000)).toString();
-                            helper.sendMail(email, otpGeneratedCode);
+                            otpGeneratedCode = helper.otpGenerator();
+                            console.log(otpGeneratedCode);
+                            helper.sendOtpMail(email, otpGeneratedCode);
                         }
                     });
                 });
@@ -161,9 +162,9 @@ exports.postVerifyOtp = async (req, res, next) => {
 }
 
 exports.postResendOtp = (req, res, next) => {
-    otpGeneratedCode = (Math.floor(100000 + Math.random() * 900000)).toString();
+    otpGeneratedCode = helper.otpGenerator();
     console.log(`resend ${otpGeneratedCode}`);
-    helper.sendMail(email, otpGeneratedCode);
+    helper.sendOtpMail(email, otpGeneratedCode);
 }
 
 exports.getGoogleAuth = passport.authenticate('google', { scope: ['profile', 'email'] });

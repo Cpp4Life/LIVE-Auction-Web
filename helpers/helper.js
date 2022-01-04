@@ -5,20 +5,21 @@ exports.normalizeText = (text) => {
     return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
-exports.sendMail = (email, otp) => {
+// function
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    service: 'Gmail',
+    auth: {
+        user: 'auctionboi@gmail.com',
+        pass: 'Auctionboi123'
+    }
+});
+
+exports.sendOtpMail = (email, otp) => {
     console.log(`${email} ${otp}`);
     try {
-        const transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 465,
-            secure: true,
-            service: 'Gmail',
-            auth: {
-                user: 'auctionboi@gmail.com',
-                pass: 'Auctionboi123'
-            }
-        });
-
         const mailOptions = {
             from: 'Mailing System <auctionboi@gmail.com>',
             to: email,
@@ -37,6 +38,8 @@ exports.sendMail = (email, otp) => {
         console.log(error);
     }
 }
+
+exports.otpGenerator = () => { return (Math.floor(100000 + Math.random() * 900000)).toString() };
 
 exports.formatter = new Intl.NumberFormat('vi-VN', {
     style: 'currency',

@@ -43,7 +43,7 @@ module.exports = (passport) => {
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: 'http://localhost:3000/auth/google/home'
     }, (accessToken, refreshToken, profile, cb) => {
-        console.log(profile);
+        // console.log(profile);
         User.findOne({ googleId: profile.id }, (err, user) => {
             if (err) {
                 return done(err);
