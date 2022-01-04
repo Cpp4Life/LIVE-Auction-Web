@@ -16,11 +16,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-
     googleId: String,
     role: String,
     address: String,
-    reviewPoint: Number
+    reviewPoint: Number,
+    phone: String,
+    image:String
 });
 
 const bidLogSchema = new mongoose.Schema({

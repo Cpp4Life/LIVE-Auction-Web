@@ -28,11 +28,14 @@ exports.getRegisterPage = (req, res) => {
 }
 
 var otpGeneratedCode;
-var name, email, password, password2, captcha;
+var name, email, password, password2, captcha ,phone, address, image;
 
 exports.postRegister = async (req, res, next) => {
     name = req.body.name;
     email = (req.body.email).toLowerCase();
+    phone = "";
+    address = "";
+    image = "";
     password = req.body.password;
     password2 = req.body.password2;
     captcha = req.body['g-recaptcha-response'];
@@ -61,7 +64,8 @@ exports.postRegister = async (req, res, next) => {
             Category: categoryList[0].list
         });
     } else {
-        const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+        // const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+        const secretKey = '6Le1-LEdAAAAAGlij5NL99nsRJaUMUVt5lokJqsE';
         const response = captcha;
         const remoteip = req.connection.remoteAddress;
         const verifyURL = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${response}&remoteip=${remoteip}`;
@@ -142,7 +146,10 @@ exports.postVerifyOtp = async (req, res, next) => {
             email,
             password,
             role: 'bidder',
-            reviewPoint: 0
+            reviewPoint: 0,
+            phone,
+            address,
+            image
         });
 
         bcrypt.genSalt(saltRounds, (err, salt) => {
