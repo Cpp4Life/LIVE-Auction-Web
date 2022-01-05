@@ -28,14 +28,11 @@ exports.getRegisterPage = (req, res) => {
 }
 
 var otpGeneratedCode;
-var name, email, password, password2, captcha ,phone, address, image;
+var name, email, password, password2, captcha ;
 
 exports.postRegister = async (req, res, next) => {
     name = req.body.name;
     email = (req.body.email).toLowerCase();
-    phone = "";
-    address = "";
-    image = "";
     password = req.body.password;
     password2 = req.body.password2;
     captcha = req.body['g-recaptcha-response'];
@@ -147,9 +144,6 @@ exports.postVerifyOtp = async (req, res, next) => {
             password,
             role: 'bidder',
             reviewPoint: 0,
-            phone,
-            address,
-            image
         });
 
         bcrypt.genSalt(saltRounds, (err, salt) => {

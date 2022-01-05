@@ -8,8 +8,8 @@ const passport = require('passport');
 
 const app = express();
 
-require('dotenv').config()
-// passport config
+
+
 require('./config/passport')(passport);
 
 const authRoutes = require('./routes/auth');
@@ -59,4 +59,3 @@ mongoose.connect('mongodb://localhost:27017/auctionDB');
 
 app.listen(3000, () => console.log('Server running on port 3000'));
 
-const {User} = require('./models/model.js')
