@@ -9,7 +9,13 @@
 
 <body>
 <script>
-
+    $('#fuMain').fileinput({
+        dropZoneEnabled: false,
+        maxFileCount: 5,
+        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        theme: 'fa',
+        language: 'vi',
+    });
 </script>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -47,7 +53,8 @@
 
     <div class="row" style="margin-bottom: 200px;">
         <div class="col-sm-3">
-            <img src=<%= user.image %> >
+            <img src="/images/<%= user.image %> " alt="avatar" class="img-thumbnail" style="border-radius: 29px;margin-right: 20px;">
+
 
 
             <h1 style="text-align: center;"> <%= user.name %></h1>
@@ -80,18 +87,20 @@
 
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <form action="/bidder/profile/<%= user._id %>" method="POST">
+
+                    <form action="/bidder/profile/<%= user._id %>" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;margin-top: 20px;">
-                                <img src=<%= user.image %>  alt="avatar" class="img-thumbnail" style="width: 139.981132px;height: 123.981132px;border-radius: 29px;margin-right: 20px;">
+<!--                                src="public/marcos-llorente-mu-removebg-preview (3).png"-->
+                                <img   src="/images/<%= user.image %>"   alt="avatar" class="img-thumbnail" style="width: 139.981132px;height: 123.981132px;border-radius: 29px;margin-right: 20px;">
                                 <label for="first_name" class="font_size1"><span><%= user.name %></span></label>
-                                <input type="file" class="text-center center-block file-upload" style="margin-left: 0px; margin-top: 10px;">
+                                <input type="file" class="text-center center-block file-upload"  id="fuMain" name="fuMain" style="margin-left: 0px; margin-top: 10px;">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;margin-top: 20px;">
                                 <label for="first_name" class="font_size1"><span>Name</span></label>
-                                <input style="font-size: 14px;" type="text" class="form-control"  id="name" id="name" name="name" value="<%= user.name %>"  title="enter your first name if any.">
+                                <input style="font-size: 14px;" type="text" class="form-control"  id="name" name="name" value="<%= user.name %>"  title="enter your first name if any.">
                             </div>
 
                         </div>
@@ -525,11 +534,14 @@
 </div>
 <script>
     function getInfo() {
-
         document.getElementById("registrationForm").innerHTML = 1
-
-
     }
+
+
+
+
+
+
 
 </script>
 
