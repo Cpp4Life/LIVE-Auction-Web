@@ -26,7 +26,7 @@ exports.editprofile  = async (req, res) =>  {
 
     const storage = multer.diskStorage({
         destination: function (req, file, cb) {
-            cb(null, './public/images')
+            cb(null, './public/images/Profile')
         },
         filename: function (req, file, cb) {
             cb(null,file.originalname);
@@ -40,27 +40,53 @@ exports.editprofile  = async (req, res) =>  {
         }
         else
         {
-            let currentUser = {
-                _id : req.params.id,
-                name : req.body.name,
-                email : req.body.email,
-                address: req.body.address,
-                phone: req.body.mobile,
-                image : req.file.filename
-            };
-            console.log(currentUser)
-            User.findOneAndUpdate(
-                { _id: currentUser._id },
-                currentUser,
-                { new: true },
-                (err, doc) => {
-                    if (err) {
-                        console.log(err);
-                    }
-                }
-            );
 
-            res.redirect('/bidder/profile')
+            if(req.file == null){
+                let currentUser = {
+                    _id : req.params.id,
+                    name : req.body.name,
+                    email : req.body.email,
+                    address: req.body.address,
+                    phone: req.body.mobile
+                };
+                console.log(currentUser)
+                User.findOneAndUpdate(
+                    { _id: currentUser._id },
+                    currentUser,
+                    { new: true },
+                    (err, doc) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
+
+                res.redirect('/bidder/profile')
+            }
+            else {
+
+                let currentUser = {
+                    _id: req.params.id,
+                    name: req.body.name,
+                    email: req.body.email,
+                    address: req.body.address,
+                    phone: req.body.mobile,
+                    image: req.file.filename
+                };
+                console.log(currentUser)
+                User.findOneAndUpdate(
+                    {_id: currentUser._id},
+                    currentUser,
+                    {new: true},
+                    (err, doc) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
+
+                res.redirect('/bidder/profile')
+            }
         }
     })
 
