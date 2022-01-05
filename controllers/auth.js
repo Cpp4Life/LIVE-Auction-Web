@@ -28,7 +28,7 @@ exports.getRegisterPage = (req, res) => {
 }
 
 var otpGeneratedCode;
-var name, email, password, password2, captcha ;
+var name, email, password, password2, captcha;
 
 exports.postRegister = async (req, res, next) => {
     name = req.body.name;

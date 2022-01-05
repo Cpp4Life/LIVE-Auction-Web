@@ -8,8 +8,7 @@ const passport = require('passport');
 
 const app = express();
 
-
-
+// passport config
 require('./config/passport')(passport);
 
 const authRoutes = require('./routes/auth');
@@ -46,7 +45,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-// const str = _.snakeCase(helper.normalizeText('Thiết bị gia dụng'));
+// const str = _.kebabCase(helper.normalizeText('Thiết bị gia dụng'));
 // console.log(str);
 
 app.use(authRoutes);
