@@ -3,6 +3,7 @@ const { User, Category, Product} = require('../models/model');
 const {MongoClient: mongoClient} = require("mongodb");
 const express = require("express");
 const multer  = require('multer')
+const bcrypt = require("bcrypt");
 
 
 
@@ -97,7 +98,81 @@ exports.getPostchangepass = async (req, res) => {
 
     res.render('viewBidder/changepass' );
 }
+var pas1, pas2,pas3
 exports.editpassword = async (req, res) => {
+    // console.log(req.body)
+    pas1= req.body.password1
+    pas2= req.body.password2
+    pas3= req.body.password3
+    let currentUser = {
+        _id: req.params.id,
+        pas1 : req.body.password1
+    };
+
+    const errors = [];
+    if (!pas1 || !pas2 || !pas3 ) {
+        errors.push({ msg: 'Please enter all ' });
+    }
+    if (errors.length > 0) {
+        res.render('viewBidder/changepass', {
+            errors,
+        });
+        console.log("hhi")
+    }
+    else
+    {
+        User.find({_id: currentUser._id}, function (err, user, done) {
+            if (err) {
+                errors.push({ msg: ' không tồn tại' });
+                res.render('viewBidder/changepass', {
+                    errors,
+                });
+            }
+            if (user) {
+                bcrypt.compare(currentUser.pas1, user[0].password, (err, isMatch) => {
+                    if (err) throw err;
+                    if(!isMatch){
+                        errors.push({ msg: ' Nhập sai mật khẩu ' });
+                        res.render('viewBidder/changepass', {
+                            errors,
+                        });
+                    }
+                    else {
+                        const salt = bcrypt.genSaltSync(10, 'a');
+                        pas2 = bcrypt.hashSync(pas2, salt)
+                        console.log(pas2)
+                        let newUser = {
+                            _id: req.params.id,
+                            password: pas2
+                        };
+                        bcrypt.compare(pas3, pas2, (err, isMatch) => {
+                            if (err) throw err;
+                            if(!isMatch){
+                                errors.push({ msg: ' Nhập sai mật khẩu mới' });
+                                res.render('viewBidder/changepass', {
+                                    errors,
+                                });
+                            }
+                            else {
+                                User.findOneAndUpdate(
+                                    {_id: newUser._id},
+                                    newUser,
+                                    {new: true},
+                                    (err, doc) => {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                    }
+                                );
+
+                                res.redirect('/bidder/profile')
+                            }
+                        });
+                    }
+                });
 
 
+            }
+        });
+    }
 }

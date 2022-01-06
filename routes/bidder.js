@@ -15,7 +15,7 @@ router.post('/bidder/profile/:id',bidderController.editprofile);
 
 router.get('/bidder/profile/changepassword', isAuth,bidderController.getPostchangepass);
 
-router.post('/bidder/profile/changepassword', isAuth, bidderController.editpassword)
+router.post('/bidder/profile/changepassword/:id', isAuth, bidderController.editpassword)
 
 
 module.exports = router;
