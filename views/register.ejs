@@ -45,17 +45,17 @@
                 </form>
                 <div class="text-center" id="otp">
                     <div class="prompt">
-                        Enter the OTP code sent to according email to register!
+                        Nhập mã OTP được gửi đến email tương ứng!
                     </div>
                     <form action="/user/register/verify-otp" class="digit-group" style="margin-bottom: 20px;" data-group-name="digits" data-autosubmit="false" autocomplete="off" method="POST">
                         <%- include('partials/otp'); -%>
                             <div class="otp-footer" style="margin-top: 25px;">
-                                <button class="btn btn-primary" type="submit" id="verifyOtpBtn">Verify OTP</button>
+                                <button class="btn btn-primary" type="submit" id="verifyOtpBtn">Xác nhận</button>
                             </div>
                     </form>
                     <div class="otp-footer">
                         <form action="/user/register/resend-otp" method="POST">
-                            <button class="btn btn-primary" type="submit" id="resendOtpBtn">Resend OTP</button>
+                            <button class="btn btn-primary" type="submit" id="resendOtpBtn">Gửi lại</button>
                         </form>
                     </div>
                 </div>
@@ -64,13 +64,13 @@
                     <div class="my-2">
                         <a class="btn btn-width btn-google" href="/auth/google" role="button">
                             <i class="fab fa-google"></i>
-                            Sign Up with Google
+                            Đăng nhập bằng Google
                         </a>
                     </div>
                     <div class="my-2">
                         <a class="btn btn-width btn-facebook" href="#" role="button">
                             <i class="fab fa-facebook"></i>
-                            Sign Up with Facebook
+                            Đăng nhập bằng Facebook
                         </a>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                 });
             });
             $('#resendOtpBtn').click(() => {
-                alert('New OTP code has been sent to your email');
+                alert('Mã OTP mới được gửi đến email của bạn!');
             });
         </script>
         <%- include('partials/footer'); -%>

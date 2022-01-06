@@ -5,7 +5,7 @@ const { MongoClient: mongoClient } = require("mongodb");
 
 exports.getPostProductPage = async (req, res) => {
     const categoryList = await Category.find({});
-    res.render('viewSeller/post_product', { Category: categoryList[0].list });
+    res.render('viewSeller/post-product', { Category: categoryList[0].list });
 }
 
 exports.postProduct = async (req, res) => {

@@ -31,8 +31,30 @@ exports.sendOtpMail = (email, otp) => {
             if (error) {
                 return console.log(error);
             }
-            console.log('Message sent: %s', info.messageId);
-            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+            // console.log('Message sent: %s', info.messageId);
+            // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+exports.sendNewPassword = (email, password) => {
+    console.log(`${email} ${password}`);
+    try {
+        const mailOptions = {
+            from: 'Mailing System <auctionboi@gmail.com>',
+            to: email,
+            subject: "New Account Password",
+            html: "<h3>Here is your new password </h3>" + "<h1 style='font-weight:bold;'>" + password + "</h1>" // html body
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            // console.log('Message sent: %s', info.messageId);
+            // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
         });
     } catch (error) {
         console.log(error);

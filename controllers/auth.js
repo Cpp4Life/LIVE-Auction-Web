@@ -27,6 +27,16 @@ exports.getRegisterPage = (req, res) => {
     })
 }
 
+exports.getForgotPasswordPage = (req, res) => {
+    Category.find({}, (err, foundList) => {
+        if (err)
+            console.log(err);
+        else {
+            res.render('forgot-password', { Category: foundList[0].list });
+        }
+    })
+}
+
 var otpGeneratedCode;
 var name, email, password, password2, captcha;
 
@@ -40,15 +50,17 @@ exports.postRegister = async (req, res, next) => {
     const errors = [];
 
     if (!name || !email || !password || !password2) {
-        errors.push({ msg: 'Please enter all fields' });
+        errors.push({ msg: 'Hãy nhập tất cả thông tin!' });
+    } else if (!(/@gmail\.com$/.test(email))) {
+        errors.push({ msg: 'Hãy nhập gmail hợp lệ!' });
     } else if (name.length > 20) {
-        errors.push({ msg: 'Name in maximum of 20 characters' });
+        errors.push({ msg: 'Họ tên không được vượt quá 20 ký tự!' });
     } else if (password === undefined || password.length < 6) {
-        errors.push({ msg: 'Password must be at least 6 characters' });
+        errors.push({ msg: 'Mật khẩu phải ít nhất 6 ký tự!' });
     } else if (password != password2) {
-        errors.push({ msg: 'Passwords do not match' });
+        errors.push({ msg: 'Mật khẩu không trùng nhau!' });
     } else if (captcha === undefined || captcha === '' || captcha === null) {
-        errors.push({ msg: 'Please check captcha box' });
+        errors.push({ msg: 'Xin đánh vào reCaptcha!' });
     }
 
     if (errors.length > 0) {
@@ -69,7 +81,7 @@ exports.postRegister = async (req, res, next) => {
 
         User.findOne({ email: email }).then(user => {
             if (user) {
-                errors.push({ msg: 'Email already exists' });
+                errors.push({ msg: 'Email đã tồn tại' });
                 res.render('register', {
                     errors,
                     name,
@@ -112,6 +124,40 @@ exports.postRegister = async (req, res, next) => {
     }
 }
 
+exports.postForgotPassword = async (req, res) => {
+    console.log(req.body);
+    email = (req.body.email).toLowerCase();
+    const errors = [];
+    const categoryList = await Category.find({});
+    if (!email)
+        errors.push({ msg: 'Nhập email để nhận mã OTP!' });
+    else if (!(/@gmail\.com$/.test(email)))
+        errors.push({ msg: 'Hãy nhập gmail hợp lệ!' });
+
+    if (errors.length > 0) {
+        res.render('forgot-password', {
+            email,
+            errors,
+            Category: categoryList[0].list
+        });
+    } else {
+        User.findOne({ 'email': email }, (err, foundUser) => {
+            if (err) console.log(err);
+            if (!foundUser) {
+                errors.push({ msg: 'Email không tồn tại!' });
+                res.render('forgot-password', {
+                    email,
+                    errors,
+                    Category: categoryList[0].list
+                });
+            } else {
+                otpGeneratedCode = helper.otpGenerator();
+                console.log(otpGeneratedCode);
+                helper.sendOtpMail(email, otpGeneratedCode);
+            }
+        })
+    }
+}
 
 exports.postVerifyOtp = async (req, res, next) => {
     const submittedOtp = req.body['digit-1'] + req.body['digit-2'] + req.body['digit-3'] + req.body['digit-4'] + req.body['digit-5'] + req.body['digit-6'];
@@ -119,13 +165,13 @@ exports.postVerifyOtp = async (req, res, next) => {
     const categoryList = await Category.find({});
 
     if (!submittedOtp) {
-        errors.push({ msg: 'Please enter OTP code' });
+        errors.push({ msg: 'Xin nhập mã OTP!' });
     } else if (submittedOtp.length != 6) {
-        errors.push({ msg: 'OTP code must have 6 digits' });
+        errors.push({ msg: 'Mã OTP phải chứa 6 chữ số!' });
     } else if (!submittedOtp.match(/^[0-9]+$/)) {
-        errors.push({ msg: 'OTP contains only digits' });
+        errors.push({ msg: 'Mã OTP không được chứa ký tự alphabet!' });
     } else if (submittedOtp !== otpGeneratedCode) {
-        errors.push({ msg: 'OTP codes do not match. Please check OTP code sent to your email again!' });
+        errors.push({ msg: 'Mã OTP không trùng. Xin kiểm tra lại mã OTP được gửi đến email của bạn!' });
     }
 
     if (errors.length > 0) {
@@ -163,6 +209,52 @@ exports.postVerifyOtp = async (req, res, next) => {
 }
 
 exports.postResendOtp = (req, res, next) => {
+    otpGeneratedCode = helper.otpGenerator();
+    console.log(`resend ${otpGeneratedCode}`);
+    helper.sendOtpMail(email, otpGeneratedCode);
+}
+
+exports.postForgotPasswordVerifyOtp = async (req, res, next) => {
+    const submittedOtp = req.body['digit-1'] + req.body['digit-2'] + req.body['digit-3'] + req.body['digit-4'] + req.body['digit-5'] + req.body['digit-6'];
+    const errors = [];
+    const categoryList = await Category.find({});
+
+    if (!submittedOtp) {
+        errors.push({ msg: 'Xin nhập mã OTP!' });
+    } else if (submittedOtp.length != 6) {
+        errors.push({ msg: 'Mã OTP phải chứa 6 chữ số!' });
+    } else if (!submittedOtp.match(/^[0-9]+$/)) {
+        errors.push({ msg: 'Mã OTP không được chứa ký tự alphabet!' });
+    } else if (submittedOtp !== otpGeneratedCode) {
+        errors.push({ msg: 'Mã OTP không trùng. Xin kiểm tra lại mã OTP được gửi đến email của bạn!' });
+    }
+
+    if (errors.length > 0) {
+        res.render('forgot-password', {
+            email,
+            errors,
+            Category: categoryList[0].list
+        });
+    } else {
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+            bcrypt.hash('@Password123', salt, (err, hash) => {
+                console.log(hash);
+                if (err) throw err;
+                User.findOneAndUpdate({ email: email }, { password: hash }, (err, result) => {
+                    if (err) throw (err);
+                    if (result) {
+                        helper.sendNewPassword(email, '@Password123');
+                        res.redirect('/user/login');
+                    } else {
+                        res.redirect('/user/forgot-password');
+                    }
+                });
+            });
+        });
+    }
+}
+
+exports.postForgotPasswordResendOtp = (req, res, next) => {
     otpGeneratedCode = helper.otpGenerator();
     console.log(`resend ${otpGeneratedCode}`);
     helper.sendOtpMail(email, otpGeneratedCode);

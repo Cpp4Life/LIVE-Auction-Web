@@ -12,7 +12,7 @@ module.exports = (passport) => {
                 email: email.toLowerCase()
             }).then(user => {
                 if (!user) {
-                    return done(null, false, { message: 'That email is not registered' });
+                    return done(null, false, { message: 'Email này chưa được đăng ký!' });
                 }
 
                 // Match password
@@ -21,7 +21,7 @@ module.exports = (passport) => {
                     if (isMatch) {
                         return done(null, user);
                     } else {
-                        return done(null, false, { message: 'Password incorrect' });
+                        return done(null, false, { message: 'Mật khẩu không đúng!' });
                     }
                 });
             });

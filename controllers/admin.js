@@ -2,7 +2,7 @@ const { User, Category } = require('../models/model');
 
 exports.getAdminLoginPage = async (req, res) => {
     const categoryList = await Category.find({});
-    res.render('viewAdmin/admin_login', { Category: categoryList[0].list });
+    res.render('viewAdmin/admin-login', { Category: categoryList[0].list });
 }
 
 exports.postAdminLogin = async (req, res) => {
