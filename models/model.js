@@ -44,7 +44,7 @@ const productSchema = new mongoose.Schema({
     owner: userSchema,
     bidders: [bidLogSchema],
     timeStart: Date,
-    timeRemaining: Date,
+    timeEnd: Date,
     description: String
 });
 

@@ -15,7 +15,7 @@ function image_select() {
         }
     }
 
-    document.getElementById('form').reset();
+    // document.getElementById('form').reset();
     document.getElementById('container').innerHTML = image_show();
 }
 

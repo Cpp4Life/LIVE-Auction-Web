@@ -1,6 +1,7 @@
 <%- include('../partials/header'); -%>
-    <link rel="stylesheet" href="/css/postproduct.css">
-    <script src="/js/postproduct.js"></script>
+<!--    <link rel="css/post-product.css" href="public/css/post-product.css">-->
+<link rel="stylesheet" href="../css/post-product.css">
+    <script src="../js/post-product.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
     </head>
 
@@ -8,7 +9,8 @@
         <section class="colored-section" style="padding:0 15%;">
             <%- include('../partials/navbar'); -%>
         </section>
-        <form method="post">
+
+        <form method="post" enctype="multipart/form-data">
             <div class="container my-5 px-5">
                 <%- include ('../partials/messages'); -%>
                     <h3 class="container font-weight-bold text-center">ĐĂNG SẢN PHẨM ĐẤU GIÁ</h3>
@@ -16,20 +18,20 @@
                         <label class="font-weight-bold pl-3"> Tên sản phẩm </label>
                         <input type="text" class="form-control " id="name" name="name" placeholder="Nhập tên sản phẩm đấu giá" autofocus>
                     </div>
-                    <!-- <div class="container">
+                    <div class="container">
                         <div class="card ">
                             <div class="card-header d-flex justify-content-between " style="background-color: #ffffff">
                                 <label class="font-weight-bold">Ảnh sản phẩm</label>
                                 <form class="form" action="#" method="post" id="form">
-                                    <input type="file" name="Image" id="image" multiple="" class="d-none" onchange="image_select()">
+                                    <input type="file" name="image" id="image" multiple="" class="d-none" onchange="image_select()">
                                     <button class="btn btn-sm btn-primary" type="button" onclick="document.getElementById('image').click()">Choose Images</button>
                                 </form>
                             </div>
                             <div class="card-body d-flex flex-wrap justify-content-start" id="container">
-                                &lt;!&ndash; Image will be show here&ndash;&gt;
+                                <!-- Image will be show here-->
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="container form-group">
                         <label class="font-weight-bold pl-3">Giá khởi điểm</label>
                         <input type="number" min="1" step="1" class="form-control" id="startPrice" name="startPrice" placeholder="Nhập giá khởi điểm của sản phảm" id="inputPrice">
@@ -102,19 +104,19 @@
 
 
                         <!--                    </form>-->
-                        <form>
+
                             <label for="datetime" class="font-weight-bold">Time:</label>
                             <input type="datetime-local" id="datetime" name="datetime">
-                        </form>
+
 
 
                     </div>
-                    <div class="container form-group">
-                        <label class="font-weight-bold pl-3">Khoảng thời gian (ngày)</label>
-                        <input type="number" min="1" step="1" class="form-control" id="period" name="period" placeholder="Nhập giá khoảng thời gian (Không quá 7 ngày)" id="nowPrice">
-                    </div>
+<!--                    <div class="container form-group">-->
+<!--                        <label class="font-weight-bold pl-3">Khoảng thời gian (ngày)</label>-->
+<!--                        <input type="number" min="1" step="1" class="form-control" id="period" name="period" placeholder="Nhập giá khoảng thời gian (Không quá 7 ngày)" id="nowPrice">-->
+<!--                    </div>-->
                     <div class="container form-group text-center my-5">
-                        <button type="submit" class="btn btn-primary btn-lg font-weight-bold"> ĐĂNG SẢN PHẨM </button>
+                        <button type="submit" class="btn btn-primary btn-lg font-weight-bold" onchange="get_image_data()"> ĐĂNG SẢN PHẨM </button>
                     </div>
 
             </div>

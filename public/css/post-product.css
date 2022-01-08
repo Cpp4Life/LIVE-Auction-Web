@@ -18,9 +18,10 @@
     font-weight: normal;
     cursor: pointer;
 }
-input[type="checkbox"]{
-    width: 20px; /*Desired width*/
-    height: 20px; /*Desired height*/
-    margin: 0em 0 1.2em 0;
+/*input[type="checkbox"]{*/
+/*    width: 20px; !*Desired width*!*/
+/*    height: 20px; !*Desired height*!*/
+/*    margin: 0em 0 1.2em 0;*/
 
-}
+/*}*/
+
