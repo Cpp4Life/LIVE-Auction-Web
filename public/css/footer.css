@@ -1,4 +1,8 @@
 /* Footer */
+p {
+  color: #8f8f8f;
+}
+
 #footer .container-fluid {
   padding: 3% 15%;
 }

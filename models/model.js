@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     address: String,
     reviewPoint: Number,
     phone: String,
-    image:String
+    image: String
 });
 
 const bidLogSchema = new mongoose.Schema({

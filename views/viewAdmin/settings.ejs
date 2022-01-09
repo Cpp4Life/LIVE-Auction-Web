@@ -1,0 +1,73 @@
+<%- include('../partials/header'); -%>
+    <link rel="stylesheet" href="/css/admin-settings.css">
+    </head>
+
+    <body>
+        <section class="colored-section" style="padding:0 15%;">
+            <%- include('../partials/navbar'); -%>
+        </section>
+        <section class="container-fluid" id="settings-pane">
+            <div class="shadow container-fluid" style="background-color: white;">
+                <div class="text-center" style="padding: 1.5rem 1.5rem 0;">
+                    <h1 style="margin: 0;">Quản lý</h1>
+                </div>
+                <div class="row justify-content-center p-3">
+                    <div class="col-md-12 col-lg-10" id="pane-column">
+                        <%- include('settings-nav'); -%>
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-category" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <div class="row">
+                                        <% Category.forEach(element=> { %>
+                                            <div class="col-lg-4 col-md-6 category-card">
+                                                <div class="card h-100" id="<%= element.brand %>">
+                                                    <div class="card-header text-center" style="font-weight: bold;">
+                                                        <%= element.brand %>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <% element.subBrand.forEach(subBrand=> { %>
+                                                            <p class="card-text">
+                                                                <%= subBrand %>
+                                                            </p>
+                                                            <% }) %>
+                                                    </div>
+                                                    <div class="card-footer text-right">
+                                                        <a type="button" href="settings/category/<%= _.kebabCase(element.brand.normalize('NFD').replace(/[\u0300-\u036f]/g, '')) %>" class="btn btn-outline-primary border-0 rounded-circle shadow-none" id="addCateBtn" data-toggle="tooltip" data-placement="top" title="Xem danh mục"><i class="fas fa-eye"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                                <div class="col-lg-4 col-md-6 category-card">
+                                                    <div class="card h-100 border-0">
+                                                        <div class="card-body align-items-center d-flex justify-content-center">
+                                                            <button type="button" class="btn btn-outline-primary border-0 rounded-circle shadow-none" id="addCateBtn" data-toggle="tooltip" data-placement="top" title="Thêm danh mục"><i class="fas fa-plus fa-3x"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="nav-product" role="tabpanel" aria-labelledby="nav-profile-tab">Neque viverra justo nec ultrices dui. Neque laoreet suspendisse interdum consectetur libero id faucibus nisl. Sed ullamcorper morbi tincidunt ornare massa eget egestas. Porttitor eget dolor morbi non. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus. Tellus mauris a diam maecenas sed enim ut. Nisi scelerisque eu ultrices vitae. Nec feugiat in fermentum posuere urna nec tincidunt praesent. Suspendisse ultrices gravida dictum fusce ut placerat orci nulla pellentesque. Turpis massa tincidunt dui ut ornare lectus sit amet. Gravida quis blandit turpis cursus in hac habitasse. Feugiat sed lectus vestibulum mattis. Risus in hendrerit gravida rutrum quisque non tellus orci ac. Leo in vitae turpis massa sed elementum tempus egestas sed. In fermentum posuere urna nec tincidunt praesent semper. Pulvinar sapien et ligula ullamcorper. Mauris pellentesque pulvinar pellentesque habitant.</div>
+                                <div class="tab-pane fade" id="nav-account" role="tabpanel" aria-labelledby="nav-contact-tab">Ipsum dolor sit amet consectetur adipiscing elit pellentesque habitant. Mauris a diam maecenas sed enim ut sem. Tincidunt arcu non sodales neque sodales ut. Sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Ullamcorper a lacus vestibulum sed arcu non odio euismod. Habitant morbi tristique senectus et netus et malesuada fames. Ut consequat semper viverra nam libero justo laoreet sit. Duis ultricies lacus sed turpis tincidunt id. Lectus nulla at volutpat diam ut venenatis. Nisl nunc mi ipsum faucibus. Netus et malesuada fames ac. Quis viverra nibh cras pulvinar mattis nunc. Felis donec et odio pellentesque diam. Turpis egestas maecenas pharetra convallis posuere morbi leo urna molestie. Facilisis gravida neque convallis a cras semper. Feugiat nibh sed pulvinar proin gravida hendrerit lectus. Pulvinar neque laoreet suspendisse interdum consectetur libero. At risus viverra adipiscing at in tellus integer feugiat. Tincidunt vitae semper quis lectus nulla.Ipsum dolor sit amet consectetur adipiscing elit pellentesque habitant. Mauris a diam maecenas sed enim ut sem. Tincidunt arcu non sodales neque sodales ut. Sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Ullamcorper a lacus vestibulum sed arcu non odio euismod. Habitant morbi tristique senectus et netus et malesuada fames. Ut consequat semper viverra nam libero justo laoreet sit. Duis ultricies lacus sed turpis tincidunt id. Lectus nulla at volutpat diam ut venenatis. Nisl nunc mi ipsum faucibus. Netus et malesuada fames ac. Quis viverra nibh cras pulvinar mattis nunc. Felis donec et odio pellentesque diam. Turpis egestas maecenas pharetra convallis posuere morbi leo urna molestie. Facilisis gravida neque convallis a cras semper. Feugiat nibh sed pulvinar proin gravida hendrerit lectus. Pulvinar neque laoreet suspendisse interdum consectetur libero. At risus viverra adipiscing at in tellus integer feugiat. Tincidunt vitae semper quis lectus nulla.</div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            const categoryTabHeight = $('#nav-category').outerHeight(true);
+            const productTabHeight = $('#nav-product').outerHeight(true);
+            const accountTabHeight = $('#nav-account').outerHeight(true);
+            const maxTabHeight = Math.max(categoryTabHeight, productTabHeight, accountTabHeight);
+            $('#nav-category, #nav-product, #nav-account').css('height', maxTabHeight);
+
+            $(window).resize(() => {
+                if ($(window).width() <= 1080) {
+                    $('#nav-category, #nav-product, #nav-account').css('height', '');
+                }
+            });
+
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+
+        </script>
+        <%- include('../partials/footer'); -%>

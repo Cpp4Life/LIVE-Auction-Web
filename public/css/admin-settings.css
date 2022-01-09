@@ -1,0 +1,14 @@
+/* Settings pane */
+#settings-pane {
+  padding: 3% 15%;
+  background-color: #f8f9fd;
+  font-family: "Montserrat";
+}
+
+.tab-pane {
+  padding: 3%;
+}
+
+.category-card {
+  padding: 15px;
+}
