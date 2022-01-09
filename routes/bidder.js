@@ -18,9 +18,11 @@ router.get('/bidder/profile/changepassword', isAuth,bidderController.getPostchan
 router.post('/bidder/profile/changepassword/:id', isAuth, bidderController.editpassword)
 
 
+//
+// router.get('/view-product-list/viewproduct/:id/auction/:id', isAuth, bidderController.getviewauction);
+//
+// router.post('/view-product-list/viewproduct/:id/auction/:id', isAuth, bidderController.getpostviewauction);
 
-router.get('/view-product-list/viewproduct/auction/:id', isAuth, bidderController.getviewauction);
-
-router.post('/view-product-list/viewproduct/auction/:id', isAuth, bidderController.getpostviewauction);
+router.get('/view-product-list/viewproduct/favorite/:id', isAuth, bidderController.getfavorites);
 
 module.exports = router;

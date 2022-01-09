@@ -4,6 +4,7 @@ const {MongoClient: mongoClient} = require("mongodb");
 const express = require("express");
 const multer  = require('multer')
 const bcrypt = require("bcrypt");
+const dbModel = require("../models/model");
 
 
 
@@ -176,38 +177,52 @@ exports.editpassword = async (req, res) => {
 }
 
 
-
-exports.getpostviewauction = async (req, res) => {
-    res.render('viewBidder/bidder-Auction' );
-}
-exports.getviewauction = async (req, res) => {
+exports.getfavorites = async (req, res) => {
     let currentUser = {
         _id: req.params.id,
     };
+    var id_user= req.params.id.split("+")
     const errors = [];
 
     console.log(req.params.id)
-    User.find({_id: currentUser._id}, async function (err, user, done) {
+    console.log(id_user)
+    User.find({_id: id_user[0]}, async function (err, user, done) {
         if (err) {
-            errors.push({msg: ' không tồn tại'});
-            res.render('viewBidder/bidder-Auction', {Category: categoryList[0].list,
-                errors,
-            });
+           console.log(err)
         }
         if (user) {
-            // var i = 0;
-            // var sum = 0;
-            // var point = 0;
-            // for (i = 0; i < user[0].review.length; i++) {
-            //     if (user[0].review[i].point == 1) {
-            //         point = point + 1;
-            //     }
-            //     sum = sum + 1;
-            // }
-            // console.log(point);
-            // if (point == 1) {
+            var check=0;
+            var i;
+            console.log(user[0].favorites.length)
+            for( i=0;i< user[0].favorites.length;i++){
+                var x=user[0].favorites[i].id_product
+                if(id_user[1] == x){
+                    check=1;
+                }
+            }
+
+            let currentUser = {
+                 $push : { favorites:   {id_product: id_user[1]} }
+            };
+            if(check==0) {
+                console.log(currentUser)
+                User.findOneAndUpdate(
+                    {_id: id_user[0]},
+                    currentUser,
+                    {new: true},
+                    (err, doc) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
                 const categoryList = await Category.find({});
-                res.render('viewBidder/bidder-Auction', {Category: categoryList[0].list});
+
+                res.redirect('/view-product-list/viewproduct/' + id_user[1])
+            }
+            else{
+                res.redirect('/view-product-list/viewproduct/' + id_user[1])
+            }
             // }
             // else{
             //     res.redirect('/bidder/profile')
@@ -216,4 +231,46 @@ exports.getviewauction = async (req, res) => {
     });
 
 }
+
+
+
+// exports.getpostviewauction = async (req, res) => {
+//     res.render('viewBidder/bidder-Auction' );
+// }
+// exports.getviewauction = async (req, res) => {
+//     let currentUser = {
+//         _id: req.params.id,
+//     };
+//     const errors = [];
+//
+//     console.log(req.params.id)
+//     User.find({_id: currentUser._id}, async function (err, user, done) {
+//         if (err) {
+//             errors.push({msg: ' không tồn tại'});
+//             res.render('viewBidder/bidder-Auction', {Category: categoryList[0].list,
+//                 errors,
+//             });
+//         }
+//         if (user) {
+//             // var i = 0;
+//             // var sum = 0;
+//             // var point = 0;
+//             // for (i = 0; i < user[0].review.length; i++) {
+//             //     if (user[0].review[i].point == 1) {
+//             //         point = point + 1;
+//             //     }
+//             //     sum = sum + 1;
+//             // }
+//             // console.log(point);
+//             // if (point == 1) {
+//                 const categoryList = await Category.find({});
+//                 res.render('viewBidder/bidder-Auction', {Category: categoryList[0].list});
+//             // }
+//             // else{
+//             //     res.redirect('/bidder/profile')
+//             // }
+//         }
+//     });
+//
+// }
 
