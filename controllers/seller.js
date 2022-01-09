@@ -1,9 +1,10 @@
 const fs = require('fs');
 const dbModel = require('../models/model');
-const { Category, Brand, Product } = require("../models/model");
+const { Category, Brand, Product, User} = require("../models/model");
 const { MongoClient: mongoClient } = require("mongodb");
 const multer = require('multer');
 const date = require("date-and-time");
+const bcrypt = require("bcrypt");
 const username = 'hieule';
 // const upload = nulter({dest: 'uploads/'});
 exports.getPostProductPage = async (req, res) => {
@@ -112,4 +113,154 @@ function secondsToDhms(seconds) {
     var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
     var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
     return dDisplay + hDisplay + mDisplay + sDisplay;
+}
+
+exports.editprofile  = async (req, res) =>  {
+    const user = req.body;
+
+    const storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, './public/images/Profile')
+        },
+        filename: function (req, file, cb) {
+            cb(null,file.originalname);
+        }
+    });
+    const upload = multer({storage});
+    upload.single('fuMain')(req, res, function (err){
+        console.log(req.file)
+        if(err){
+            console.error(err);
+        }
+        else
+        {
+
+            if(req.file == null){
+                let currentUser = {
+                    _id : req.params.id,
+                    name : req.body.name,
+                    email : req.body.email,
+                    address: req.body.address,
+                    phone: req.body.mobile
+                };
+                console.log(currentUser)
+                User.findOneAndUpdate(
+                    { _id: currentUser._id },
+                    currentUser,
+                    { new: true },
+                    (err, doc) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
+
+                res.redirect('/seller/profile')
+            }
+            else {
+
+                let currentUser = {
+                    _id: req.params.id,
+                    name: req.body.name,
+                    email: req.body.email,
+                    address: req.body.address,
+                    phone: req.body.mobile,
+                    image: req.file.filename
+                };
+                console.log(currentUser)
+                User.findOneAndUpdate(
+                    {_id: currentUser._id},
+                    currentUser,
+                    {new: true},
+                    (err, doc) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
+
+                res.redirect('/seller/profile')
+            }
+        }
+    })
+}
+exports.getPostchangepass = async (req, res) => {
+
+    res.render('viewSeller/change-pass-seller' );
+}
+var pas1, pas2,pas3
+exports.editpassword = async (req, res) => {
+    // console.log(req.body)
+    pas1= req.body.password1
+    pas2= req.body.password2
+    pas3= req.body.password3
+    let currentUser = {
+        _id: req.params.id,
+        pas1 : req.body.password1
+    };
+
+    const errors = [];
+    if (!pas1 || !pas2 || !pas3 ) {
+        errors.push({ msg: 'Please enter all ' });
+    }
+    if (errors.length > 0) {
+        res.render('viewSeller/change-pass-seller' , {
+            errors,
+        });
+        console.log("hhi")
+    }
+    else
+    {
+        User.find({_id: currentUser._id}, function (err, user, done) {
+            if (err) {
+                errors.push({ msg: ' không tồn tại' });
+                res.render('viewSeller/change-pass-seller' , {
+                    errors,
+                });
+            }
+            if (user) {
+                bcrypt.compare(currentUser.pas1, user[0].password, (err, isMatch) => {
+                    if (err) throw err;
+                    if(!isMatch){
+                        errors.push({ msg: ' Nhập sai mật khẩu ' });
+                        res.render('viewSeller/change-pass-seller' , {
+                            errors,
+                        });
+                    }
+                    else {
+                        const salt = bcrypt.genSaltSync(10, 'a');
+                        pas2 = bcrypt.hashSync(pas2, salt)
+                        console.log(pas2)
+                        let newUser = {
+                            _id: req.params.id,
+                            password: pas2
+                        };
+                        bcrypt.compare(pas3, pas2, (err, isMatch) => {
+                            if (err) throw err;
+                            if(!isMatch){
+                                errors.push({ msg: ' Nhập sai mật khẩu mới' });
+                                res.render('viewSeller/change-pass-seller' , {
+                                    errors,
+                                });
+                            }
+                            else {
+                                User.findOneAndUpdate(
+                                    {_id: newUser._id},
+                                    newUser,
+                                    {new: true},
+                                    (err, doc) => {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                    }
+                                );
+
+                                res.redirect('/seller/profile')
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
 }
