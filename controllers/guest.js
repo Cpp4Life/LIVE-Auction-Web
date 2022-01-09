@@ -20,7 +20,7 @@ exports.getListView = (req, res) => {
                     console.log(err);
                 else {
 
-                    res.render('viewListProduct', {
+                    res.render('view-product-list', {
                         Product: ProductList,
                         Category: CategoryList[0].list
                     });

@@ -13,51 +13,60 @@ exports.getPostProductPage = async (req, res) => {
 
 exports.postProduct = async (req, res) => {
     const categoryList = await Category.find({});
-    var idProduct;
     var count = 0;
+    const  url = './public/images/';
+    fs.mkdirSync(url + 'newImages');
     const storage = multer.diskStorage({
         destination: function (req, res, cb){
-            cb(null, './public/images')
+            cb(null, url + 'newImages')
         },
         filename: function (req, file, cb){
             cb(null, count++ + '.jpg');
         }
     })
 
-    console.log(req.body);
     const upload = multer({storage});
-    console.log(req.body);
     upload.array('image', 5)
     (req, res, function (err){
-
+        console.log(req.body);
         const { name, startPrice, stepprice, endPrice, mydecript, brand, subBrand, time } = req.body;
         const errors = [];
+
+        if (!req.body.name || req.body.startPrice === 0|| req.body.stepprice === 0
+            || !req.body.brand || !req.body.subBrand || req.body.time) {
+            errors.push({ msg: 'Bạn phải điền đầy đủ thông tin' });
+        }
         const myTimeRemain = new Date(req.body.datetime).getTime() - (new Date()).getTime();
         if(myTimeRemain < 0){
-            errors.push({ msg: 'Datetime error. Please enter again' });
+            errors.push({ msg: 'Lỗi!!! Ngày kết thúc không thể nhỏ hơn ngày bắt đầu' });
         }
-        // if (!name || !startPrice || !stepprice) {
-        //     errors.push({ msg: 'Please enter all fields required' });
-        // }
-        if (name.length > 50) {
-            errors.push({ msg: 'Name in maximum of 50 characters' });
+        if (req.body.name.length > 50) {
+            errors.push({ msg: 'Chiều dài tên không được vượt quá 50 kí tự' });
         }
 
-        if (startPrice < 0 || endPrice < 0 || stepprice < 0) {
-            errors.push({ msg: 'You can not enter negative number' });
+        if (req.body.startPrice < 0 || req.body.stepprice < 0) {
+            errors.push({ msg: 'Giá không được để số âm' });
         }
-        if (endPrice < startPrice) {
-            errors.push({ msg: 'Invalid!! Giá mua ngay không thể nhỏ hơn giá ban đầu' });
+        if(req.body.endPrice !== 0){
+            if (parseInt(req.body.startPrice) > parseInt(req.body.endPrice)) {
+                errors.push({ msg: 'Invalid!! Giá mua ngay không thể nhỏ hơn giá ban đầu' });
+            }
         }
         if (errors.length > 0) {
+            fs.rmdir(url + 'newImages', { recursive: true }, (err) => {
+                if (err) {
+                    throw err;
+                }
+                console.log(`deleted!`);
+            });
             res.render('viewSeller/post-product', {
                 errors,
                 Category: categoryList[0].list
             });
         } else {
             var mongoClient = require('mongodb').MongoClient;
-            var url = "mongodb://localhost:27017/";
-            mongoClient.connect(url, function (err, db) {
+            var MGurl = "mongodb://localhost:27017/";
+            mongoClient.connect(MGurl, function (err, db) {
                 if (err) throw err;
                 var dbo = db.db("auctionDB");
                 var newProduct = new Product({
@@ -75,31 +84,21 @@ exports.postProduct = async (req, res) => {
                 })
                 dbo.collection("products").insertOne(newProduct, function (err, res) {
                     if (err) throw err;
-                    idProduct = newProduct.id;
+                    console.log(newProduct.id);
+                    // fs.mkdirSync(url + newProduct.id.toString());
+                    fs.rename(url + 'newImages', url + newProduct.id, function(err) {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            console.log("Successfully renamed the directory.")
+                        }
+                    })
                     db.close();
                 })
-                //chèn hình ảnh trước nè
                 res.render('viewSeller/post-product', {
                     Category: categoryList[0].list
                 });
     })
-            // var url = './public/images/' + idProduct;
-            // var count = 0;
-            // console.log(req.body);
-            // fs.mkdirSync(url);
-            // const storage1 = multer.diskStorage({
-            //     destination: function (req, res, cb){
-            //         cb(null, url)
-            //     },
-            //     filename: function (req, file, cb){
-            //         cb(null, count++ + '.jpg');
-            //     }
-            // })
-            // const upload = multer({storage1});
-            // upload.array('image', 5)
-            // //thêm dữ liệu vào database
-
-
 }})}
 function secondsToDhms(seconds) {
     seconds = Number(seconds/1000);
