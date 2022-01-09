@@ -176,3 +176,12 @@ exports.editpassword = async (req, res) => {
         });
     }
 }
+exports.getProductPage = async (req, res) => {
+    const categoryList = await Category.find({});
+    res.render('view-product', { Category: categoryList[0].list });
+}
+
+exports.getviewauction = async (req, res) => {
+    const categoryList = await Category.find({});
+    res.render('viewBidder/bidder-Auction', { Category: categoryList[0].list });
+}

@@ -21,7 +21,15 @@ const userSchema = new mongoose.Schema({
     address: String,
     reviewPoint: Number,
     phone: String,
-    image:String
+    image: String,
+    review : [
+        {
+            user_id: String,
+            name_rv: String,
+            comment: String,
+            point: Number
+        },
+    ],
 });
 
 const bidLogSchema = new mongoose.Schema({

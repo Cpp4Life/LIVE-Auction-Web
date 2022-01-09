@@ -14,16 +14,20 @@ exports.postAdminLogin = async (req, res) => {
     User.findOne({ email: username, password: password }, (err, foundUser) => {
         if (err) {
             console.log(err);
-            res.render('viewAdmin/admin_login', { Category: categoryList[0].list });
         }
         if (foundUser) {
-            console.log(foundUser);
+            res.redirect('/admin/settings');
         } else {
-            errors.push({ msg: 'Incorrect administrator login!' });
-            res.render('viewAdmin/admin_login', {
+            errors.push({ msg: 'Mật khẩu không đúng!' });
+            res.render('viewAdmin/admin-login', {
                 errors,
                 Category: categoryList[0].list
             });
         }
     });
+}
+
+exports.getAdminSettings = async (req, res) => {
+    const categoryList = await Category.find({});
+    res.render('viewAdmin/settings', { Category: categoryList[0].list });
 }

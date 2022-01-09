@@ -3,22 +3,12 @@
 
     <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
     </head>
-<script>
-    import date from 'date-and-time';
-</script>
+
 <body>
 <section class="colored-section" style="padding:0 15%;">
     <%- include('partials/navbar'); -%>
 </section>
 
-
-<!--<script>-->
-<!--    // var endDay =  date.parse('2015/01/02 23:14:05', 'YYYY/MM/DD HH:mm:ss').toLocaleString();-->
-<!--    // var rs =  date.subtract(new Date().toLocaleString(), endDay).toSeconds();-->
-<!--    var a = '2015/01/02 23:14:05';-->
-<!--    document.getElementById('time').innerHTML = a;-->
-
-<!--</script>-->
 
 <div class="container my-5 px-5">
     <div class="row">
@@ -30,12 +20,11 @@
                     <div class="card-body">
                         <h4 class="card-title"><%= element.name %></h4>
                         <p class="card-text text-danger"><%= element.currentPrice %></p>
-                        <p class="card-text" id="time">7</p>
                     </div>
                     <script src="../js/view-product-list.js"></script>
 
                     <div class="card-footer text-muted d-flex justify-content-center">
-                        <a class="btn btn-md btn-outline-primary btn-block" href="" role="button">
+                        <a class="btn btn-md btn-outline-primary btn-block" href="/view-product-list/viewproduct" role="button">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                             Detail
                         </a>
