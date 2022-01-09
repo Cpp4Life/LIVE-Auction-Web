@@ -195,23 +195,23 @@ exports.getviewauction = async (req, res) => {
             });
         }
         if (user) {
-            var i = 0;
-            var sum = 0;
-            var point = 0;
-            for (i = 0; i < user[0].review.length; i++) {
-                if (user[0].review[i].point == 1) {
-                    point = point + 1;
-                }
-                sum = sum + 1;
-            }
-            console.log(point);
-            if (point == 1) {
+            // var i = 0;
+            // var sum = 0;
+            // var point = 0;
+            // for (i = 0; i < user[0].review.length; i++) {
+            //     if (user[0].review[i].point == 1) {
+            //         point = point + 1;
+            //     }
+            //     sum = sum + 1;
+            // }
+            // console.log(point);
+            // if (point == 1) {
                 const categoryList = await Category.find({});
                 res.render('viewBidder/bidder-Auction', {Category: categoryList[0].list});
-            }
-            else{
-                res.redirect('/bidder/profile')
-            }
+            // }
+            // else{
+            //     res.redirect('/bidder/profile')
+            // }
         }
     });
 

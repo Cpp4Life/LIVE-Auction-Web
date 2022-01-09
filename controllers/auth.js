@@ -191,6 +191,7 @@ exports.postVerifyOtp = async (req, res, next) => {
             role: 'bidder',
             reviewPoint: 0,
             review: [],
+            favorites: [],
         });
 
         bcrypt.genSalt(saltRounds, (err, salt) => {

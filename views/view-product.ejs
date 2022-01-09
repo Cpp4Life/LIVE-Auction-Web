@@ -390,20 +390,17 @@
         </form>
 
     </section>
-
+        <% }) %>
 </div>
 
 <script>
-
-    var target_date = <%= element.timeStart.getTime() %> + (1000 * 3600 * 48);
-    console.log(  element.timeStart.getTime() )
-
-    var current_date = <%= element.timeStart.getTime() %> + 0;
+    var target_date = new Date().getTime() + (1000 * 3600 * 48);
     var days, hours, minutes, seconds;
     var countdown = document.getElementById("titles");
     getCountdown();
     setInterval(function () { getCountdown(); }, 1000);
     function getCountdown() {
+        var current_date = new Date().getTime();
         var seconds_left = (target_date - current_date) / 1000;
         days = pad(parseInt(seconds_left / 86400));
         seconds_left = seconds_left % 86400;
@@ -447,5 +444,4 @@
 
     window.addEventListener('resize', slideImage);
 </script>
-<% }) %>
 <%- include('partials/footer'); -%>

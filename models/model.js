@@ -30,6 +30,11 @@ const userSchema = new mongoose.Schema({
             point: Number
         },
     ],
+    favorites: [
+        {
+            id_product: String,
+        }
+    ],
 });
 
 const bidLogSchema = new mongoose.Schema({
