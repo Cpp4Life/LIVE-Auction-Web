@@ -17,5 +17,8 @@ router.get('/bidder/profile/changepassword', isAuth,bidderController.getPostchan
 
 router.post('/bidder/profile/changepassword/:id', isAuth, bidderController.editpassword)
 
+router.get('/view-product-list/viewproduct', isAuth, bidderController.getProductPage);
+
+router.get('/view-product-list/viewproduct/auction', isAuth, bidderController.getviewauction);
 
 module.exports = router;

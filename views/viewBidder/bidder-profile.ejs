@@ -91,7 +91,7 @@
                     <form action="/bidder/profile/<%= user._id %>" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;margin-top: 20px;">
-<!--                                src="public/marcos-llorente-mu-removebg-preview (3).png"-->
+                                <!--                                src="public/marcos-llorente-mu-removebg-preview (3).png"-->
                                 <img   src="/images/Profile/<%= user.image %>"   alt="avatar" class="img-thumbnail" style="width: 139.981132px;height: 123.981132px;border-radius: 29px;margin-right: 20px;">
                                 <label for="first_name" class="font_size1"><span><%= user.name %></span></label>
                                 <input type="file" class="text-center center-block file-upload"  id="fuMain" name="fuMain" style="margin-left: 0px; margin-top: 10px;">
@@ -104,12 +104,6 @@
                             </div>
 
                         </div>
-                        <!--                            <div class="form-group">-->
-                        <!--                                <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;margin-top: 20px;">-->
-                        <!--                                    <label for="first_name" class="font_size1"><span>Name</span></label>-->
-                        <!--                                    <input style="font-size: 14px;" type="text" class="form-control"  id="name" id="id" name="id" value="<%= user._id %>"  title="enter your first name if any.">-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
                         <div class="form-group">
                             <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
                                 <label for="email" class="font_size1"><span>Email</span></label>
@@ -164,25 +158,27 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-4">
-                                <strong class="font_size2">350</strong>
+                                <!--                                <strong class="font_size2">350</strong>-->
                                 <br>
-                                <span class="color_note">Tốt</span>
+                                <!--                                <span class="color_note">Tốt</span>-->
                             </div>
                             <div class="col-md-4">
-                                <strong class="font_size2">25</strong>
+                                <strong class="font_size2">Review Point</strong>
                                 <br>
-                                <span class="color_note">Bình thường</span>
+
+                                <span class="color_note"><%= user.reviewPoint %></span>
                             </div>
                             <div class="col-md-4">
-                                <strong class="font_size2">25</strong>
+                                <!--                                <strong class="font_size2">25</strong>-->
                                 <br>
-                                <span class="color_note">Không tốt</span>
+                                <!--                                <span class="color_note">Không tốt</span>-->
                             </div>
                         </div>
                     </div>
                     <div class="container" style="margin-top: 40px;">
 
                         <table class="table table-hover table-bordered">
+
                             <thead>
                             <tr>
                                 <th>User</th>
@@ -190,23 +186,34 @@
                                 <th>Review</th>
                             </tr>
                             </thead>
+                            <script>
+                                var m = user.review.length
+                                for (let i = 0; i < user.review.length  ; i++) {
+                                    user = await User.find({_id: user.review[i].user_id})
+                                }
+                            </script>
                             <tbody>
-                            <tr>
-                                <td><a class="info_ava" href="#"> <img src="images/Adam.png" lazyloading="" style="height: 30px;width: 30px; border-radius: 15px"> </a> Marcos Llorente </td>
-                                <td>+1</td>
-                                <td>Thân thiện</td>
-                            </tr>
-                            <tr>
-                                <td><a class="info_ava" href="#"> <img src="images/Adam.png" lazyloading="" style="height: 30px;width: 30px; border-radius: 15px"> </a> Reus</td>
-                                <td>+1</td>
-                                <td>nhiệt tình.</td>
-                            </tr>
-                            <tr>
-                                <td> <a class="info_ava" href="#"> <img src="images/Adam.png" lazyloading="" style="height: 30px;width: 30px; border-radius: 15px"> </a> Ronaldo</td>
-                                <td>+1</td>
-                                <td>chốt đơn nhanh .</td>
-                            </tr>
+                            <% user.review.forEach(element => { %>
+                                <tr>
+                                    <td><a class="info_ava" href="/viewprofile/<%= element.user_id%> "> <img src="images/Adam.png" lazyloading="" style="height: 30px;width: 30px; border-radius: 15px"> </a> <%= element.name_rv%> </td>
+                                    <td> <%= element.point %> </td>
+                                    <td> <%= element.comment %> </td>
+                                </tr>
+                            <% }) %>
+                            <!--                            <tr>-->
+                            <!--                                <td><a class="info_ava" href="#"> <img src="images/Adam.png" lazyloading="" style="height: 30px;width: 30px; border-radius: 15px"> </a> Reus</td>-->
+                            <!--                                <td>+1</td>-->
+                            <!--                                <td>nhiệt tình.</td>-->
+                            <!--                            </tr>-->
+                            <!--                            <tr>-->
+                            <!--                                <td> <a class="info_ava" href="#"> <img src="images/Adam.png" lazyloading="" style="height: 30px;width: 30px; border-radius: 15px"> </a> Ronaldo</td>-->
+                            <!--                                <td>+1</td>-->
+                            <!--                                <td>chốt đơn nhanh .</td>-->
+                            <!--                            </tr>-->
                             </tbody>
+
+
+
                         </table>
                     </div>
                 </div>
