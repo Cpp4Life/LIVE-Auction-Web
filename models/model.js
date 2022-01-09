@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     reviewPoint: Number,
     phone: String,
     image: String,
-    review : [
+    review: [
         {
             user_id: String,
             name_rv: String,
