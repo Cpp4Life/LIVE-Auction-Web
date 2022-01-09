@@ -1,6 +1,6 @@
 <%- include('partials/header'); -%>
     <link rel="stylesheet" href="/css/postproduct.css">
-    <script src="/js/postproduct.js"></script>
+
     <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
     </head>
 
@@ -8,19 +8,23 @@
 <section class="colored-section" style="padding:0 15%;">
     <%- include('partials/navbar'); -%>
 </section>
+
+
 <div class="container my-5 px-5">
     <div class="row">
         <% Product.forEach(element=> {%>
             <div class="col-sm-4 mb-4">
                 <div class="card">
-                    <img class="card-img-top" src="/public/images/ImageProduct/Thiết%20bị%20điện%20tử/Phone/1/nho.jpg" width="100" height="300">
+
+                    <img class="card-img-top" src="/public/images/<%= element.id %>/1.jpg" width="100" height="300">
                     <div class="card-body">
                         <h4 class="card-title"><%= element.name %></h4>
-                        <p class="card-text"><%= element.currentPrice %></p>
+                        <p class="card-text text-danger"><%= element.currentPrice %></p>
                     </div>
+                    <script src="../js/view-product-list.js"></script>
 
                     <div class="card-footer text-muted d-flex justify-content-center">
-                        <a class="btn btn-md btn-outline-primary" href="/view-product-list/viewproduct" role="button">
+                        <a class="btn btn-md btn-outline-primary btn-block" href="/view-product-list/viewproduct" role="button">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                             Detail
                         </a>
