@@ -1,12 +1,15 @@
 const { User, Category } = require('../models/model');
 
-exports.getAdminLoginPage = async (req, res) => {
-    const categoryList = await Category.find({});
+var categoryList;
+Category.find({}, (err, foundList) => {
+    categoryList = foundList;
+});
+
+exports.getAdminLoginPage = (req, res) => {
     res.render('viewAdmin/admin-login', { Category: categoryList[0].list });
 }
 
-exports.postAdminLogin = async (req, res) => {
-    const categoryList = await Category.find({});
+exports.postAdminLogin = (req, res) => {
     const { username, password } = req.body;
     const errors = [];
     console.log(req.body);
@@ -27,7 +30,10 @@ exports.postAdminLogin = async (req, res) => {
     });
 }
 
-exports.getAdminSettings = async (req, res) => {
-    const categoryList = await Category.find({});
+exports.getAdminSettings = (req, res) => {
     res.render('viewAdmin/settings', { Category: categoryList[0].list });
+}
+
+exports.getCategoryBrand = (req, res) => {
+    console.log(req.params.brand);
 }

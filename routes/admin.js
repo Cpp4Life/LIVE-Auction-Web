@@ -8,4 +8,6 @@ router.post('/login', adminController.postAdminLogin);
 
 router.get('/settings', adminController.getAdminSettings);
 
+router.get('/settings/category/:brand', adminController.getCategoryBrand);
+
 module.exports = router;

@@ -12,3 +12,24 @@
 .category-card {
   padding: 15px;
 }
+
+#addCateBtn .fas {
+  transition: transform 1s ease-in-out;
+}
+
+#addCateBtn .fas:hover {
+  transform: rotate(180deg);
+}
+
+.table-striped tbody tr:nth-of-type(2n) {
+  background-color: #bee5eb;
+}
+
+.table-striped tbody tr:nth-of-type(2n + 1) {
+  background-color: #f8f9fd;
+}
+
+.table thead th {
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+}
