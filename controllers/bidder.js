@@ -65,7 +65,6 @@ exports.editprofile  = async (req, res) =>  {
                 res.redirect('/bidder/profile')
             }
             else {
-
                 let currentUser = {
                     _id: req.params.id,
                     name: req.body.name,
@@ -85,7 +84,6 @@ exports.editprofile  = async (req, res) =>  {
                         }
                     }
                 );
-
                 res.redirect('/bidder/profile')
             }
         }
@@ -96,7 +94,7 @@ exports.editprofile  = async (req, res) =>  {
 
 exports.getPostchangepass = async (req, res) => {
 
-    res.render('viewBidder/changepass' );
+    res.render('viewBidder/change-pass' );
 }
 var pas1, pas2,pas3
 exports.editpassword = async (req, res) => {
@@ -114,7 +112,7 @@ exports.editpassword = async (req, res) => {
         errors.push({ msg: 'Please enter all ' });
     }
     if (errors.length > 0) {
-        res.render('viewBidder/changepass', {
+        res.render('viewBidder/change-pass', {
             errors,
         });
         console.log("hhi")
@@ -124,7 +122,7 @@ exports.editpassword = async (req, res) => {
         User.find({_id: currentUser._id}, function (err, user, done) {
             if (err) {
                 errors.push({ msg: ' không tồn tại' });
-                res.render('viewBidder/changepass', {
+                res.render('viewBidder/change-pass', {
                     errors,
                 });
             }
@@ -133,7 +131,7 @@ exports.editpassword = async (req, res) => {
                     if (err) throw err;
                     if(!isMatch){
                         errors.push({ msg: ' Nhập sai mật khẩu ' });
-                        res.render('viewBidder/changepass', {
+                        res.render('viewBidder/change-pass', {
                             errors,
                         });
                     }
@@ -149,7 +147,7 @@ exports.editpassword = async (req, res) => {
                             if (err) throw err;
                             if(!isMatch){
                                 errors.push({ msg: ' Nhập sai mật khẩu mới' });
-                                res.render('viewBidder/changepass', {
+                                res.render('viewBidder/change-pass', {
                                     errors,
                                 });
                             }
@@ -176,12 +174,46 @@ exports.editpassword = async (req, res) => {
         });
     }
 }
-exports.getProductPage = async (req, res) => {
-    const categoryList = await Category.find({});
-    res.render('view-product', { Category: categoryList[0].list });
+
+
+
+exports.getpostviewauction = async (req, res) => {
+    res.render('viewBidder/bidder-Auction' );
+}
+exports.getviewauction = async (req, res) => {
+    let currentUser = {
+        _id: req.params.id,
+    };
+    const errors = [];
+
+    console.log(req.params.id)
+    User.find({_id: currentUser._id}, async function (err, user, done) {
+        if (err) {
+            errors.push({msg: ' không tồn tại'});
+            res.render('viewBidder/bidder-Auction', {Category: categoryList[0].list,
+                errors,
+            });
+        }
+        if (user) {
+            // var i = 0;
+            // var sum = 0;
+            // var point = 0;
+            // for (i = 0; i < user[0].review.length; i++) {
+            //     if (user[0].review[i].point == 1) {
+            //         point = point + 1;
+            //     }
+            //     sum = sum + 1;
+            // }
+            // console.log(point);
+            // if (point == 1) {
+                const categoryList = await Category.find({});
+                res.render('viewBidder/bidder-Auction', {Category: categoryList[0].list});
+            // }
+            // else{
+            //     res.redirect('/bidder/profile')
+            // }
+        }
+    });
+
 }
 
-exports.getviewauction = async (req, res) => {
-    const categoryList = await Category.find({});
-    res.render('viewBidder/bidder-Auction', { Category: categoryList[0].list });
-}

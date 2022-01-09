@@ -1,3 +1,4 @@
+
 <%- include('partials/header'); -%>
 <link rel="stylesheet" href="/css/view-product.css">
 <link rel="stylesheet" type="text/css" href="https://hocwebgiare.com/cpadmin/css/xzoom.css" media="all">
@@ -8,6 +9,7 @@
     <%- include('partials/navbar'); -%>
 </section>
 <div>
+    <% Product.forEach(element=> {%>
     <section class="view-product">
         <form action= "/viewproduct" method="POST">
             <div class="feature">
@@ -15,31 +17,37 @@
                     <div>
                         <div class="img-display">
                             <div class="img-showcase">
-                                <img src="images/logo-clock/image1.png" alt="rolex image">
-                                <img src="images/logo-clock/image2.png" alt="rolex image">
-                                <img src="images/logo-clock/image3.png" alt="rolex image">
-                                <img src="images/logo-clock/image4.png" alt="rolex image">
+                                <img src="/images/<%= element.id %>/0.jpg" alt="rolex image">
+                                <img src="/images/<%= element.id %>/1.jpg" alt="rolex image">
+                                <img src="/images/<%= element.id %>/2.jpg" alt="rolex image">
+                                <img src="/images/<%= element.id %>/3.jpg" alt="rolex image">
+                                <img src="/images/<%= element.id %>/4.jpg" alt="rolex image">
                             </div>
                         </div>
                         <div class="img-select">
                             <div class="img-item">
                                 <a href="#" data-id="1">
-                                    <img src="images/logo-clock/image1.png" alt="rolex image">
+                                    <img src="/images/<%= element.id %>/0.jpg" alt="rolex image">
                                 </a>
                             </div>
                             <div class="img-item">
                                 <a href="#" data-id="2">
-                                    <img src="images/logo-clock/image1.png" alt="rolex image">
+                                    <img src="/images/<%= element.id %>/1.jpg" alt="rolex image">
                                 </a>
                             </div>
                             <div class="img-item">
                                 <a href="#" data-id="3">
-                                    <img src="images/logo-clock/image3.png" alt="rolex image">
+                                    <img src="/images/<%= element.id %>/2.jpg" alt="rolex image">
                                 </a>
                             </div>
                             <div class="img-item">
                                 <a href="#" data-id="4">
-                                    <img src="images/logo-clock/image4.png" alt="rolex image">
+                                    <img src="/images/<%= element.id %>/3.jpg" alt="rolex image">
+                                </a>
+                            </div>
+                            <div class="img-item">
+                                <a href="#" data-id="5">
+                                    <img src="/images/<%= element.id %>/4.jpg" alt="rolex image">
                                 </a>
                             </div>
                         </div>
@@ -55,7 +63,8 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <h1 class="product-detail-name">K10GF金張りジャガールクルト JAEGER LECOULTRE メモボックス MEMOVOX アンティーク1960年代 手巻 メンズ 動作良好 極美品 本物 価格高騰中</h1>
+
+                    <h1 class="product-detail-name"><%= element.name %></h1>
                     <div class="col-lg-12">
                         <div class="info time">
                             <div class="countdown">
@@ -75,7 +84,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="price">
-                                    <span> <span style="text-align: center; font-style: inherit ; color:  black ; font-size: 1.4rem; background: #f2f4f8;  border-radius: 20px;  ">Giá hiện tại:</span> 10,161,000 &nbsp;VND</span>
+                                    <span> <span style="text-align: center; font-style: inherit ; color:  black ; font-size: 1.4rem; background: #f2f4f8;  border-radius: 20px;  ">Giá hiện tại:</span> <%= element.currentPrice %> &nbsp;VND</span>
                                     <br>
                                 </div>
                                 <div>
@@ -103,7 +112,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="price">
-                                    <span> <span style="text-align: center; font-style: inherit ; color:  black; font-size: 1.4rem; background: #f2f4f8;  border-radius: 20px;">Mua ngay:</span> 10,161,000 &nbsp;VND</span>
+                                    <span> <span style="text-align: center; font-style: inherit ; color:  black; font-size: 1.4rem; background: #f2f4f8;  border-radius: 20px;">Mua ngay:</span>  <%= element.boughtPrice %> &nbsp;VND</span>
                                     <br>
                                 </div>
                             </div>
@@ -210,13 +219,13 @@
                         <div class="mb-1">
                             <h1 class="color_note1"><strong>Thời gian bắt đầu</strong></h1>
                         </div>
-                        <div>2021.12.11 (Sat) 21:19 </div>
+                        <div><%= element.timeStart %></div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
                             <h1 class="color_note1"><strong>Thời gian kết thúc</strong></h1>
                         </div>
-                        <div>2021.16.11 (Sat) 21:19 </div>
+                        <div><%= element.timeEnd %></div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
@@ -228,13 +237,13 @@
                         <div class="mb-1">
                             <h1 class="color_note1"><strong>Thêm thời gian đấu giá</strong></h1>
                         </div>
-                        <div>Có </div>
+                        <div> </div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
                             <h1 class="color_note1"><strong>Giá khởi điểm</strong></h1>
                         </div>
-                        <div>100.000 vnd </div>
+                        <div><%= element.originalBidPrice %></div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
@@ -250,9 +259,9 @@
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
-                            <h1 class="color_note1"><strong>Thương hiệu</strong></h1>
+                            <h1 class="color_note1"><strong>Brand</strong></h1>
                         </div>
-                        <div>Rolex</div>
+                        <div><%= element.brand%></div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
@@ -262,9 +271,9 @@
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
-                            <h1 class="color_note1"><strong>Chính sách bảo hành</strong></h1>
+                            <h1 class="color_note1"><strong>subBrand</strong></h1>
                         </div>
-                        <div>hết thời hạn</div>
+                        <div><%= element.subBrand%></div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
@@ -276,41 +285,20 @@
                         <div class="mb-1">
                             <h1 class="color_note1"><strong>ID</strong></h1>
                         </div>
-                        <div>n12345</div>
+                        <div><%= element._id%></div>
                     </div>
 
                 </div>
             </div>
             <div class="motachitietsp">
                 <h1 class="infor_details" style="  margin-bottom: 20px;font-size: 1.5rem; width: 480px">Mô tả chi tiết sản phẩm </h1>
-                <h1 style="font-size: 16px;"><strong>K10 GOLD FILLED</strong></h1>
-                <h2 style="font-size: 16px;"><strong>最高級時計の風格を感じさせる逸品です。</strong></h2>
+                <h1 style="font-size: 16px;"><strong><%= element.name%></strong></h1>
+                <h2 style="font-size: 16px;"><strong><%= element.subBrand%></strong></h2>
 
                 <p class="text1">
-                    Đèn LED
-                    Công tắc đèn tự động, thời lượng chiếu sáng có thể lựa chọn (1,5 giây hoặc 3 giây), phát sáng sau
-                    Giờ thế giới
-                    29 múi giờ (48 thành phố + giờ phối hợp quốc tế), bật/tắt tiết kiệm ánh sáng ban ngày, chuyển đổi Giờ địa phương/Giờ thế giới<span class="dots"> ...</span>
+                   <%=element.description%><span class="dots"> ...</span>
                     <span class="moreText1" class="show-more">
-                                Đồng hồ bấm giờ 1/1000 giây
-                                Khả năng đo: 99:59’59.999”
-                                Chế độ đo: Thời gian đã trôi qua, thời gian vòng chạy, ngắt giờ
-                                Khác: Tốc độ (0 đến 1998 đơn vị / giờ), Nhập khoảng cách (0,0 đến 99,9)
-                                Đồng hồ đếm ngược
-                                Đơn vị đo: 1 giây
-                                Khoảng đếm ngược: 24 giờ
-                                Khoảng cài đặt thời gian bắt đầu đếm ngược: 1 phút đến 24 giờ (khoảng tăng 1 phút và khoảng tăng 1 giờ)
-                                Khác: Tự động lặp lại
-                                5 chế độ báo thức hàng ngày (với 1 chế độ báo lặp)
-                                Tín hiệu thời gian hàng giờ
-                                Lịch hoàn toàn tự động (đến năm 2099)
-                                Định dạng giờ 12/24
-                                Giờ hiện hành thông thường
-                                Đồng hồ kim: 2 kim (giờ, phút (kim di chuyển 20 giây một lần)), 1 mặt số (tốc độ)
-                                Đồng hồ số: Giờ, phút, giây, chiều, tháng, ngày, thứ
-                                Độ chính xác: ±15 giây một tháng
-                                Tuổi thọ pin xấp xỉ: 2 năm với pin CR1220
-                                Tín hiệu thời gian hàng giờ
+
                             </span>
                 </p>
                 <div style="text-align: center; color: red" class="read-more-btn">
@@ -402,6 +390,7 @@
         </form>
 
     </section>
+        <% }) %>
 </div>
 
 <script>

@@ -74,7 +74,8 @@
   background-color: white;
 }
 h1.product-detail-name {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
+  text-align: center;
 }
 .view-product .info .time {
   width: 100%;
