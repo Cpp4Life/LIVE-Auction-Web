@@ -186,6 +186,7 @@ exports.getfavorites = async (req, res) => {
 
     console.log(req.params.id)
     console.log(id_user)
+
     User.find({_id: id_user[0]}, async function (err, user, done) {
         if (err) {
            console.log(err)
@@ -200,9 +201,24 @@ exports.getfavorites = async (req, res) => {
                     check=1;
                 }
             }
+            Product.find({_id: id_user[1]}, async function (err, product, done) {
+
+            let currentproduct = {
+                name: product[0].name,
+                timest: product[0].timeStart,
+                timeend:product[0].timeEnd,
+                current: product[0].currentPrice
+            };
 
             let currentUser = {
-                 $push : { favorites:   {id_product: id_user[1]} }
+                 $push : { favorites:   {
+                     id_product: id_user[1],
+                     name_product: currentproduct.name,
+                     timeStart_product:currentproduct.timest,
+                     timeEnd_product:currentproduct.timeend,
+                     currentPrice_product:currentproduct.current,
+
+                 } }
             };
             if(check==0) {
                 console.log(currentUser)
@@ -223,10 +239,7 @@ exports.getfavorites = async (req, res) => {
             else{
                 res.redirect('/view-product-list/viewproduct/' + id_user[1])
             }
-            // }
-            // else{
-            //     res.redirect('/bidder/profile')
-            // }
+            })
         }
     });
 

@@ -215,119 +215,23 @@
                         </table>
                     </div>
                 </div>
+
                 <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="contact-tab">
+
                     <h4 class="card-header " style="text-align: center;">
                         Favorites product
                     </h4>
+                    <% user.favorites.forEach(element => { %>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-4 mb-3">
+                           <div class="col-sm-4 mb-3">
                                 <div class="card h-100">
-                                    <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
+                                    <img src="/images/<%= element.id_product %>/3.jpg" style="height: 100px;" class="card-img-top" alt="...">
                                     <div class="card-body">
-                                        <h5 class="card-title">Rolex</h5>
-                                        <p class="card-text">Giá hiện tại: $</p>
-                                        <p class="card-text">Giá mua ngay: $</p>
-                                        <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                        <p class="card-text">
-
-                                        <div class="info time">
-                                            <div class="countdown">
-
-                                                <div class="far fa-clock" id='hehe2'>
-                                                    <script>
-                                                        var target_date = new Date().getTime() + (1000 * 3600 * 48);
-                                                        var days, hours, minutes, seconds;
-                                                        var countdown = document.getElementById("hehe2");
-                                                        getCountdown();
-                                                        setInterval(function () { getCountdown(); }, 1000);
-                                                        function getCountdown() {
-                                                            var current_date = new Date().getTime();
-                                                            var seconds_left = (target_date - current_date) / 1000;
-                                                            days = pad(parseInt(seconds_left / 86400));
-                                                            seconds_left = seconds_left % 86400;
-                                                            hours = pad(parseInt(seconds_left / 3600));
-                                                            seconds_left = seconds_left % 3600;
-                                                            minutes = pad(parseInt(seconds_left / 60));
-                                                            seconds = pad(parseInt(seconds_left % 60));
-                                                            countdown.innerHTML = "<span>" + " " + days + "d " + "</span><span>" + hours + "h " + "</span><span>" + minutes + "' " + "</span><span>" + seconds + "s " + "</span>";
-                                                        }
-                                                        function pad(n) {
-                                                            return (n < 10 ? '0' : '') + n;
-                                                        }
-                                                    </script>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </p>
-                                        <p class="card-text">Số lượt ra giá: 10</p>
-                                    </div>
-                                    <div class="card-footer text-muted">
-                                        <a class="btn btn-sm btn-outline-primary" href="#" role="button">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                            Details
-                                        </a>
-                                        <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
-                                            <i class="far fa-heart"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 mb-3">
-                                <div class="card h-100">
-                                    <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Rolex</h5>
-                                        <p class="card-text">Giá hiện tại: $</p>
-                                        <p class="card-text">Giá mua ngay: $</p>
-                                        <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                        <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
-                                        <p class="card-text">Số lượt ra giá: 10</p>
-                                    </div>
-                                    <div class="card-footer text-muted">
-                                        <a class="btn btn-sm btn-outline-primary" href="#" role="button">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                            Details
-                                        </a>
-                                        <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
-                                            <i class="far fa-heart"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 mb-3">
-                                <div class="card h-100">
-                                    <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Rolex</h5>
-                                        <p class="card-text">Giá hiện tại: $</p>
-                                        <p class="card-text">Giá mua ngay: $</p>
-                                        <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                        <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
-                                        <p class="card-text">Số lượt ra giá: 10</p>
-                                    </div>
-                                    <div class="card-footer text-muted">
-                                        <a class="btn btn-sm btn-outline-primary" href="#" role="button">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                            Details
-                                        </a>
-                                        <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
-                                            <i class="far fa-heart"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 mb-3">
-                                <div class="card h-100">
-                                    <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Rolex</h5>
-                                        <p class="card-text">Giá hiện tại: $</p>
-                                        <p class="card-text">Giá mua ngay: $</p>
-                                        <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                        <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
-                                        <p class="card-text">Số lượt ra giá: 10</p>
+                                        <h5 class="card-title"><%= element.name_product%></h5>
+                                        <p class="card-text">Giá hiện tại: <%= element.currentPrice_product%>  VND</p>
+                                        <p class="card-text">Ngày/giờ đăng: <%= element.timeStart_product%></p>
+                                        <p class="card-text">Ngày/giờ Kết thúc: <%= element.timeEnd_product%></p>
                                     </div>
                                     <div class="card-footer text-muted">
                                         <a class="btn btn-sm btn-outline-primary" href="#" role="button">
@@ -341,28 +245,10 @@
                                 </div>
                             </div>
                         </div>
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-end">
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Previous</a>
-                                </li>
-
-                                <li class="page-item active">
-                                    <a class="page-link" href="javascript:;">1</a>
-                                </li>
-
-                                <li class="page-item">
-                                    <a class="page-link" href="?page={{value}}">2</a>
-                                </li>
-
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
-
                     </div>
+                    <% }) %>
                 </div>
+
                 <div class="tab-pane fade" id="biddings" role="tabpanel" aria-labelledby="contact-tab">
                     <hr>
                     <h4 class="card-header " style="text-align: center;">
@@ -372,7 +258,7 @@
                         <div class="row">
                             <div class="col-sm-4 mb-3">
                                 <div class="card h-100">
-                                    <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
+                                    <img src="images/logo-clock/image4.png"  class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">Rolex</h5>
                                         <p class="card-text">Giá hiện tại: 50.000</p>
