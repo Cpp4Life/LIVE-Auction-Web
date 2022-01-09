@@ -65,7 +65,6 @@ exports.editprofile  = async (req, res) =>  {
                 res.redirect('/bidder/profile')
             }
             else {
-
                 let currentUser = {
                     _id: req.params.id,
                     name: req.body.name,
@@ -85,7 +84,6 @@ exports.editprofile  = async (req, res) =>  {
                         }
                     }
                 );
-
                 res.redirect('/bidder/profile')
             }
         }
@@ -176,10 +174,9 @@ exports.editpassword = async (req, res) => {
         });
     }
 }
-exports.getProductPage = async (req, res) => {
-    const categoryList = await Category.find({});
-    res.render('view-product', { Category: categoryList[0].list });
-}
+
+
+
 exports.getpostviewauction = async (req, res) => {
     res.render('viewBidder/bidder-Auction' );
 }
@@ -219,3 +216,4 @@ exports.getviewauction = async (req, res) => {
     });
 
 }
+
