@@ -67,12 +67,14 @@ exports.postAuctionProduct = async (req, res) => {
 
     //Lấy dữ liệu sản phẩm
     Product.find({_id: req.params.id}, async function(err,product, done){
-        console.log(product);
+        console.log(product)
+        console.log(product[0].originalBidPrice);
+        console.log(product[0].stepPrice);
         //Trường hợp chưa có ai đấu giá
-        if(product.bidders.length === 0){
+        if(product[0].bidders.length === 0){
             let currentProduct = {
                 topPrice: req.body.price,
-                currentPrice: product.originalBidPrice,
+                currentPrice: parseInt(product[0].originalBidPrice + product[0].stepPrice),
                 topOwner: req.user,
                 $push: {bidders: {
                         bidTime: new Date().toLocaleString(), user: req.user, bidPrice: req.body.price}}
@@ -88,11 +90,51 @@ exports.postAuctionProduct = async (req, res) => {
                 }
             );
         }
+        //Trường hợp đã có người đấu giá trước đó
+        else{
+            //Trường hợp 1: Lớn hơn giá hiện tại nhưng bé hơn topPrice
+            if(req.body.price < product[0].topPrice){
+                let currentProduct1 = {
+                    currentPrice: Math.min((parseInt(req.body.price) + parseInt(product[0].stepPrice)),product[0].topPrice),
+                    $push: {bidders: { $each:[
+                        {bidTime: new Date().toLocaleString(), user: req.user, bidPrice: req.body.price},
+                        {bidTime: new Date().toLocaleString(), user: product[0].topOwner, bidPrice: Math.min((parseInt(req.body.price) + parseInt(product[0].stepPrice)),product[0].topPrice)}
+                                ]}}
+                };
+                Product.findOneAndUpdate(
+                    {_id: req.params.id},
+                    currentProduct1,
+                    {new: true},
+                    (err, doc) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
+            }else{
+                //Trường hợp 2: Lớn hơn cả giá của top price
+                let currentProduct2 = {
+                    topPrice: req.body.price,
+                    topOwner: req.user,
+                    currentPrice: Math.min((product[0].topPrice + product[0].stepPrice), req.body.price),
+                    $push: {bidders: {$each: [
+                {bidTime: new Date().toLocaleString(), user: product[0].topOwner, bidPrice: product[0].topPrice},
+                                {bidTime: new Date().toLocaleString(), user: req.user, bidPrice: Math.min((product[0].topPrice + product[0].stepPrice), req.body.price)}]}}
+                };
+                Product.findOneAndUpdate(
+                    {_id: req.params.id},
+                    currentProduct2,
+                    {new: true},
+                    (err, doc) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
+            }
+        }
         }
     )
-
-
-    //Trường hợp đã có người đấu giá truóc đó
 
 
 
