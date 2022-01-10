@@ -64,7 +64,8 @@ const productSchema = new mongoose.Schema({
     bidders: [bidLogSchema],
     timeStart: Date,
     timeEnd: Date,
-    description: String
+    description: String,
+
 });
 
 const brandSchema = new mongoose.Schema({

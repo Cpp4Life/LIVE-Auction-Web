@@ -70,6 +70,7 @@ exports.postProduct = async (req, res) => {
             mongoClient.connect(MGurl, function (err, db) {
                 if (err) throw err;
                 var dbo = db.db("auctionDB");
+
                 var newProduct = new Product({
                     name: req.body.name,
                     originalBidPrice: req.body.startPrice,
@@ -83,7 +84,9 @@ exports.postProduct = async (req, res) => {
                     timeEnd: new Date(req.body.datetime).toLocaleString(),
                     description: req.body.description,
                     topPrice: 0,
-                    topOwner: Object()
+                    topOwner: {
+                        image:   "262679398_417432213213287_2443858593223327537_n.png",
+                    }
                 })
 
                 dbo.collection("products").insertOne(newProduct, function (err, res) {

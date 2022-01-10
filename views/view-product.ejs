@@ -61,8 +61,59 @@
                             <i class="far fa-heart"></i>
                             <span class="font-size1" style="padding-left: 10px;color: black;"> </span>
                         </a>
+                        <a  class="font-size1"  data-toggle="modal" data-target="#request"> Lịch sử đấu giá</a>
+
 
                     </div>
+                    <div class="modal fade" id="request">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <table id = "mask1" class="table table-hover table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Thời điểm</th>
+                                            <th style="width: 120px;">Người mua</th>
+                                            <th>Giá</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <% element.bidders.forEach(element1 => { %>
+                                            <tr>
+                                                <td> <%= element1.bidTime%> </td>
+                                                <td id="mask" >  </td>
+                                                <td> <%= element1.bidPrice %> </td>
+                                            </tr>
+                                            <script>
+                                                var str_bidder= ('<%= element1.user.name %>');
+                                                var mask_bidder="";
+                                                for(var i=0;i<str_bidder.length;i++){
+                                                    if(i<(str_bidder.length /2 )){
+                                                        mask_bidder = mask_bidder + "*"
+                                                    }
+                                                    else{
+                                                        mask_bidder= mask_bidder + str_bidder[i]
+                                                    }
+                                                }
+                                                const a =  document.getElementById("mask")
+                                                a.value = mask_bidder
+
+                                            </script>
+                                        <% }) %>
+                                        </tbody>
+
+
+
+                                    </table>
+
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg" data-dismiss="modal" style="text-align: center;">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-lg-6">
 
@@ -203,27 +254,6 @@
                                 <i class="far fa-heart"></i>
                             </a>
                         </div>
-<!--                        <div>-->
-<!--                            <div class="mb-3">-->
-<!--                                <div class="row">-->
-<!--                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">-->
-<!--                                        <strong class="font_size1">150</strong>-->
-<!--                                        <br>-->
-<!--                                        <span class="color_note">Tốt</span>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">-->
-<!--                                        <strong class="font_size1">0</strong>-->
-<!--                                        <br>-->
-<!--                                        <span class="color_note">Bình thường</span>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-lg-4 col-md-4 col-sm-4 col-4">-->
-<!--                                        <strong class="font_size1">1</strong>-->
-<!--                                        <br>-->
-<!--                                        <span class="color_note">Không tốt</span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
                     </div>
                 </div>
                 <div class="col-lg-6">
