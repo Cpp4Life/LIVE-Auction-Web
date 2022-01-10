@@ -63,32 +63,42 @@ exports.getpostProductPage = async (req, res) => {
     res.render('view-product', { Category: categoryList[0].list });
 }
 exports.getButtonBuy = async (req, res) =>{
-    console.log(req.params.id);
-    console.log(req.user);
+    Product.find({_id: req.params.id}, async function(err,product, done) {
+
+        let currentProduct = {
+            status: 0,
+            topPrice: product[0].boughtPrice,
+            topOwner: req.user,
+        };
+        Product.findOneAndUpdate(
+            {_id: req.params.id},
+            currentProduct,
+            {new: true},
+            (err, doc) => {
+                if (err) {
+                    console.log(err);
+                }
+            }
+        );
+    })
+
     res.redirect('/view-product-list');
 }
 exports.postAuctionProduct = async (req, res) => {
-    console.log(req.body);
-    console.log(req.params);
-    console.log(req.user.id);
 
     //Lấy dữ liệu sản phẩm
-    Product.find({_id: req.params.id}, async function(err,product, done){
+    Product.find({_id: req.params.id}, async function(err,product, done) {
         console.log(product)
         console.log(product[0].originalBidPrice);
         console.log(product[0].stepPrice);
-        //Trường hợp chưa có ai đấu giá
-        if(product[0].bidders.length === 0){
-            let currentProduct = {
-                topPrice: req.body.price,
-                currentPrice: parseInt(product[0].originalBidPrice + product[0].stepPrice),
-                topOwner: req.user,
-                $push: {bidders: {
-                        bidTime: new Date().toLocaleString(), user: req.user, bidPrice: req.body.price}}
+
+        if (product[0].timeEnd.getTime() - new Date().getTime() < 0) {
+            let currentProduct0 = {
+                status: 0
             };
             Product.findOneAndUpdate(
                 {_id: req.params.id},
-                currentProduct,
+                currentProduct0,
                 {new: true},
                 (err, doc) => {
                     if (err) {
@@ -96,41 +106,22 @@ exports.postAuctionProduct = async (req, res) => {
                     }
                 }
             );
-        }
-        //Trường hợp đã có người đấu giá trước đó
-        else{
-            //Trường hợp 1: Lớn hơn giá hiện tại nhưng bé hơn topPrice
-            if(req.body.price < product[0].topPrice){
-                let currentProduct1 = {
-                    currentPrice: Math.min((parseInt(req.body.price) + parseInt(product[0].stepPrice)),product[0].topPrice),
-                    $push: {bidders: { $each:[
-                        {bidTime: new Date().toLocaleString(), user: req.user, bidPrice: req.body.price},
-                        {bidTime: new Date().toLocaleString(), user: product[0].topOwner, bidPrice: Math.min((parseInt(req.body.price) + parseInt(product[0].stepPrice)),product[0].topPrice)}
-                                ]}}
-                };
-                Product.findOneAndUpdate(
-                    {_id: req.params.id},
-                    currentProduct1,
-                    {new: true},
-                    (err, doc) => {
-                        if (err) {
-                            console.log(err);
+        } else {
+            //Trường hợp chưa có ai đấu giá
+            if (product[0].bidders.length === 0) {
+                let currentProduct = {
+                    topPrice: req.body.price,
+                    currentPrice: parseInt(product[0].originalBidPrice + product[0].stepPrice),
+                    topOwner: req.user,
+                    $push: {
+                        bidders: {
+                            bidTime: new Date().toLocaleString(), user: req.user, bidPrice: req.body.price
                         }
                     }
-                );
-            }else{
-                //Trường hợp 2: Lớn hơn cả giá của top price
-                let currentProduct2 = {
-                    topPrice: req.body.price,
-                    topOwner: req.user,
-                    currentPrice: Math.min((product[0].topPrice + product[0].stepPrice), req.body.price),
-                    $push: {bidders: {$each: [
-                {bidTime: new Date().toLocaleString(), user: product[0].topOwner, bidPrice: product[0].topPrice},
-                                {bidTime: new Date().toLocaleString(), user: req.user, bidPrice: Math.min((product[0].topPrice + product[0].stepPrice), req.body.price)}]}}
                 };
                 Product.findOneAndUpdate(
                     {_id: req.params.id},
-                    currentProduct2,
+                    currentProduct,
                     {new: true},
                     (err, doc) => {
                         if (err) {
@@ -139,10 +130,95 @@ exports.postAuctionProduct = async (req, res) => {
                     }
                 );
             }
+            //Trường hợp đã có người đấu giá trước đó
+            else {
+                //Trường hợp 1: Lớn hơn giá hiện tại nhưng bé hơn topPrice
+                if (req.body.price < product[0].topPrice) {
+                    let currentProduct1 = {
+                        currentPrice: Math.min((parseInt(req.body.price) + parseInt(product[0].stepPrice)), product[0].topPrice),
+                        $push: {
+                            bidders: {
+                                $each: [
+                                    {bidTime: new Date().toLocaleString(), user: req.user, bidPrice: req.body.price},
+                                    {
+                                        bidTime: new Date().toLocaleString(),
+                                        user: product[0].topOwner,
+                                        bidPrice: Math.min((parseInt(req.body.price) + parseInt(product[0].stepPrice)), product[0].topPrice)
+                                    }
+                                ]
+                            }
+                        }
+                    };
+                    Product.findOneAndUpdate(
+                        {_id: req.params.id},
+                        currentProduct1,
+                        {new: true},
+                        (err, doc) => {
+                            if (err) {
+                                console.log(err);
+                            }
+                        }
+                    );
+                } else {
+                    //Trường hợp 2: Lớn hơn cả giá của top price
+                    let currentProduct2 = {
+                        topPrice: req.body.price,
+                        topOwner: req.user,
+                        currentPrice: Math.min((product[0].topPrice + product[0].stepPrice), req.body.price),
+                        $push: {
+                            bidders: {
+                                $each: [
+                                    {
+                                        bidTime: new Date().toLocaleString(),
+                                        user: product[0].topOwner,
+                                        bidPrice: product[0].topPrice
+                                    },
+                                    {
+                                        bidTime: new Date().toLocaleString(),
+                                        user: req.user,
+                                        bidPrice: Math.min((product[0].topPrice + product[0].stepPrice), req.body.price)
+                                    }]
+                            }
+                        }
+                    };
+                    Product.findOneAndUpdate(
+                        {_id: req.params.id},
+                        currentProduct2,
+                        {new: true},
+                        (err, doc) => {
+                            if (err) {
+                                console.log(err);
+                            }
+                        }
+                    );
+                }
+            }
+            console.log((product[0].timeEnd.getTime() - new Date().getTime()) / 1000);
+            if (product[0].timeEnd.getTime() - new Date().getTime() < 5 * 60 * 1000) {
+                var time1 = product[0].timeEnd.getTime() + 10*60*1000;
+                console.log('asdads ' + time1);
+                time1 = new Date(time1).toLocaleString();
+                console.log(time1);
+                Product.find({_id: req.params.id}, async function (err, product, done) {
+                    let currentProduct3 = {
+                        timeEnd: time1
+                    };
+                    Product.findOneAndUpdate(
+                        {_id: req.params.id},
+                        currentProduct3,
+                        {new: true},
+                        (err, doc) => {
+                            if (err) {
+                                console.log(err);
+                            }
+                        }
+                    );
+
+                })
+            }
         }
-        }
-    )
-    res.redirect('/view-product-list');
+        res.redirect('/view-product-list');
+    })    }
 
     // dbModel.Product.find( (err, ProductList) => {
     //         if (err)
@@ -162,4 +238,4 @@ exports.postAuctionProduct = async (req, res) => {
     //         }
     //     }
     // )
-}
+

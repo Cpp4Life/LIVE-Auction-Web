@@ -65,7 +65,7 @@ const productSchema = new mongoose.Schema({
     timeStart: Date,
     timeEnd: Date,
     description: String,
-
+    status: Boolean
 });
 
 const brandSchema = new mongoose.Schema({
