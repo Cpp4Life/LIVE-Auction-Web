@@ -62,6 +62,11 @@ exports.getpostProductPage = async (req, res) => {
 
     res.render('view-product', { Category: categoryList[0].list });
 }
+exports.getButtonBuy = async (req, res) =>{
+    console.log(req.params.id);
+    console.log(req.user);
+    res.redirect('/view-product-list');
+}
 exports.postAuctionProduct = async (req, res) => {
     console.log(req.body);
     console.log(req.params);
@@ -137,26 +142,24 @@ exports.postAuctionProduct = async (req, res) => {
         }
         }
     )
+    res.redirect('/view-product-list');
 
-
-
-
-    dbModel.Product.find( (err, ProductList) => {
-            if (err)
-                console.log(err);
-            else {
-                dbModel.Category.find({}, (err, CategoryList) => {
-                    if (err)
-                        console.log(err);
-                    else {
-                        res.render('view-product-list', {
-                            Product: ProductList,
-                            Category: CategoryList[0].list
-                        });
-                    }
-                })
-
-            }
-        }
-    )
+    // dbModel.Product.find( (err, ProductList) => {
+    //         if (err)
+    //             console.log(err);
+    //         else {
+    //             dbModel.Category.find({}, (err, CategoryList) => {
+    //                 if (err)
+    //                     console.log(err);
+    //                 else {
+    //                     res.render('view-product-list', {
+    //                         Product: ProductList,
+    //                         Category: CategoryList[0].list
+    //                     });
+    //                 }
+    //             })
+    //
+    //         }
+    //     }
+    // )
 }

@@ -10,6 +10,7 @@
     <%- include('partials/navbar'); -%>
 </section>
 <div>
+
     <% Product.forEach(element=> {%>
     <section class="view-product">
             <div class="feature">
@@ -77,6 +78,40 @@
                                     <li>Secs</li>
                                 </div>
                             </div>
+                            <script>
+                                var target_date = new Date(`<%=element.timeEnd%>`).getTime();
+                                console.log(target_date);
+                                var days, hours, minutes, seconds;
+                                var countdown = document.getElementById("titles");
+                                getCountdown();
+                                setInterval(function () { getCountdown(); }, 1000);
+                                function getCountdown() {
+                                    var current_date = new Date().getTime();
+                                    var seconds_left = (target_date - current_date) / 1000;
+                                    days = pad(parseInt(seconds_left / 86400));
+                                    seconds_left = seconds_left % 86400;
+                                    hours = pad(parseInt(seconds_left / 3600));
+                                    seconds_left = seconds_left % 3600;
+                                    minutes = pad(parseInt(seconds_left / 60));
+                                    seconds = pad(parseInt(seconds_left % 60));
+                                    countdown.innerHTML = "<span>" + days + "</span><span>" + hours + "</span><span>" + minutes + "</span><span>" + seconds + "</span>";
+                                }
+                                function pad(n) {
+                                    return (n < 10 ? '0' : '') + n;
+                                }
+                            </script>
+<!--                            <script>-->
+
+
+<!--                                var time = new Date(Product.timeStart).getSeconds();-->
+<!--                                var day = Math.floor(time / (24*3600));-->
+<!--                                var hour = Math.floor((time - day*24*3600) % 3600);-->
+<!--                                var minute = Math.floor((time - day*24*3600 - hour*3600) % 60);-->
+<!--                                var second = Math.floor(time - day*24*3600 - hour*3600 - minute*60);-->
+<!--                                -->
+<!--                                -->
+
+<!--                            </script>-->
                         </div>
                     </div>
                     <div class="info product_detail__box">
@@ -139,9 +174,9 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <a type="button" href="" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid" style="margin-top: 10px;">
-                                    Mua ngay
-                                </a>
+                                    <a href='/view-product-list/viewproduct/buynow/<%=element.id%>' type="button" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid" style="margin-top: 10px;">
+                                        Mua ngay
+                                    </a>
                             </div>
                         </div>
                     </div>
@@ -220,13 +255,13 @@
                         <div class="mb-1">
                             <h1 class="color_note1"><strong>Thời gian bắt đầu</strong></h1>
                         </div>
-                        <div><%= element.timeStart %></div>
+                        <div><%= element.timeStart.toLocaleString() %></div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
                             <h1 class="color_note1"><strong>Thời gian kết thúc</strong></h1>
                         </div>
-                        <div><%= element.timeEnd %></div>
+                        <div><%= element.timeEnd.toLocaleString() %></div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
@@ -293,14 +328,26 @@
             </div>
             <div class="motachitietsp">
                 <h1 class="infor_details" style="  margin-bottom: 20px;font-size: 1.5rem; width: 480px">Mô tả chi tiết sản phẩm </h1>
-                <h1 style="font-size: 16px;"><strong><%= element.name%></strong></h1>
-                <h2 style="font-size: 16px;"><strong><%= element.subBrand%></strong></h2>
+                <div id="decript"></div>
+                <script>
+                    function htmlDecode(input) {
+                        var doc = new DOMParser().parseFromString(input, "text/html");
+                        return doc.documentElement.textContent;
+                    }
+                    var myDescript = '<%=element.description%>';
+                    console.log(htmlDecode(myDescript));
+                    var temp = document.getElementById('decript');
+                    temp.innerHTML = htmlDecode(myDescript);
+                </script>
 
-                <p class="text1">
-                   <%=element.description%><span class="dots"> ...</span>
-                    <span class="moreText1" class="show-more">
+                <p class="text1" id="decript">
+                    <span class="dots"> ...</span>
+                    <span class="moreText1" class="show-more"> </span>
+                    <script>
 
-                            </span>
+                        var getDecription = document.getElementById("decript");
+                        getDecription.innerHTML(Product.description);
+                    </script>
                 </p>
                 <div style="text-align: center; color: red" class="read-more-btn">
                     <a>Xem thêm</a>
@@ -395,25 +442,7 @@
 </div>
 
 <script>
-    var target_date = new Date().getTime() + (1000 * 3600 * 48);
-    var days, hours, minutes, seconds;
-    var countdown = document.getElementById("titles");
-    getCountdown();
-    setInterval(function () { getCountdown(); }, 1000);
-    function getCountdown() {
-        var current_date = new Date().getTime();
-        var seconds_left = (target_date - current_date) / 1000;
-        days = pad(parseInt(seconds_left / 86400));
-        seconds_left = seconds_left % 86400;
-        hours = pad(parseInt(seconds_left / 3600));
-        seconds_left = seconds_left % 3600;
-        minutes = pad(parseInt(seconds_left / 60));
-        seconds = pad(parseInt(seconds_left % 60));
-        countdown.innerHTML = "<span>" + days + "</span><span>" + hours + "</span><span>" + minutes + "</span><span>" + seconds + "</span>";
-    }
-    function pad(n) {
-        return (n < 10 ? '0' : '') + n;
-    }
+
     const readMoreBtn = document.querySelector(".read-more-btn");
     const text1 = document.querySelector(".text1");
 
