@@ -1,0 +1,44 @@
+<%- include('../partials/header'); -%>
+    <link rel="stylesheet" href="/css/brand-list.css">
+    </head>
+
+    <body>
+        <section class="colored-section" style="padding:0 15%;">
+            <%- include('../partials/navbar'); -%>
+        </section>
+        <div class="container-fluid" id="brand-pane">
+            <div class="shadow container-fluid" style="background-color: white; padding: 3% 7%;">
+                <div class="text-center">
+                    <%- include('../partials/messages'); -%>
+                </div>
+                <div class="box" id="heading">
+                    <h1>
+                        <%= brandTitle %>
+                    </h1>
+                </div>
+
+                <div class="box">
+                    <% subBrandList.forEach(element=> { %>
+                        <form action="/admin/settings/category/<%= _.kebabCase(brandTitle.normalize('NFD').replace(/[\u0300-\u036f]/g, '')) %>/delete-item" method="POST">
+                            <div class="item">
+                                <input type="checkbox" name="checkbox" value="<%=element %>" onChange="this.form.submit()">
+                                <p>
+                                    <%= element %>
+                                </p>
+                            </div>
+                            <input type="hidden" name="brandName" value="<%= brandTitle %>">
+                        </form>
+                        <% }) %>
+
+                            <form action="/admin/settings/category/<%= _.kebabCase(brandTitle.normalize('NFD').replace(/[\u0300-\u036f]/g, '')) %>/add-item" class="item" method="post">
+                                <input class="form-control" type="text" name="newItem" placeholder="Sản phẩm mới" autocomplete="off" required>
+                                <button type="submit" id="addBtn" name="brand" value="<%=brandTitle%>">+</button>
+                            </form>
+                </div>
+
+                <div class="box">
+                    <a href="/admin/settings" type="button" class="btn btn-block btn-lg" style="background-color: #ffab4c; color: white;">Quay về</a>
+                </div>
+            </div>
+        </div>
+        <%- include('../partials/footer'); -%>
