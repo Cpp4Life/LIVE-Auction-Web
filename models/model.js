@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     reviewPoint: Number,
     phone: String,
     image: String,
-    review : [
+    review: [
         {
             user_id: String,
             name_rv: String,
@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
     favorites: [
         {
             id_product: String,
+            name_product:String,
+            timeStart_product:String,
+            timeEnd_product:String,
+            currentPrice_product:String,
         }
     ],
 });

@@ -34,21 +34,7 @@ exports.getListView = (req, res) => {
     )
 }
 exports.getProductPage = async (req, res) => {
-    // console.log(req.params.id)
-    // Product.find({_id: req.params.id}, async function (err, products, done) {
-    //     if (err) {
-    //         errors.push({msg: ' không tồn tại'});
-    //         res.render('viewBidder/change-pass', {
-    //             errors,
-    //         });
-    //     }
-    //     if (products) {
-    //         console.log(products)
-    //         const categoryList = await Category.find({});
-    //         res.render('view-product', {Category: categoryList[0].list} , {Product : products});
-    //     }
-    //
-    // })
+
     dbModel.Product.find({_id: req.params.id}, (err, ProductList) => {
             if (err)
                 console.log(err);

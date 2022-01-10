@@ -13,11 +13,16 @@
   padding: 15px;
 }
 
-#addCateBtn .fas {
+#editBtn:hover {
+  color: #007bff;
+  background-color: transparent;
+}
+
+#plusBtn .fas {
   transition: transform 1s ease-in-out;
 }
 
-#addCateBtn .fas:hover {
+#plusBtn .fas:hover {
   transform: rotate(180deg);
 }
 

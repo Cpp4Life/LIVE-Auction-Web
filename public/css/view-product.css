@@ -253,6 +253,7 @@ h1.product-detail-name {
 }
 .img-display {
   overflow: hidden;
+  height: 500px;
 }
 .img-showcase {
   display: flex;
