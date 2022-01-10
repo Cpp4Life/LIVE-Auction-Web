@@ -124,28 +124,37 @@
                 <div class="tab-pane fade" id="sellingitems" role="tabpanel" aria-labelledby="profile-tab">
                     <hr>
                     <% Product.forEach(element=> {%>
-                    <div class="container" style="margin-top: 40px;">
-                        <table class="table table-hover table-bordered">
-                            <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Category</th>
-                                <th>Times remaining</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td><a class="info_ava" href="#"> <img src="images/logo-clock/image1.png" lazyloading="" style="height: 90px;width: 90px; ">  </a> rolex </td>
-                                <td>Điện tử</td>
-                                <td>1d 2h 3p 4s</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        <% if(element.status){ %>
+                            <% if(element.owner._id == user.id){ %>
+                                <div class="container" style="margin-top: 40px;">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Category</th>
+                                            <th>Times remaining</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td><a class="info_ava" href="#"> <img src="images/logo-clock/image1.png" lazyloading="" style="height: 90px;width: 90px; ">  </a> <%= element.name %> </td>
+                                            <td> <%= element.brand %></td>
+                                            <td> <%= element.timeEnd %> </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <% } %>
+
+                        <% } %>
+
                     <% }) %>
                 </div>
                 <div class="tab-pane fade"  id="solditems" role="tabpanel" aria-labelledby="contact-tab">
                     <hr>
+                    <% Product.forEach(element=> {%>
+                        <% if(!element.status){ %>
+                    <% if(element.owner._id == user.id){ %>
                     <div class="container">
                         <table class="table table-hover table-bordered">
                             <thead>
@@ -159,7 +168,7 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td style="width:9%">IphoneX</td>
+                                <td style="width:9%"><%= element.name %></td>
                                 <td><button type="button" class="btn btn-primary active" data-toggle="modal" data-target="#review"  >+1</button></td>
                                 <td><button type="button" class="btn btn-primary disabled" data-toggle="modal" data-target="#review" >-1</button></td>
                                 <td><button type="button" class="btn btn-primary disabled"  >cancel</button></td>
@@ -169,6 +178,11 @@
                             </tbody>
                         </table>
                     </div>
+                        <% } %>
+
+                        <% } %>
+
+                    <% }) %>
                 </div>
             </div>
         </div><!--/tab-content-->

@@ -25,7 +25,7 @@
                                 <img src="/images/<%= element.id %>/4.jpg" alt="rolex image">
                             </div>
                         </div>
-                        <div class="img-select">
+                        <div class="img-select" style="align-items: center;">
                             <div class="img-item">
                                 <a href="#" data-id="1">
                                     <img src="/images/<%= element.id %>/0.jpg" alt="rolex image">
@@ -81,7 +81,8 @@
                                         <% element.bidders.forEach(element1 => { %>
                                             <tr>
                                                 <td> <%= element1.bidTime%> </td>
-                                                <td id="mask" >  </td>
+                                                <td  ><%= element1.user.name%></td>
+
                                                 <td> <%= element1.bidPrice %> </td>
                                             </tr>
                                             <script>
@@ -97,8 +98,10 @@
                                                 }
                                                 const a =  document.getElementById("mask")
                                                 a.value = mask_bidder
+                                                // document.getElementById("mask").innerHTML = mask_bidder;
 
                                             </script>
+
                                         <% }) %>
                                         </tbody>
 
@@ -151,18 +154,7 @@
                                     return (n < 10 ? '0' : '') + n;
                                 }
                             </script>
-<!--                            <script>-->
 
-
-<!--                                var time = new Date(Product.timeStart).getSeconds();-->
-<!--                                var day = Math.floor(time / (24*3600));-->
-<!--                                var hour = Math.floor((time - day*24*3600) % 3600);-->
-<!--                                var minute = Math.floor((time - day*24*3600 - hour*3600) % 60);-->
-<!--                                var second = Math.floor(time - day*24*3600 - hour*3600 - minute*60);-->
-<!--                                -->
-<!--                                -->
-
-<!--                            </script>-->
                         </div>
                     </div>
                     <div class="info product_detail__box">

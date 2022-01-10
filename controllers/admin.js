@@ -10,7 +10,7 @@ exports.getAdminLoginPage = (req, res) => {
 exports.postAdminLogin = (req, res) => {
     const { username, password } = req.body;
     const errors = [];
-    console.log(req.body);
+
 
     User.findOne({ email: username, password: password }, (err, foundUser) => {
         if (err) {
@@ -163,7 +163,6 @@ exports.postDelBrandItem = async (req, res) => {
 }
 
 exports.postAddBrandItem = async (req, res) => {
-    console.log(req.body);
     const categoryList = await Category.find({});
     const itemName = req.body.newItem;
     const brandName = req.body.brand;

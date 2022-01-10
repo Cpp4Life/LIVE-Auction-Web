@@ -34,7 +34,7 @@ exports.getListView = (req, res) => {
     )
 }
 exports.getProductPage = async (req, res) => {
-    console.log(req.params.id)
+    // console.log(req.params.id)
     dbModel.Product.find({_id: req.params.id}, (err, ProductList) => {
             if (err)
                 console.log(err);
@@ -57,7 +57,7 @@ exports.getProductPage = async (req, res) => {
     )
 }
 exports.getpostProductPage = async (req, res) => {
-    console.log( req.params.id)
+    // console.log( req.params.id)
     const categoryList = await Category.find({});
 
     res.render('view-product', { Category: categoryList[0].list });
@@ -88,9 +88,9 @@ exports.postAuctionProduct = async (req, res) => {
 
     //Lấy dữ liệu sản phẩm
     Product.find({_id: req.params.id}, async function(err,product, done) {
-        console.log(product)
-        console.log(product[0].originalBidPrice);
-        console.log(product[0].stepPrice);
+        // console.log(product)
+        // console.log(product[0].originalBidPrice);
+        // console.log(product[0].stepPrice);
 
         if (product[0].timeEnd.getTime() - new Date().getTime() < 0) {
             let currentProduct0 = {
@@ -193,12 +193,10 @@ exports.postAuctionProduct = async (req, res) => {
                     );
                 }
             }
-            console.log((product[0].timeEnd.getTime() - new Date().getTime()) / 1000);
+            // console.log((product[0].timeEnd.getTime() - new Date().getTime()) / 1000);
             if (product[0].timeEnd.getTime() - new Date().getTime() < 5 * 60 * 1000) {
                 var time1 = product[0].timeEnd.getTime() + 10*60*1000;
-                console.log('asdads ' + time1);
                 time1 = new Date(time1).toLocaleString();
-                console.log(time1);
                 Product.find({_id: req.params.id}, async function (err, product, done) {
                     let currentProduct3 = {
                         timeEnd: time1
