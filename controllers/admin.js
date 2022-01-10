@@ -37,7 +37,6 @@ exports.postCategory = async (req, res) => {
     const categoryList = await Category.find({});
     const submittedBrand = req.body.brand;
     const submittedSubBrand = req.body.subBrand;
-    console.log(submittedBrand + ' ' + submittedSubBrand);
     const errors = [];
 
     Brand.findOne({ brand: submittedBrand }, (err, foundList) => {
@@ -63,12 +62,10 @@ exports.postCategory = async (req, res) => {
             });
 
             const objectId = categoryList[0]._id;
-            console.log(objectId);
 
             Category.updateOne({ _id: objectId }, { $push: { list: [newBrand] } }, (err, result) => {
                 if (err)
                     console.log(err);
-                console.log(result);
             });
 
             newBrand.save(err => {
@@ -83,29 +80,33 @@ exports.postCategory = async (req, res) => {
 
 exports.getCategoryBrand = async (req, res) => {
     const categoryList = await Category.find({});
+    const brandList = await Brand.find({});
     const submittedBrand = req.params.brand;
-    Brand.find({}, (err, result) => {
-        for (var i = 0; i < result.length; i++) {
-            const currentBrand = _.kebabCase(helper.normalizeText(result[i].brand));
-            if (submittedBrand === currentBrand) {
-                res.render('viewAdmin/brand-list', {
-                    Category: categoryList[0].list,
-                    brandTitle: result[i].brand,
-                    subBrandList: result[i].subBrand
-                });
-            }
+
+    for (var i = 0; i < brandList.length; i++) {
+        const currentBrand = _.kebabCase(helper.normalizeText(brandList[i].brand));
+        if (currentBrand === submittedBrand) {
+            res.render('viewAdmin/brand-list', {
+                Category: categoryList[0].list,
+                brandTitle: brandList[i].brand,
+                subBrandList: brandList[i].subBrand
+            });
+            break;
         }
-    })
+    }
+
+    res.render('viewAdmin/settings', { Category: categoryList[0].list });
 }
 
-exports.postDelBrandItem = (req, res) => {
+exports.postDelBrandItem = async (req, res) => {
+    const categoryList = await Category.find({});
     const checkedItem = req.body.checkbox;
     const brandName = req.body.brandName;
 
     Category.findOne({ "list.brand": brandName },
         (err, result) => {
             if (err) {
-                res.send(err);
+                console.log(err);
             } else {
                 for (var i = 0; i < result.list.length; i++) {
                     if (result.list[i].brand === brandName) {
@@ -115,10 +116,6 @@ exports.postDelBrandItem = (req, res) => {
                         }
                         if (result.list[i].subBrand.length === 0) {
                             result.list.splice(i, 1);
-                            Brand.findOneAndDelete({ brand: brandName }, (err, result) => {
-                                if (err) console.log(err);
-                            });
-                            res.redirect('/admin/settings');
                         }
                         result.save(err => {
                             if (err) console.log(err);
@@ -130,12 +127,39 @@ exports.postDelBrandItem = (req, res) => {
         }
     );
 
-    Brand.updateOne({ brand: brandName }, { $pull: { subBrand: checkedItem } },
+    Brand.find({},
         (err, result) => {
-            if (err) console.log(err);
-            res.redirect('/admin/settings/category/' + _.kebabCase(helper.normalizeText(brandName)));
-        }
-    );
+            if (err)
+                console.log(err);
+            else {
+                for (var i = 0; i < result.length; i++) {
+                    if (result[i].brand === brandName) {
+                        const index = result[i].subBrand.indexOf(checkedItem);
+                        if (index > -1) {
+                            result[i].subBrand.splice(index, 1);
+                            if (result[i].subBrand.length === 0) {
+                                const objectId = result[i]._id;
+                                Brand.findByIdAndDelete({ _id: objectId }, (deleteErr) => {
+                                    if (deleteErr) {
+                                        console.log('Document deleted');
+                                        console.log(deleteErr);
+                                    }
+                                });
+                            } else {
+                                result[i].save(err => {
+                                    if (err) console.log(err);
+                                });
+                            }
+                        }
+                        try {
+                            res.redirect('/admin/settings/category/' + _.kebabCase(helper.normalizeText(brandName)));
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    }
+                }
+            }
+        });
 }
 
 exports.postAddBrandItem = async (req, res) => {
