@@ -59,6 +59,8 @@ const productSchema = new mongoose.Schema({
     brand: String,
     subBrand: String,
     owner: userSchema,
+    topOwner: userSchema,
+    topPrice: Number,
     bidders: [bidLogSchema],
     timeStart: Date,
     timeEnd: Date,

@@ -221,32 +221,55 @@
                     <h4 class="card-header " style="text-align: center;">
                         Favorites product
                     </h4>
-                    <% user.favorites.forEach(element => { %>
                     <div class="card-body">
+<!--                        <div class="row">-->
+<!--                            <% user.favorites.forEach(element => { %>-->
+<!--                           <div class="col-sm-4 mb-3">-->
+<!--                                <div class="card h-100">-->
+<!--                                    <img src="/images/<%= element.id_product %>/3.jpg" style="height: 100px;" class="card-img-top" alt="...">-->
+<!--                                    <div class="card-body">-->
+<!--                                        <h5 class="card-title"><%= element.name_product%></h5>-->
+<!--                                        <p class="card-text">Giá hiện tại: <%= element.currentPrice_product%>  VND</p>-->
+<!--                                        <p class="card-text">Ngày/giờ đăng: <%= element.timeStart_product%></p>-->
+<!--                                        <p class="card-text">Ngày/giờ Kết thúc: <%= element.timeEnd_product%></p>-->
+<!--                                    </div>-->
+<!--                                    <div class="card-footer text-muted">-->
+<!--                                        <a class="btn btn-sm btn-outline-primary" href="/view-product-list/viewproduct/<%= element.id_product %>" role="button">-->
+<!--                                            <i class="fa fa-eye" aria-hidden="true"></i>-->
+<!--                                            Details-->
+<!--                                        </a>-->
+<!--                                        <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">-->
+<!--                                            <i class="far fa-heart"></i>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <% }) %>-->
                         <div class="row">
-                           <div class="col-sm-4 mb-3">
-                                <div class="card h-100">
-                                    <img src="/images/<%= element.id_product %>/3.jpg" style="height: 100px;" class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><%= element.name_product%></h5>
-                                        <p class="card-text">Giá hiện tại: <%= element.currentPrice_product%>  VND</p>
-                                        <p class="card-text">Ngày/giờ đăng: <%= element.timeStart_product%></p>
-                                        <p class="card-text">Ngày/giờ Kết thúc: <%= element.timeEnd_product%></p>
-                                    </div>
-                                    <div class="card-footer text-muted">
-                                        <a class="btn btn-sm btn-outline-primary" href="/view-product-list/viewproduct/<%= element.id_product %>" role="button">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                            Details
-                                        </a>
-                                        <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
-                                            <i class="far fa-heart"></i>
-                                        </a>
+                            <% user.favorites.forEach(element => { %>
+                                <div class="col-sm-4 mb-4">
+                                    <div class="card">
+                                        <img src="/images/<%= element.id_product %>/3.jpg" style="height: 100px;" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><%= element.name_product%></h5>
+                                            <p class="card-text">Giá hiện tại: <%= element.currentPrice_product%>  VND</p>
+                                            <p class="card-text">Ngày/giờ đăng: <%= element.timeStart_product%></p>
+                                            <p class="card-text">Ngày/giờ Kết thúc: <%= element.timeEnd_product%></p>
+                                        </div>
+
+                                        <div class="card-footer text-muted">
+                                            <a class="btn btn-sm btn-outline-primary" href="/view-product-list/viewproduct/<%= element.id_product %>" role="button">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                                Details
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            <% }) %>
+
                         </div>
-                    </div>
-                    <% }) %>
                 </div>
 
                 <div class="tab-pane fade" id="biddings" role="tabpanel" aria-labelledby="contact-tab">

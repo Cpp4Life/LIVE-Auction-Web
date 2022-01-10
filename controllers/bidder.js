@@ -237,6 +237,26 @@ exports.getfavorites = async (req, res) => {
                 res.redirect('/view-product-list/viewproduct/' + id_user[1])
             }
             else{
+                let currentUser = {
+                    $pull : { favorites:   {
+                            id_product: id_user[1],
+                            name_product: currentproduct.name,
+                            timeStart_product:currentproduct.timest,
+                            timeEnd_product:currentproduct.timeend,
+                            currentPrice_product:currentproduct.current,
+
+                        } }
+                };
+                User.findOneAndUpdate(
+                    {_id: id_user[0]},
+                    currentUser,
+                    {new: true},
+                    (err, doc) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
                 res.redirect('/view-product-list/viewproduct/' + id_user[1])
             }
             })

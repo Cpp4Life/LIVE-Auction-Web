@@ -29,7 +29,6 @@ exports.postProduct = async (req, res) => {
     const upload = multer({storage});
     upload.array('image', 5)
     (req, res, function (err){
-        console.log(req.body);
         const { name, startPrice, stepprice, endPrice, mydecript, brand, subBrand, time } = req.body;
         const errors = [];
 
@@ -65,27 +64,33 @@ exports.postProduct = async (req, res) => {
                 Category: categoryList[0].list
             });
         } else {
+            console.log(req.body);
             var mongoClient = require('mongodb').MongoClient;
             var MGurl = "mongodb://localhost:27017/";
             mongoClient.connect(MGurl, function (err, db) {
                 if (err) throw err;
                 var dbo = db.db("auctionDB");
                 var newProduct = new Product({
-                    name: name,
-                    originalBidPrice: startPrice,
-                    boughtPrice: endPrice,
-                    currentPrice: startPrice,
-                    stepPrice: stepprice,
-                    brand: brand,
-                    subBrand: subBrand,
+                    name: req.body.name,
+                    originalBidPrice: req.body.startPrice,
+                    boughtPrice: req.body.endPrice,
+                    currentPrice: req.body.startPrice,
+                    stepPrice: req.body.stepPrice,
+                    brand: req.body.brand,
+                    subBrand: req.body.subBrand,
+                    owner: req.user,
                     timeStart: new Date().toLocaleDateString(),
                     timeEnd: new Date(req.body.datetime).toLocaleString(),
-                    description: req.body.description
-
+                    description: req.body.description,
+                    topPrice: 0
                 })
+
                 dbo.collection("products").insertOne(newProduct, function (err, res) {
                     if (err) throw err;
+                    console.log(req.params.id);
+
                     console.log(newProduct.id);
+
                     // fs.mkdirSync(url + newProduct.id.toString());
                     fs.rename(url + 'newImages', url + newProduct.id, function(err) {
                         if (err) {
