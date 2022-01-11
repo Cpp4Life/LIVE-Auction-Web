@@ -1,16 +1,16 @@
 const helper = require('../helpers/helper');
 const _ = require('lodash');
 const { User, Category, Brand } = require('../models/model');
-const { isBuffer } = require('lodash');
 
-exports.getAdminLoginPage = (req, res) => {
+exports.getAdminLoginPage = async (req, res) => {
+    const categoryList = await Category.find({});
     res.render('viewAdmin/admin-login', { Category: categoryList[0].list });
 }
 
-exports.postAdminLogin = (req, res) => {
+exports.postAdminLogin = async (req, res) => {
+    const categoryList = await Category.find({});
     const { username, password } = req.body;
     const errors = [];
-    console.log(req.body);
 
     User.findOne({ email: username, password: password }, (err, foundUser) => {
         if (err) {
@@ -30,7 +30,11 @@ exports.postAdminLogin = (req, res) => {
 
 exports.getAdminSettings = async (req, res) => {
     const categoryList = await Category.find({});
-    res.render('viewAdmin/settings', { Category: categoryList[0].list });
+    const userList = await User.find({});
+    res.render('viewAdmin/settings', {
+        Category: categoryList[0].list,
+        User: userList
+    });
 }
 
 exports.postCategory = async (req, res) => {
@@ -43,7 +47,7 @@ exports.postCategory = async (req, res) => {
         if (err) console.log(err);
 
         if (foundList) {
-            console.log('Brand existed');
+            console.log('Old Brand');
             if (foundList.subBrand.includes(submittedSubBrand)) {
                 errors.push({ msg: 'Mặt hàng và loại sản phẩm đã tồn tại!' });
             } else {
@@ -141,7 +145,6 @@ exports.postDelBrandItem = async (req, res) => {
                                 const objectId = result[i]._id;
                                 Brand.findByIdAndDelete({ _id: objectId }, (deleteErr) => {
                                     if (deleteErr) {
-                                        console.log('Document deleted');
                                         console.log(deleteErr);
                                     }
                                 });
@@ -163,7 +166,6 @@ exports.postDelBrandItem = async (req, res) => {
 }
 
 exports.postAddBrandItem = async (req, res) => {
-    console.log(req.body);
     const categoryList = await Category.find({});
     const itemName = req.body.newItem;
     const brandName = req.body.brand;
@@ -203,4 +205,19 @@ exports.postAddBrandItem = async (req, res) => {
             }
         }
     );
+}
+
+exports.postAccounts = async (req, res) => {
+    const action = req.body.action;
+    const email = req.body.email;
+
+    if (action === 'delete') {
+        User.deleteOne({ email: email }, err => {
+            if (err)
+                console.log(err);
+        });
+    } else if (action === 'reset') {
+
+    }
+    res.redirect('/admin/settings');
 }

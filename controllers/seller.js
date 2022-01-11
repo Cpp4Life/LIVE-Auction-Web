@@ -11,7 +11,27 @@ exports.getPostProductPage = async (req, res) => {
     const categoryList = await Category.find({});
     res.render('viewSeller/post-product', { success: '',Category: categoryList[0].list });
 }
+exports.getProductselling = async (req,res) =>{
+    dbModel.Product.find({}, (err, ProductList) => {
+            if (err)
+                console.log(err);
+            else {
+                dbModel.Category.find({}, (err, CategoryList) => {
+                    if (err)
+                        console.log(err);
+                    else {
 
+                        res.render('viewSeller/seller-profile', {
+                            Product: ProductList,
+                            Category: CategoryList[0].list
+                        });
+                    }
+                })
+
+            }
+        }
+    )
+}
 exports.postProduct = async (req, res) => {
     const categoryList = await Category.find({});
     var count = 0;
@@ -70,7 +90,6 @@ exports.postProduct = async (req, res) => {
             mongoClient.connect(MGurl, function (err, db) {
                 if (err) throw err;
                 var dbo = db.db("auctionDB");
-
                 var newProduct = new Product({
                     name: req.body.name,
                     originalBidPrice: req.body.startPrice,
@@ -92,9 +111,9 @@ exports.postProduct = async (req, res) => {
 
                 dbo.collection("products").insertOne(newProduct, function (err, res) {
                     if (err) throw err;
-                    console.log(req.params.id);
+                    // console.log(req.params.id);
 
-                    console.log(newProduct.id);
+                    // console.log(newProduct.id);
 
                     // fs.mkdirSync(url + newProduct.id.toString());
                     fs.rename(url + 'newImages', url + newProduct.id, function(err) {

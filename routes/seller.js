@@ -12,11 +12,7 @@ router.post('/seller/post-product', isAuth, sellerController.postProduct)
 // router.post('/seller/post-product', sellerController.postProduct)
 
 
-router.get('/seller/profile', isAuth, async (req, res) => {
-    const ProductList = await Product.find({});
-
-    res.render('viewSeller/seller-profile', { Product: ProductList.list });
-});
+router.get('/seller/profile', isAuth, sellerController.getProductselling)
 
 // router.post('/seller/profile/:id',sellerController.editprofile);
 router.post('/seller/profile/:id',sellerController.editprofile);

@@ -125,7 +125,6 @@ exports.postRegister = async (req, res, next) => {
 }
 
 exports.postForgotPassword = async (req, res) => {
-    console.log(req.body);
     email = (req.body.email).toLowerCase();
     const errors = [];
     const categoryList = await Category.find({});

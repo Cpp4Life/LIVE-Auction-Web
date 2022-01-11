@@ -23,6 +23,27 @@ exports.getPostProfilePage = async (req, res) => {
 var name, email, mobile, address,img;
 
 
+exports.getbidderprofile = async ( req, res) =>{
+    dbModel.Product.find({}, (err, ProductList) => {
+            if (err)
+                console.log(err);
+            else {
+                dbModel.Category.find({}, (err, CategoryList) => {
+                    if (err)
+                        console.log(err);
+                    else {
+                        res.render('viewBidder/bidder-profile', {
+                            Product: ProductList,
+                            Category: CategoryList[0].list
+                        });
+                    }
+                })
+
+            }
+        }
+    )
+}
+
 exports.editprofile  = async (req, res) =>  {
     const user = req.body;
 
@@ -51,7 +72,7 @@ exports.editprofile  = async (req, res) =>  {
                     address: req.body.address,
                     phone: req.body.mobile
                 };
-                console.log(currentUser)
+                // console.log(currentUser)
                 User.findOneAndUpdate(
                     { _id: currentUser._id },
                     currentUser,
@@ -74,7 +95,7 @@ exports.editprofile  = async (req, res) =>  {
                     phone: req.body.mobile,
                     image: req.file.filename
                 };
-                console.log(currentUser)
+                // console.log(currentUser)
                 User.findOneAndUpdate(
                     {_id: currentUser._id},
                     currentUser,

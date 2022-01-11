@@ -2,11 +2,7 @@
 <link rel="stylesheet" href="css/profilebidder.css" xmlns="http://www.w3.org/1999/html">
 <script src="js/product.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-
-
 </head>
-
-
 <body>
 <script>
     $('#fuMain').fileinput({
@@ -47,7 +43,6 @@
     </div>
 </nav>
 
-
 <hr>
 <div class="container-fluid bootstrap snippet">
 
@@ -73,16 +68,8 @@
                     <span class="badge  badge-pill">1</span>
                 </li>
             </ul>
-
-
-
         </div>
-        <!--/col-3-->
-
         <div class="col-sm-9">
-
-
-
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
@@ -140,11 +127,6 @@
                             </div>
 
                         </div>
-                        <!--                                <label for="fname">First name:</label><br>-->
-                        <!--                            <input type="text" id="fname" name="fname" value="John"><br>-->
-                        <!--                            <label for="lname">Last name:</label><br>-->
-                        <!--                            <input type="text" id="lname" name="lname" value="Doe"><br><br>-->
-                        <!--                            <input type="submit" value="Submit">-->
                     </form>
 
                 </div>
@@ -198,20 +180,7 @@
                                     <td> <%= element.comment %> </td>
                                 </tr>
                             <% }) %>
-                            <!--                            <tr>-->
-                            <!--                                <td><a class="info_ava" href="#"> <img src="images/Adam.png" lazyloading="" style="height: 30px;width: 30px; border-radius: 15px"> </a> Reus</td>-->
-                            <!--                                <td>+1</td>-->
-                            <!--                                <td>nhiệt tình.</td>-->
-                            <!--                            </tr>-->
-                            <!--                            <tr>-->
-                            <!--                                <td> <a class="info_ava" href="#"> <img src="images/Adam.png" lazyloading="" style="height: 30px;width: 30px; border-radius: 15px"> </a> Ronaldo</td>-->
-                            <!--                                <td>+1</td>-->
-                            <!--                                <td>chốt đơn nhanh .</td>-->
-                            <!--                            </tr>-->
                             </tbody>
-
-
-
                         </table>
                     </div>
                 </div>
@@ -221,9 +190,13 @@
                     <h4 class="card-header " style="text-align: center;">
                         Favorites product
                     </h4>
+
                     <div class="card-body">
                         <div class="row">
-                            <% user.favorites.forEach(element => { %>
+                            <% Product.forEach(element1=> {%>
+                                <% user.favorites.forEach(element => { %>
+                                    <% if((element1._id ).equals(element.id_product) ){ %>
+                                        <% if(element1.status){ %>
                                 <div class="col-sm-4 mb-4">
                                     <div class="card">
                                         <img src="/images/<%= element.id_product %>/3.jpg" style="height: 100px;" class="card-img-top" alt="...">
@@ -242,10 +215,14 @@
                                         </div>
                                     </div>
                                 </div>
-                            <% }) %>
+                                            <% } %>
 
+                                        <% } %>
+                                <% }) %>
+                            <% }) %>
                         </div>
                 </div>
+
                 </div>
 
                 <div class="tab-pane fade" id="biddings" role="tabpanel" aria-labelledby="contact-tab">
@@ -255,59 +232,36 @@
                     </h4>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-4 mb-3">
-                                <div class="card h-100">
-                                    <img src="images/logo-clock/image4.png"  class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Rolex</h5>
-                                        <p class="card-text">Giá hiện tại: 50.000</p>
-                                        <p class="card-text">Giá bạn đấu: 70.000</p>
-                                        <p class="card-text">Giá mua ngay: $</p>
-                                        <p class="card-text">Người bán: Adam</p>
-                                        <p class="card-text">
+                            <% Product.forEach(element1=> {%>
 
-                                        <div class="info time">
-                                            <div class="countdown">
-                                                <div class="far fa-clock">
-                                                    <script>
-                                                        var target_date = new Date().getTime() + (1000 * 3600 * 48);
-                                                        var days, hours, minutes, seconds;
-                                                        var countdown = document.getElementById("hihi1");
-                                                        getCountdown();
-                                                        setInterval(function () { getCountdown(); }, 1000);
-                                                        function getCountdown() {
-                                                            var current_date = new Date().getTime();
-                                                            var seconds_left = (target_date - current_date) / 1000;
-                                                            days = pad(parseInt(seconds_left / 86400));
-                                                            seconds_left = seconds_left % 86400;
-                                                            hours = pad(parseInt(seconds_left / 3600));
-                                                            seconds_left = seconds_left % 3600;
-                                                            minutes = pad(parseInt(seconds_left / 60));
-                                                            seconds = pad(parseInt(seconds_left % 60));
-                                                            countdown.innerHTML = "<span>" + " " + days + "d " + "</span><span>" + hours + "h " + "</span><span>" + minutes + "' " + "</span><span>" + seconds + "s " + "</span>";
-                                                        }
-                                                        function pad(n) {
-                                                            return (n < 10 ? '0' : '') + n;
-                                                        }
-                                                    </script>
-
+                                <% if( element1.status) { %>
+                                <% var found = false%>
+                                <% element1.bidders.forEach(element2=> { %>
+                                    <% if(( element2.user._id).equals( user._id) && !found) { %>
+                                            <div class="col-sm-4 mb-3">
+                                                <div class="card">
+                                                    <img src="/images/<%= element1._id %>/3.jpg" style="height: 120px;" class="card-img-top" alt="...">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><%= element1.name%></h5>
+                                                        <p class="card-text">Giá hiện tại: <%= element1.currentPrice%></p>
+                                                        <p class="card-text">Giá mua ngay:<%= element1.boughtPrice%></p>
+                                                        <p class="card-text">Người bán: <%= element1.owner.name%></p>
+                                                        <p class="card-text">Ngày/giờ Kết thúc: <%= element1.timeEnd %></p>
+                                                    </div>
+                                                    <div class="card-footer text-muted">
+                                                        <a class="btn btn-sm btn-outline-primary" href="/view-product-list/viewproduct/<%= element1._id %>" role="button">
+                                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                                            Details
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        </p>
-                                        <p class="card-text">Số lượt ra giá: 10</p>
-                                    </div>
-                                    <div class="card-footer text-muted">
-                                        <a class="btn btn-sm btn-outline-primary" href="#" role="button">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                            Details
-                                        </a>
-                                        <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
-                                            <i class="far fa-heart"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                                        <% found = true%>
+                                    <%   } %>
+                            <% }) %>
+                                    <%   } %>
+
+                                <% }) %>
                         </div>
                     </div>
                 </div>
@@ -400,6 +354,31 @@
         </div>
     </div>
 </div>
+
+<!--                                            <div class="info time">-->
+<!--                                                <div class="countdown">-->
+<!--                                                    <div class="far fa-clock">-->
+<!--                                                        <script>-->
+<!--                                                            var target_date = new Date().getTime() + (1000 * 3600 * 48);-->
+<!--                                                            var days, hours, minutes, seconds;-->
+<!--                                                            var countdown = document.getElementById("hihi1");-->
+<!--                                                            getCountdown();-->
+<!--                                                            setInterval(function () { getCountdown(); }, 1000);-->
+<!--                                                            function getCountdown() {-->
+<!--                                                                var current_date = new Date().getTime();-->
+<!--                                                                var seconds_left = (target_date - current_date) / 1000;-->
+<!--                                                                days = pad(parseInt(seconds_left / 86400));-->
+<!--                                                                seconds_left = seconds_left % 86400;-->
+<!--                                                                hours = pad(parseInt(seconds_left / 3600));-->
+<!--                                                                seconds_left = seconds_left % 3600;-->
+<!--                                                                minutes = pad(parseInt(seconds_left / 60));-->
+<!--                                                                seconds = pad(parseInt(seconds_left % 60));-->
+<!--                                                                countdown.innerHTML = "<span>" + " " + days + "d " + "</span><span>" + hours + "h " + "</span><span>" + minutes + "' " + "</span><span>" + seconds + "s " + "</span>";-->
+<!--                                                            }-->
+<!--                                                            function pad(n) {-->
+<!--                                                                return (n < 10 ? '0' : '') + n;-->
+<!--                                                            }-->
+<!--                                                        </script>-->
 <script>
     function getInfo() {
         document.getElementById("registrationForm").innerHTML = 1

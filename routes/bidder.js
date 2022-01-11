@@ -7,9 +7,10 @@ const router = express.Router();
 
 const multer  = require('multer')
 const upload = multer({ dest: 'uploads/' })
-router.get('/bidder/profile', isAuth, (req, res) => {
-    res.render('viewBidder/bidder-profile');
-});
+router.get('/bidder/profile', isAuth, bidderController.getbidderprofile);
+//     res.render('viewBidder/bidder-profile');
+//
+// });
 
 router.post('/bidder/profile/:id',bidderController.editprofile);
 
