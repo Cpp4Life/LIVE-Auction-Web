@@ -16,4 +16,6 @@ router.post('/settings/category/:brand/delete-item', adminController.postDelBran
 
 router.post('/settings/category/:brand/add-item', adminController.postAddBrandItem);
 
+router.post('/settings/accounts/', adminController.postAccounts);
+
 module.exports = router;
