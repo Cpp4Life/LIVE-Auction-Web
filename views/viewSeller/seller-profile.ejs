@@ -125,7 +125,7 @@
                     <hr>
                     <% Product.forEach(element=> {%>
                         <% if(element.status){ %>
-                            <% if(element.owner._id == user.id){ %>
+                            <% if((element.owner._id).equals(user.id)){ %>
                                 <div class="container" style="margin-top: 40px;">
                                     <table class="table table-hover table-bordered">
                                         <thead>
