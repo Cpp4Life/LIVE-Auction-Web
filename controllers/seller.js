@@ -6,10 +6,10 @@ const multer = require('multer');
 const date = require("date-and-time");
 const bcrypt = require("bcrypt");
 const username = 'hieule';
-// const upload = nulter({dest: 'uploads/'});
+const swal = require('sweetalert');
 exports.getPostProductPage = async (req, res) => {
     const categoryList = await Category.find({});
-    res.render('viewSeller/post-product', { Category: categoryList[0].list });
+    res.render('viewSeller/post-product', { success: '',Category: categoryList[0].list });
 }
 exports.getProductselling = async (req,res) =>{
     dbModel.Product.find({}, (err, ProductList) => {
@@ -103,10 +103,10 @@ exports.postProduct = async (req, res) => {
                     timeEnd: new Date(req.body.datetime).toLocaleString(),
                     description: req.body.description,
                     topPrice: 0,
+                    status: 1,
                     topOwner: {
                         image:   "262679398_417432213213287_2443858593223327537_n.png",
-                    },
-                    status: 1,
+                    }
                 })
 
                 dbo.collection("products").insertOne(newProduct, function (err, res) {
@@ -125,7 +125,7 @@ exports.postProduct = async (req, res) => {
                     })
                     db.close();
                 })
-                res.render('viewSeller/post-product', {
+                res.render('viewSeller/post-product', {success: 'Đăng sản phẩm thành công',
                     Category: categoryList[0].list
                 });
     })

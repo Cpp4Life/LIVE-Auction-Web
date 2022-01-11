@@ -1,6 +1,6 @@
 <%- include('partials/header'); -%>
     <link rel="stylesheet" href="/css/postproduct.css">
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
     </head>
 
@@ -12,6 +12,30 @@
 
 <div class="container my-5 px-5">
     <div class="row">
+        <script>
+            console.log(message);
+            console.log(success);
+        </script>
+        <%if(message !== '') {%>
+        <script>
+            swal({
+                title: `<%=message%>`,
+                text: "Sản phẩm đã hết thời gian đấu giá",
+                icon: "error",
+                button: "OK",
+            });
+        </script>
+        <%}%>
+        <%if(success !== '') {%>
+        <script>
+            swal({
+                title: `<%=success%>`,
+                text: "áda",
+                icon: "success",
+                button: "OK",
+            });
+        </script>
+        <%}%>
         <% Product.forEach(element=> {%>
             <% if (element.status) { %>
                 <div class="col-sm-4 mb-4">

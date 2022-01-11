@@ -2,7 +2,7 @@
 <%- include('partials/header'); -%>
 <link rel="stylesheet" href="/css/view-product.css">
 <link rel="stylesheet" type="text/css" href="https://hocwebgiare.com/cpadmin/css/xzoom.css" media="all">
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -10,7 +10,16 @@
     <%- include('partials/navbar'); -%>
 </section>
 <div>
-
+    <%if(success !== '') {%>
+    <script>
+        swal({
+            title: `<%=success%>`,
+            text: "Đấu giá thành công",
+            icon: "success",
+            button: "OK",
+        });
+    </script>
+    <%}%>
     <% Product.forEach(element=> {%>
     <section class="view-product">
             <div class="feature">
@@ -176,26 +185,34 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                    <form method="post">
-                                        <button onclick="promptMe()" id="btnAuction" name="price" value="" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid" style="margin-top: 10px;">
-                                            Đấu giá
-                                        </button>
-                                    </form>
+                                    <a onclick="promptMe()" id="btnAuction" name="price" value="" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid" style="margin-top: 10px;">
+                                        Đấu giá
+                                    </a>
                                 <script>
                                     function promptMe(){
+                                        swal("Write something here:", {
+                                            content: "input",
+                                            button: {
+                                                text: "Submit",
+                                                closeModal: false,
+                                            },
+                                        }).then((value) => {
+                                                var price = parseInt(value);
+                                                if(isNaN(price)){
+                                                    swal("Vui lòng chỉ nhập chữ số. Xin hãy thực hiện lại thao tác.");
+                                                    return;
+                                                }
+                                                var currentPrice = parseInt(document.getElementById('currentprice').innerText);
+                                                if(price < currentPrice){
+                                                    swal("Vui lòng nhập cao hơn giá hiện tại. Xin hãy thực hiện lại thao tác.");
+                                                    return;
+                                                }
+                                            location.replace("/view-product-list/viewproduct/auction/<%= element.id%>+" + price);
 
-                                        var price = parseInt(prompt("Hãy nhập giá cao nhất mà bạn có thể trả (Hệ thống sẽ tự động đấu giá giúp bạn):"));
-                                        if(isNaN(price)){
-                                            alert("Vui lòng chỉ nhập chữ số. Xin hãy thực hiện lại thao tác.");
-                                            return;
-                                        }
-                                        var currentPrice = parseInt(document.getElementById('currentprice').innerText);
+                                        });
 
-                                        if(price < currentPrice){
-                                            alert("Vui lòng nhập cao hơn giá hiện tại. Xin hãy thực hiện lại thao tác.");
-                                            return;
-                                        }
-                                        document.getElementById('btnAuction').value = price;
+
+
 
                                     }
                                 </script>
@@ -217,9 +234,31 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                    <a href='/view-product-list/viewproduct/buynow/<%=element.id%>' type="button" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid" style="margin-top: 10px;">
+                                    <button onclick="myFunction()" id="btn" type="button" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid" style="margin-top: 10px;">
                                         Mua ngay
-                                    </a>
+                                    </button>
+                                <script>
+                                    function myFunction(){
+
+                                        document.getElementById('btn').addEventListener('click', function(){
+                                            swal({
+                                                title: "Are you sure?",
+                                                text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                icon: "info",
+                                                buttons: true,
+                                                dangerMode: true,
+                                            })
+                                                .then((willDelete) => {
+                                                    if (willDelete) {
+                                                        location.replace("/view-product-list/viewproduct/buynow/`<%=element.id%>`");
+                                                    } else {
+
+                                                    }
+                                                });
+                                        })
+                                    }
+
+                                </script>
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,8 @@
 <%- include('../partials/header'); -%>
 <!--    <link rel="css/post-product.css" href="public/css/post-product.css">-->
 <link rel="stylesheet" href="../css/post-product.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script src="../js/post-product.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
     </head>
@@ -9,7 +11,16 @@
         <section class="colored-section" style="padding:0 15%;">
             <%- include('../partials/navbar'); -%>
         </section>
-
+        <%if(success !== '') {%>
+            <script>
+                swal({
+                    title: `<%=success%>`,
+                    text: "Một sản phẩm mới đã được đưa lên sàn đấu giá",
+                    icon: "success",
+                    button: "OK",
+                });
+            </script>
+        <%}%>
         <form method="post" enctype="multipart/form-data">
             <div class="container my-5 px-5">
                 <%- include ('../partials/messages'); -%>
