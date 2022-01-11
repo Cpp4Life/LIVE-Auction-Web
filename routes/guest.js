@@ -9,7 +9,7 @@ router.get('/', guestController.getHomePage);
 router.get('/view-product-list', guestController.getListView);
 
 router.get('/view-product-list/viewproduct/:id', isAuth, guestController.getProductPage);
-router.post('/view-product-list/viewproduct/:id', isAuth, guestController.postAuctionProduct);
+router.get('/view-product-list/viewproduct/auction/:price', isAuth, guestController.postAuctionProduct);
 // router.post('/view-product-list/viewproduct/:id', isAuth, guestController.getpostProductPage);
 router.get('/view-product-list/viewproduct/buynow/:id', isAuth, guestController.getButtonBuy);
 module.exports = router;

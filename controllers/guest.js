@@ -23,6 +23,8 @@ exports.getListView = (req, res) => {
                 else {
 
                     res.render('view-product-list', {
+                        success: '',
+                        message: '',
                         Product: ProductList,
                         Category: CategoryList[0].list
                     });
@@ -44,6 +46,7 @@ exports.getProductPage = async (req, res) => {
                         console.log(err);
                     else {
                         res.render('view-product', {
+                            success: '',
                             topOwner: ProductList[0].topOwner,
                             owner: ProductList[0].owner,
                             Product: ProductList,
@@ -86,18 +89,17 @@ exports.getButtonBuy = async (req, res) =>{
 }
 exports.postAuctionProduct = async (req, res) => {
 
+    console.log(req.params);
+    var arr = req.params.price.split("+")
     //Lấy dữ liệu sản phẩm
-    Product.find({_id: req.params.id}, async function(err,product, done) {
-        console.log(product)
-        console.log(product[0].originalBidPrice);
-        console.log(product[0].stepPrice);
+    Product.find({_id: arr[0]}, async function(err,product, done) {
 
         if (product[0].timeEnd.getTime() - new Date().getTime() < 0) {
             let currentProduct0 = {
                 status: 0
             };
             Product.findOneAndUpdate(
-                {_id: req.params.id},
+                {_id: arr[0]},
                 currentProduct0,
                 {new: true},
                 (err, doc) => {
@@ -106,21 +108,32 @@ exports.postAuctionProduct = async (req, res) => {
                     }
                 }
             );
+            dbModel.Category.find({}, (err, CategoryList) => {
+                if (err)
+                    console.log(err);
+                else {
+
+                    res.render('view-product-list', {
+                        message: 'Đấu giá sản phẩm không thành công',
+                        Category: CategoryList[0].list
+                    });
+                }
+            })
         } else {
             //Trường hợp chưa có ai đấu giá
             if (product[0].bidders.length === 0) {
                 let currentProduct = {
-                    topPrice: req.body.price,
+                    topPrice: arr[1],
                     currentPrice: parseInt(product[0].originalBidPrice + product[0].stepPrice),
                     topOwner: req.user,
                     $push: {
                         bidders: {
-                            bidTime: new Date().toLocaleString(), user: req.user, bidPrice: req.body.price
+                            bidTime: new Date().toLocaleString(), user: req.user, bidPrice: arr[1]
                         }
                     }
                 };
                 Product.findOneAndUpdate(
-                    {_id: req.params.id},
+                    {_id: arr[0]},
                     currentProduct,
                     {new: true},
                     (err, doc) => {
@@ -133,24 +146,24 @@ exports.postAuctionProduct = async (req, res) => {
             //Trường hợp đã có người đấu giá trước đó
             else {
                 //Trường hợp 1: Lớn hơn giá hiện tại nhưng bé hơn topPrice
-                if (req.body.price < product[0].topPrice) {
+                if (parseInt(arr[1]) < product[0].topPrice) {
                     let currentProduct1 = {
-                        currentPrice: Math.min((parseInt(req.body.price) + parseInt(product[0].stepPrice)), product[0].topPrice),
+                        currentPrice: Math.min((parseInt(arr[1]) + parseInt(product[0].stepPrice)), product[0].topPrice),
                         $push: {
                             bidders: {
                                 $each: [
-                                    {bidTime: new Date().toLocaleString(), user: req.user, bidPrice: req.body.price},
+                                    {bidTime: new Date().toLocaleString(), user: req.user, bidPrice: arr[1]},
                                     {
                                         bidTime: new Date().toLocaleString(),
                                         user: product[0].topOwner,
-                                        bidPrice: Math.min((parseInt(req.body.price) + parseInt(product[0].stepPrice)), product[0].topPrice)
+                                        bidPrice: Math.min((parseInt(arr[1]) + parseInt(product[0].stepPrice)), product[0].topPrice)
                                     }
                                 ]
                             }
                         }
                     };
                     Product.findOneAndUpdate(
-                        {_id: req.params.id},
+                        {_id: arr[0]},
                         currentProduct1,
                         {new: true},
                         (err, doc) => {
@@ -162,9 +175,9 @@ exports.postAuctionProduct = async (req, res) => {
                 } else {
                     //Trường hợp 2: Lớn hơn cả giá của top price
                     let currentProduct2 = {
-                        topPrice: req.body.price,
+                        topPrice: arr[1],
                         topOwner: req.user,
-                        currentPrice: Math.min((product[0].topPrice + product[0].stepPrice), req.body.price),
+                        currentPrice: Math.min((product[0].topPrice + product[0].stepPrice), parseInt(arr[1])),
                         $push: {
                             bidders: {
                                 $each: [
@@ -176,13 +189,13 @@ exports.postAuctionProduct = async (req, res) => {
                                     {
                                         bidTime: new Date().toLocaleString(),
                                         user: req.user,
-                                        bidPrice: Math.min((product[0].topPrice + product[0].stepPrice), req.body.price)
+                                        bidPrice: Math.min((product[0].topPrice + product[0].stepPrice), arr[1])
                                     }]
                             }
                         }
                     };
                     Product.findOneAndUpdate(
-                        {_id: req.params.id},
+                        {_id: arr[0]},
                         currentProduct2,
                         {new: true},
                         (err, doc) => {
@@ -193,18 +206,15 @@ exports.postAuctionProduct = async (req, res) => {
                     );
                 }
             }
-            console.log((product[0].timeEnd.getTime() - new Date().getTime()) / 1000);
             if (product[0].timeEnd.getTime() - new Date().getTime() < 5 * 60 * 1000) {
                 var time1 = product[0].timeEnd.getTime() + 10*60*1000;
-                console.log('asdads ' + time1);
                 time1 = new Date(time1).toLocaleString();
-                console.log(time1);
-                Product.find({_id: req.params.id}, async function (err, product, done) {
+                Product.find({_id: arr[0]}, async function (err, product, done) {
                     let currentProduct3 = {
                         timeEnd: time1
                     };
                     Product.findOneAndUpdate(
-                        {_id: req.params.id},
+                        {_id: arr[0]},
                         currentProduct3,
                         {new: true},
                         (err, doc) => {
@@ -217,25 +227,29 @@ exports.postAuctionProduct = async (req, res) => {
                 })
             }
         }
-        res.redirect('/view-product-list');
-    })    }
+    })
+    console.log("áđá");
+    dbModel.Product.find({}, (err, ProductList) => {
+            if (err)
+                console.log(err);
+            else {
+                dbModel.Category.find({}, (err, CategoryList) => {
+                    if (err)
+                        console.log(err);
+                    else {
+                        res.render('view-product-list', {
+                            success: 'Đấu giá thành công',
+                            message: '',
+                            Product: ProductList,
+                            Category: CategoryList[0].list
+                        });
+                    }
+                })
 
-    // dbModel.Product.find( (err, ProductList) => {
-    //         if (err)
-    //             console.log(err);
-    //         else {
-    //             dbModel.Category.find({}, (err, CategoryList) => {
-    //                 if (err)
-    //                     console.log(err);
-    //                 else {
-    //                     res.render('view-product-list', {
-    //                         Product: ProductList,
-    //                         Category: CategoryList[0].list
-    //                     });
-    //                 }
-    //             })
-    //
-    //         }
-    //     }
-    // )
+            }
+        }
+    )
+}
+
+
 
