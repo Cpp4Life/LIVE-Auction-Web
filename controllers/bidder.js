@@ -24,24 +24,27 @@ var name, email, mobile, address,img;
 
 
 exports.getbidderprofile = async ( req, res) =>{
-    dbModel.Product.find({}, (err, ProductList) => {
-            if (err)
-                console.log(err);
-            else {
-                dbModel.Category.find({}, (err, CategoryList) => {
-                    if (err)
-                        console.log(err);
-                    else {
-                        res.render('viewBidder/bidder-profile', {
-                            Product: ProductList,
-                            Category: CategoryList[0].list
-                        });
-                    }
-                })
+    dbModel.User.find({}, (err, user) => {
+        dbModel.Product.find({}, (err, ProductList) => {
+                if (err)
+                    console.log(err);
+                else {
+                    dbModel.Category.find({}, (err, CategoryList) => {
+                        if (err)
+                            console.log(err);
+                        else {
+                            res.render('viewBidder/bidder-profile', {
+                                User: user,
+                                Product: ProductList,
+                                Category: CategoryList[0].list
+                            });
+                        }
+                    })
 
+                }
             }
-        }
-    )
+        )
+    })
 }
 
 exports.editprofile  = async (req, res) =>  {
@@ -197,6 +200,64 @@ exports.editpassword = async (req, res) => {
     }
 }
 
+exports.postevaluateSeller = async (req, res) => {
+    const errors = [];
+    console.log(req.params);
+    console.log(req.body.rate)
+    var arr = req.params.id.split("+")
+    User.find({_id: arr[0]}, async function (err, user1, done) {
+        if (err) {
+            console.log(err)
+        }
+        if (user1) {
+            User.find({_id: arr[1]}, async function (err, user, done) {
+
+                if (err) {
+                    console.log(err)
+                }
+                if (user) {
+                    var check= true;
+
+                    for(var i=0;i<user1[0].review.length;i++){
+                        if((arr[2]) == (user1[0].review[i].product_id)){
+                            check= false;
+                        }
+                    }
+                    if(check) {
+                        let currentUser = {
+                            $push: {
+                                review: {
+                                    user_id: arr[1],
+                                    product_id: arr[2],
+                                    name_rv: user[0].name,
+                                    comment: req.body.rate,
+                                    point: 1,
+
+                                }
+                            }
+                        };
+                        User.findOneAndUpdate(
+                            {_id: arr[0]},
+                            currentUser,
+                            {new: true},
+                            (err, doc) => {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            }
+                        );
+
+                    }
+                }
+            });
+        }
+    });
+
+
+
+  res.redirect("/bidder/profile")
+
+};
 
 exports.getfavorites = async (req, res) => {
     let currentUser = {

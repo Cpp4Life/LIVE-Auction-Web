@@ -78,7 +78,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <table id = "mask1" class="table table-hover table-bordered">
+                                    <table  class="table table-hover table-bordered">
                                         <thead>
                                         <tr>
                                             <th>Thời điểm</th>
@@ -90,7 +90,7 @@
                                         <% element.bidders.forEach(element1 => { %>
                                             <tr>
                                                 <td> <%= element1.bidTime%> </td>
-                                                <td  ><%= element1.user.name%></td>
+                                                <td  id = "mask1" > </td>
 
                                                 <td> <%= element1.bidPrice %> </td>
                                             </tr>
@@ -295,8 +295,8 @@
                                 <img src="/images/Profile/<%= topOwner.image %>" lazyloading="" style="height: 100px;width: 100px;">
                             </a>
                             <div class="store_info__center" style="padding-left: 30px;">
-                                <h4 class="store_info__name">
-                                    <a href="#"><%= topOwner.name %></a>
+                                <h4 class="store_info__name" >
+                                    <a  id="mask1"> </a>
                                 </h4>
                                 <div class="color_note">
                                     <strong class="color_text_primary">Diểm số : <%= topOwner.reviewPoint%> </strong> (96% Đánh giá uy tín)
@@ -307,6 +307,24 @@
                             </a>
                         </div>
                     </div>
+                    <script>
+                        var str_bidder= ('<%= topOwner.name %>');
+                        var mask_bidder="";
+                        for(var i=0;i<str_bidder.length;i++){
+                            if(i<(str_bidder.length /2 )){
+                                mask_bidder = mask_bidder + "*"
+                            }
+                            else{
+                                mask_bidder= mask_bidder + str_bidder[i]
+                            }
+                        }
+                        console.log('<%= topOwner.name %>')
+                        var countdown = document.getElementById("mask1");
+                        countdown.value = mask_bidder;
+
+                        // document.getElementById("mask1").innerHTML = mask_bidder;
+
+                    </script>
                 </div>
             </div>
             <div class="chitietsp">

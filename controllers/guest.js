@@ -93,9 +93,6 @@ exports.postAuctionProduct = async (req, res) => {
     var arr = req.params.price.split("+")
     //Lấy dữ liệu sản phẩm
     Product.find({_id: arr[0]}, async function(err,product, done) {
-        // console.log(product)
-        // console.log(product[0].originalBidPrice);
-        // console.log(product[0].stepPrice);
         if (product[0].timeEnd.getTime() - new Date().getTime() < 0) {
             let currentProduct0 = {
                 status: 0
@@ -231,7 +228,6 @@ exports.postAuctionProduct = async (req, res) => {
             }
         }
     })
-    console.log("áđá");
     dbModel.Product.find({}, (err, ProductList) => {
             if (err)
                 console.log(err);

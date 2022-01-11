@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema({
     review: [
         {
             user_id: String,
+            product_id: String,
             name_rv: String,
             comment: String,
             point: Number

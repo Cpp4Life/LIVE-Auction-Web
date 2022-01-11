@@ -6,6 +6,7 @@ const {User} = require("../models/model");
 const router = express.Router();
 
 const multer  = require('multer')
+const guestController = require("../controllers/guest");
 const upload = multer({ dest: 'uploads/' })
 router.get('/bidder/profile', isAuth, bidderController.getbidderprofile);
 //     res.render('viewBidder/bidder-profile');
@@ -25,5 +26,7 @@ router.post('/bidder/profile/changepassword/:id', isAuth, bidderController.editp
 // router.post('/view-product-list/viewproduct/:id/auction/:id', isAuth, bidderController.getpostviewauction);
 
 router.get('/view-product-list/viewproduct/favorite/:id', isAuth, bidderController.getfavorites);
+
+router.post('/bidder/profile/evaluateseller/:id', isAuth, bidderController.postevaluateSeller);
 
 module.exports = router;
