@@ -41,6 +41,7 @@ exports.getAdminSettings = async (req, res) => {
 
 exports.postCategory = async (req, res) => {
     const categoryList = await Category.find({});
+    const userList = await User.find({});
     const submittedBrand = req.body.brand;
     const submittedSubBrand = req.body.subBrand;
     const errors = [];
@@ -57,7 +58,8 @@ exports.postCategory = async (req, res) => {
             }
             res.render('viewAdmin/settings', {
                 errors,
-                Category: categoryList[0].list
+                Category: categoryList[0].list,
+                User: userList
             });
         } else {
             console.log('New Brand');
@@ -86,6 +88,7 @@ exports.postCategory = async (req, res) => {
 
 exports.getCategoryBrand = async (req, res) => {
     const categoryList = await Category.find({});
+    const userList = await User.find({});
     const brandList = await Brand.find({});
     const submittedBrand = req.params.brand;
 
@@ -101,7 +104,10 @@ exports.getCategoryBrand = async (req, res) => {
         }
     }
 
-    res.render('viewAdmin/settings', { Category: categoryList[0].list });
+    res.render('viewAdmin/settings', {
+        Category: categoryList[0].list,
+        User: userList
+    });
 }
 
 exports.postDelBrandItem = async (req, res) => {

@@ -7,6 +7,7 @@ const date = require("date-and-time");
 const bcrypt = require("bcrypt");
 const username = 'hieule';
 const swal = require('sweetalert');
+const helper = require('../helpers/helper');
 exports.getPostProductPage = async (req, res) => {
     const categoryList = await Category.find({});
     res.render('viewSeller/post-product', { success: '',Category: categoryList[0].list });
