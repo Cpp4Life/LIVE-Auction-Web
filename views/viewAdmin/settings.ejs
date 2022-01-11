@@ -120,17 +120,15 @@
                                                                         <th scope="row">
                                                                             <%= count%>
                                                                         </th>
-                                                                        <td>
+                                                                        <td class="usernameField">
                                                                             <%= User[index].name%>
                                                                         </td>
-                                                                        <input type="hidden" name="username" value="<%=User[index].name %>">
                                                                         <td class="emailField">
                                                                             <%= User[index].email%>
                                                                         </td>
-                                                                        <input type="hidden" name="email" value="<%=User[index].email %>">
                                                                         <td class="text-right">
-                                                                            <button type="submit" name="action" value="reset" class="btn shadow-none resetPasswordBtn" data-toggle="tooltip" data-placement="top" title="Reset mật khẩu"><i class="fas fa-cog"></i></button>
-                                                                            <button type="submit" name="action" value="delete" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top" title="Xóa tài khoản"><i class="fas fa-user-times"></i></button>
+                                                                            <button type="button" class="btn shadow-none resetPasswordBtn" data-toggle="tooltip" data-placement="top" title="Reset mật khẩu"><i class="fas fa-cog"></i></button>
+                                                                            <button type="button" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top" title="Xóa tài khoản"><i class="fas fa-user-times"></i></button>
                                                                         </td>
                                                                     </tr>
                                                                 </form>
@@ -148,23 +146,52 @@
         <script>
             $(".resetPasswordBtn").click(function () {
                 var row = $(this).closest("tr");
+                var username = (row.find(".usernameField").text()).trim();
                 var email = (row.find(".emailField").text()).trim();
-                console.log(email);
+
                 $('#resetAlert').css('display', 'block');
                 $('#resetMsg').html(`${email} đã được reset mật khẩu!`);
-                setTimeout(function () {
-                    $(".account-form").submit();
-                }, 500);
+
+                setTimeout(() => {
+                    var input = $("<input>")
+                        .attr("type", "hidden")
+                        .attr("name", "action").val("reset");
+                    var usernameInput = $("<input>")
+                        .attr("type", "hidden")
+                        .attr("name", "username").val(username);
+                    var emailInput = $("<input>")
+                        .attr("type", "hidden")
+                        .attr("name", "email").val(email);
+                    $('.account-form').append(input);
+                    $('.account-form').append(usernameInput);
+                    $('.account-form').append(emailInput);
+                    $('.account-form').submit();
+                }, 750);
             });
 
             $(".delAccountBtn").click(function () {
                 var row = $(this).closest("tr");
+                var username = (row.find(".usernameField").text()).trim();
                 var email = (row.find(".emailField").text()).trim();
+
                 $('#deleteAlert').css('display', 'block');
                 $('#deleteMsg').html(`${email} đã bị xóa!`);
-                setTimeout(function () {
-                    $(".account-form").submit();
-                }, 500);
+
+                setTimeout(() => {
+                    var input = $("<input>")
+                        .attr("type", "hidden")
+                        .attr("name", "action").val("delete");
+                    var usernameInput = $("<input>")
+                        .attr("type", "hidden")
+                        .attr("name", "username").val(username);
+                    var emailInput = $("<input>")
+                        .attr("type", "hidden")
+                        .attr("name", "email").val(email);
+                    $('.account-form').append(input);
+                    $('.account-form').append(usernameInput);
+                    $('.account-form').append(emailInput);
+                    $('.account-form').submit();
+                }, 750);
             });
 
             const categoryTabHeight = $('#nav-category').outerHeight(true);
