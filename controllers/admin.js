@@ -1,5 +1,7 @@
-const helper = require('../helpers/helper');
 const _ = require('lodash');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const helper = require('../helpers/helper');
 const { User, Category, Brand } = require('../models/model');
 
 exports.getAdminLoginPage = async (req, res) => {
@@ -217,7 +219,19 @@ exports.postAccounts = async (req, res) => {
                 console.log(err);
         });
     } else if (action === 'reset') {
-
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+            bcrypt.hash('@Password123', salt, (err, hash) => {
+                if (err) throw err;
+                User.findOneAndUpdate({ email: email }, { password: hash }, (err, result) => {
+                    if (err) throw (err);
+                    if (result) {
+                        helper.sendNewPassword(email, '@Password123');
+                    } else {
+                        console.log('User not found');
+                    }
+                });
+            });
+        });
     }
     res.redirect('/admin/settings');
 }

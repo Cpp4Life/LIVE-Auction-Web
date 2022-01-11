@@ -34,15 +34,22 @@
   background-color: #f8f9fd;
 }
 
+.table-striped tbody tr td,
+.table-striped tbody tr th {
+  vertical-align: middle;
+}
+
 .table thead th {
   border-top: 2px solid;
   border-bottom: 2px solid;
 }
 
-#delAccountBtn {
+.delAccountBtn {
   color: #dc3545;
+  padding: 6px 3px;
 }
 
-#resetPasswordBtn {
+.resetPasswordBtn {
   color: #007bff;
+  padding: 6px 3px;
 }
