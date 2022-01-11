@@ -33,10 +33,10 @@ const userSchema = new mongoose.Schema({
     favorites: [
         {
             id_product: String,
-            name_product:String,
-            timeStart_product:String,
-            timeEnd_product:String,
-            currentPrice_product:String,
+            name_product: String,
+            timeStart_product: String,
+            timeEnd_product: String,
+            currentPrice_product: String,
         }
     ],
 });

@@ -34,6 +34,8 @@
                                     icon: "success",
                                     button: "OK",
                                 });
+                                var formatter;
+                                var price;
                             </script>
                             <%}%>
                                 <% Product.forEach(element=> {%>
@@ -46,16 +48,16 @@
                                                     <h4 class="card-title">
                                                         <%= element.name %>
                                                     </h4>
-                                                    <p class="card-text text-danger price-tag">
+                                                    <p class="card-text text-danger price-tag" id="<%= element.name %>">
                                                         <%= element.currentPrice %>
                                                     </p>
                                                     <script>
-                                                        const formatter = new Intl.NumberFormat('vi-VN', {
+                                                        formatter = new Intl.NumberFormat('vi-VN', {
                                                             style: 'currency',
                                                             currency: 'VND'
                                                         });
-                                                        const price = '<%=element.currentPrice%>';
-                                                        $('.price-tag').html(formatter.format(price));
+                                                        price = Number((document.getElementById('<%=element.name%>').innerHTML).trim());
+                                                        document.getElementById('<%=element.name%>').innerHTML = (formatter.format(price)).toString();
                                                     </script>
                                                 </div>
                                                 <script src="../js/view-product-list.js"></script>
