@@ -1,6 +1,6 @@
 const dbModel = require('../models/model');
-const {Category, Product, User} = require("../models/model");
-const {MongoClient: mongoClient} = require("mongodb");
+const { Category, Product, User } = require("../models/model");
+const { MongoClient: mongoClient } = require("mongodb");
 const fs = require("fs");
 
 exports.getHomePage = (req, res) => {
@@ -31,32 +31,51 @@ exports.getListView = (req, res) => {
                 }
             })
 
-            }
         }
+    }
     )
 }
-exports.getProductPage = async (req, res) => {
-    // console.log(req.params.id)
-    dbModel.Product.find({_id: req.params.id}, (err, ProductList) => {
-            if (err)
-                console.log(err);
-            else {
-                dbModel.Category.find({}, (err, CategoryList) => {
-                    if (err)
-                        console.log(err);
-                    else {
-                        res.render('view-product', {
-                            success: '',
-                            topOwner: ProductList[0].topOwner,
-                            owner: ProductList[0].owner,
-                            Product: ProductList,
-                            Category: CategoryList[0].list
-                        });
-                    }
-                })
 
+exports.postListView = async (req, res) => {
+    console.log(req.body);
+    const content = req.body.search;
+    const result = await Product.aggregate([
+        {
+            '$search': {
+                'index': 'custom',
+                'text': {
+                    'query': content,
+                    'path': 'name',
+                    'fuzzy': {}
+                }
             }
         }
+    ]);
+    console.log(result);
+}
+
+exports.getProductPage = async (req, res) => {
+    // console.log(req.params.id)
+    dbModel.Product.find({ _id: req.params.id }, (err, ProductList) => {
+        if (err)
+            console.log(err);
+        else {
+            dbModel.Category.find({}, (err, CategoryList) => {
+                if (err)
+                    console.log(err);
+                else {
+                    res.render('view-product', {
+                        success: '',
+                        topOwner: ProductList[0].topOwner,
+                        owner: ProductList[0].owner,
+                        Product: ProductList,
+                        Category: CategoryList[0].list
+                    });
+                }
+            })
+
+        }
+    }
     )
 }
 exports.getpostProductPage = async (req, res) => {
@@ -65,8 +84,8 @@ exports.getpostProductPage = async (req, res) => {
 
     res.render('view-product', { Category: categoryList[0].list });
 }
-exports.getButtonBuy = async (req, res) =>{
-    Product.find({_id: req.params.id}, async function(err,product, done) {
+exports.getButtonBuy = async (req, res) => {
+    Product.find({ _id: req.params.id }, async function (err, product, done) {
 
         let currentProduct = {
             status: 0,
@@ -74,9 +93,9 @@ exports.getButtonBuy = async (req, res) =>{
             topOwner: req.user,
         };
         Product.findOneAndUpdate(
-            {_id: req.params.id},
+            { _id: req.params.id },
             currentProduct,
-            {new: true},
+            { new: true },
             (err, doc) => {
                 if (err) {
                     console.log(err);
@@ -92,15 +111,18 @@ exports.postAuctionProduct = async (req, res) => {
     console.log(req.params);
     var arr = req.params.price.split("+")
     //Lấy dữ liệu sản phẩm
-    Product.find({_id: arr[0]}, async function(err,product, done) {
+    // Product.find({_id: arr[0]}, async function(err,product, done) {
+
+    Product.find({ _id: arr[0] }, async function (err, product, done) {
+
         if (product[0].timeEnd.getTime() - new Date().getTime() < 0) {
             let currentProduct0 = {
                 status: 0
             };
             Product.findOneAndUpdate(
-                {_id: arr[0]},
+                { _id: arr[0] },
                 currentProduct0,
-                {new: true},
+                { new: true },
                 (err, doc) => {
                     if (err) {
                         console.log(err);
@@ -132,9 +154,9 @@ exports.postAuctionProduct = async (req, res) => {
                     }
                 };
                 Product.findOneAndUpdate(
-                    {_id: arr[0]},
+                    { _id: arr[0] },
                     currentProduct,
-                    {new: true},
+                    { new: true },
                     (err, doc) => {
                         if (err) {
                             console.log(err);
@@ -151,7 +173,7 @@ exports.postAuctionProduct = async (req, res) => {
                         $push: {
                             bidders: {
                                 $each: [
-                                    {bidTime: new Date().toLocaleString(), user: req.user, bidPrice: arr[1]},
+                                    { bidTime: new Date().toLocaleString(), user: req.user, bidPrice: arr[1] },
                                     {
                                         bidTime: new Date().toLocaleString(),
                                         user: product[0].topOwner,
@@ -162,9 +184,9 @@ exports.postAuctionProduct = async (req, res) => {
                         }
                     };
                     Product.findOneAndUpdate(
-                        {_id: arr[0]},
+                        { _id: arr[0] },
                         currentProduct1,
-                        {new: true},
+                        { new: true },
                         (err, doc) => {
                             if (err) {
                                 console.log(err);
@@ -194,9 +216,9 @@ exports.postAuctionProduct = async (req, res) => {
                         }
                     };
                     Product.findOneAndUpdate(
-                        {_id: arr[0]},
+                        { _id: arr[0] },
                         currentProduct2,
-                        {new: true},
+                        { new: true },
                         (err, doc) => {
                             if (err) {
                                 console.log(err);
@@ -207,16 +229,16 @@ exports.postAuctionProduct = async (req, res) => {
             }
             // console.log((product[0].timeEnd.getTime() - new Date().getTime()) / 1000);
             if (product[0].timeEnd.getTime() - new Date().getTime() < 5 * 60 * 1000) {
-                var time1 = product[0].timeEnd.getTime() + 10*60*1000;
+                var time1 = product[0].timeEnd.getTime() + 10 * 60 * 1000;
                 time1 = new Date(time1).toLocaleString();
-                Product.find({_id: req.params.id}, async function (err, product, done) {
+                Product.find({ _id: req.params.id }, async function (err, product, done) {
                     let currentProduct3 = {
                         timeEnd: time1
                     };
                     Product.findOneAndUpdate(
-                        {_id: arr[0]},
+                        { _id: arr[0] },
                         currentProduct3,
-                        {new: true},
+                        { new: true },
                         (err, doc) => {
                             if (err) {
                                 console.log(err);
@@ -229,24 +251,24 @@ exports.postAuctionProduct = async (req, res) => {
         }
     })
     dbModel.Product.find({}, (err, ProductList) => {
-            if (err)
-                console.log(err);
-            else {
-                dbModel.Category.find({}, (err, CategoryList) => {
-                    if (err)
-                        console.log(err);
-                    else {
-                        res.render('view-product-list', {
-                            success: 'Đấu giá thành công',
-                            message: '',
-                            Product: ProductList,
-                            Category: CategoryList[0].list
-                        });
-                    }
-                })
+        if (err)
+            console.log(err);
+        else {
+            dbModel.Category.find({}, (err, CategoryList) => {
+                if (err)
+                    console.log(err);
+                else {
+                    res.render('view-product-list', {
+                        success: 'Đấu giá thành công',
+                        message: '',
+                        Product: ProductList,
+                        Category: CategoryList[0].list
+                    });
+                }
+            })
 
-            }
         }
+    }
     )
 }
 

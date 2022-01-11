@@ -1,67 +1,79 @@
 <%- include('partials/header'); -%>
     <link rel="stylesheet" href="/css/postproduct.css">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
     </head>
 
-<body>
-<section class="colored-section" style="padding:0 15%;">
-    <%- include('partials/navbar'); -%>
-</section>
+    <body>
+        <section class="colored-section" style="padding:0 15%;">
+            <%- include('partials/navbar'); -%>
+        </section>
 
 
-<div class="container my-5 px-5">
-    <div class="row">
-        <script>
-            console.log(message);
-            console.log(success);
-        </script>
-        <%if(message !== '') {%>
-        <script>
-            swal({
-                title: `<%=message%>`,
-                text: "Sản phẩm đã hết thời gian đấu giá",
-                icon: "error",
-                button: "OK",
-            });
-        </script>
-        <%}%>
-        <%if(success !== '') {%>
-        <script>
-            swal({
-                title: `<%=success%>`,
-                text: "áda",
-                icon: "success",
-                button: "OK",
-            });
-        </script>
-        <%}%>
-        <% Product.forEach(element=> {%>
-            <% if (element.status) { %>
-                <div class="col-sm-4 mb-4">
-                    <div class="card">
+        <div class="container my-5 px-5">
+            <div class="row">
+                <script>
+                    console.log(message);
+                    console.log(success);
+                </script>
+                <%if(message !=='' ) {%>
+                    <script>
+                        swal({
+                            title: `<%=message%>`,
+                            text: "Sản phẩm đã hết thời gian đấu giá",
+                            icon: "error",
+                            button: "OK",
+                        });
+                    </script>
+                    <%}%>
+                        <%if(success !=='' ) {%>
+                            <script>
+                                swal({
+                                    title: `<%=success%>`,
+                                    text: "áda",
+                                    icon: "success",
+                                    button: "OK",
+                                });
+                                var formatter;
+                                var price;
+                            </script>
+                            <%}%>
+                                <% Product.forEach(element=> {%>
+                                    <% if (element.status) { %>
+                                        <div class="col-sm-4 mb-4">
+                                            <div class="card">
 
-                        <img class="card-img-top" src="/public/images/<%= element.id %>/0.jpg" width="100" height="300">
-                        <div class="card-body">
-                            <h4 class="card-title"><%= element.name %></h4>
-                            <p class="card-text text-danger"><%= element.currentPrice %></p>
-                        </div>
-                        <script src="../js/view-product-list.js"></script>
+                                                <img class="card-img-top" src="/public/images/<%= element.id %>/0.jpg" width="100" height="300">
+                                                <div class="card-body">
+                                                    <h4 class="card-title">
+                                                        <%= element.name %>
+                                                    </h4>
+                                                    <p class="card-text text-danger price-tag" id="<%= element.name %>">
+                                                        <%= element.currentPrice %>
+                                                    </p>
+                                                    <script>
+                                                        formatter = new Intl.NumberFormat('vi-VN', {
+                                                            style: 'currency',
+                                                            currency: 'VND'
+                                                        });
+                                                        price = Number((document.getElementById('<%=element.name%>').innerHTML).trim());
+                                                        document.getElementById('<%=element.name%>').innerHTML = (formatter.format(price)).toString();
+                                                    </script>
+                                                </div>
+                                                <script src="../js/view-product-list.js"></script>
 
-                        <div class="card-footer text-muted d-flex justify-content-center">
-                            <a class="btn btn-md btn-outline-primary btn-block" href="/view-product-list/viewproduct/<%= element.id %>" role="button">
-                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                Detail
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            <%} %>
-
-        <% }) %>
-
-    </div>
-</div>
+                                                <div class="card-footer text-muted d-flex justify-content-center">
+                                                    <a class="btn btn-md btn-outline-primary btn-block" href="/view-product-list/viewproduct/<%= element.id %>" role="button">
+                                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                                        Detail
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <%} %>
+                                            <% }) %>
+            </div>
+        </div>
 
 
 
@@ -75,4 +87,4 @@
 
 
 
-<%- include('partials/footer'); -%>
+        <%- include('partials/footer'); -%>

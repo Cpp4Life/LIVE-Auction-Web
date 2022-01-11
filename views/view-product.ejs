@@ -1,4 +1,3 @@
-
 <%- include('partials/header'); -%>
 <link rel="stylesheet" href="/css/view-product.css">
 <link rel="stylesheet" type="text/css" href="https://hocwebgiare.com/cpadmin/css/xzoom.css" media="all">
@@ -10,7 +9,7 @@
     <%- include('partials/navbar'); -%>
 </section>
 <div>
-    <%if(success !== '') {%>
+    <%if(success !=='' ) {%>
     <script>
         swal({
             title: `<%=success%>`,
@@ -21,7 +20,7 @@
     </script>
     <%}%>
     <% Product.forEach(element=> {%>
-    <section class="view-product">
+        <section class="view-product">
             <div class="feature">
                 <div class="col-lg-6">
                     <div>
@@ -62,7 +61,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="social my-3" style="padding-bottom: 0px;">
                         <span class="font-size1"> Chia sẻ : </span>
                         <a href="#" class="ml-2"><i class="fab fa-facebook fa-2x"></i></a>
@@ -70,15 +68,13 @@
                             <i class="far fa-heart"></i>
                             <span class="font-size1" style="padding-left: 10px;color: black;"> </span>
                         </a>
-                        <a  class="font-size1"  data-toggle="modal" data-target="#request"> Lịch sử đấu giá</a>
-
-
+                        <a class="font-size1" data-toggle="modal" data-target="#request"> Lịch sử đấu giá</a>
                     </div>
                     <div class="modal fade" id="request">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <table  class="table table-hover table-bordered">
+                                    <table id="mask1" class="table table-hover table-bordered">
                                         <thead>
                                         <tr>
                                             <th>Thời điểm</th>
@@ -87,37 +83,36 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <% element.bidders.forEach(element1 => { %>
+                                        <% element.bidders.forEach(element1=> { %>
                                             <tr>
-                                                <td> <%= element1.bidTime%> </td>
-                                                <td  id = "mask1" > </td>
-
-                                                <td> <%= element1.bidPrice %> </td>
+                                                <td>
+                                                    <%= element1.bidTime%>
+                                                </td>
+                                                <td>
+                                                    <%= element1.user.name%>
+                                                </td>
+                                                <td class="bid-price">
+                                                    <%= element1.bidPrice %>
+                                                </td>
                                             </tr>
                                             <script>
-                                                var str_bidder= ('<%= element1.user.name %>');
-                                                var mask_bidder="";
-                                                for(var i=0;i<str_bidder.length;i++){
-                                                    if(i<(str_bidder.length /2 )){
+                                                var str_bidder = ('<%= element1.user.name %>');
+                                                var mask_bidder = "";
+                                                for (var i = 0; i < str_bidder.length; i++) {
+                                                    if (i < (str_bidder.length / 2)) {
                                                         mask_bidder = mask_bidder + "*"
                                                     }
-                                                    else{
-                                                        mask_bidder= mask_bidder + str_bidder[i]
+                                                    else {
+                                                        mask_bidder = mask_bidder + str_bidder[i]
                                                     }
                                                 }
-                                                const a =  document.getElementById("mask")
+                                                const a = document.getElementById("mask")
                                                 a.value = mask_bidder
                                                 // document.getElementById("mask").innerHTML = mask_bidder;
-
                                             </script>
-
                                         <% }) %>
                                         </tbody>
-
-
-
                                     </table>
-
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-lg" data-dismiss="modal" style="text-align: center;">Cancel</button>
@@ -125,11 +120,11 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="col-lg-6">
-
-                    <h1 class="product-detail-name"><%= element.name %></h1>
+                    <h1 class="product-detail-name">
+                        <%= element.name %>
+                    </h1>
                     <div class="col-lg-12">
                         <div class="info time">
                             <div class="countdown">
@@ -163,7 +158,6 @@
                                     return (n < 10 ? '0' : '') + n;
                                 }
                             </script>
-
                         </div>
                     </div>
                     <div class="info product_detail__box">
@@ -171,10 +165,19 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="price" >
-                                    <span  style="text-align: center; font-style: inherit ; color:  black ; font-size: 1.4rem; background: #f2f4f8;  border-radius: 20px;  ">Giá hiện tại:</span>
-                                    <span id="currentprice"><%= element.currentPrice %></span>
-                                    <span> &nbsp;VND</span>
+                                <div class="price">
+                                    <span style="text-align: center; font-style: inherit ; color:  black ; font-size: 1.4rem; background: #f2f4f8;  border-radius: 20px;  ">Giá hiện tại:</span>
+                                    <span id="currentprice">
+                                                        <%= element.currentPrice %>
+                                                    </span>
+                                    <script>
+                                        const formatter = new Intl.NumberFormat('vi-VN', {
+                                            style: 'currency',
+                                            currency: 'VND'
+                                        });
+                                        const currentPrice = '<%=element.currentPrice%>';
+                                        $('#currentprice').html(formatter.format(currentPrice));
+                                    </script>
                                     <br>
                                 </div>
                                 <div>
@@ -185,11 +188,11 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                    <a onclick="promptMe()" id="btnAuction" name="price" value="" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid" style="margin-top: 10px;">
-                                        Đấu giá
-                                    </a>
+                                <a onclick="promptMe()" id="btnAuction" name="price" value="" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid" style="margin-top: 10px;">
+                                    Đấu giá
+                                </a>
                                 <script>
-                                    function promptMe(){
+                                    function promptMe() {
                                         swal("Write something here:", {
                                             content: "input",
                                             button: {
@@ -197,29 +200,22 @@
                                                 closeModal: false,
                                             },
                                         }).then((value) => {
-                                                var price = parseInt(value);
-                                                if(isNaN(price)){
-                                                    swal("Vui lòng chỉ nhập chữ số. Xin hãy thực hiện lại thao tác.");
-                                                    return;
-                                                }
-                                                var currentPrice = parseInt(document.getElementById('currentprice').innerText);
-                                                if(price < currentPrice){
-                                                    swal("Vui lòng nhập cao hơn giá hiện tại. Xin hãy thực hiện lại thao tác.");
-                                                    return;
-                                                }
+                                            var price = parseInt(value);
+                                            if (isNaN(price)) {
+                                                swal("Vui lòng chỉ nhập chữ số. Xin hãy thực hiện lại thao tác.");
+                                                return;
+                                            }
+                                            var currentPrice = parseInt(document.getElementById('currentprice').innerText);
+                                            if (price < currentPrice) {
+                                                swal("Vui lòng nhập cao hơn giá hiện tại. Xin hãy thực hiện lại thao tác.");
+                                                return;
+                                            }
                                             location.replace("/view-product-list/viewproduct/auction/<%= element.id%>+" + price);
-
                                         });
-
-
-
-
                                     }
                                 </script>
                             </div>
-
                         </div>
-
                     </div>
                     <div class="info product_detail__box">
                         <div class="product_detail__box_current_price">
@@ -229,18 +225,24 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="price">
-                                    <span> <span style="text-align: center; font-style: inherit ; color:  black; font-size: 1.4rem; background: #f2f4f8;  border-radius: 20px;">Mua ngay:</span>  <%= element.boughtPrice %> &nbsp;VND</span>
+                                    <span style="text-align: center; font-style: inherit ; color:  black; font-size: 1.4rem; background: #f2f4f8;  border-radius: 20px;">Mua ngay:</span>
+                                    <span id="boughtPrice">
+                                                        <%= element.boughtPrice %> &nbsp;VND
+                                                    </span>
+                                    <script>
+                                        const boughtPrice = '<%=element.boughtPrice%>';
+                                        $('#boughtPrice').html(formatter.format(boughtPrice));
+                                    </script>
                                     <br>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                    <button onclick="myFunction()" id="btn" type="button" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid" style="margin-top: 10px;">
-                                        Mua ngay
-                                    </button>
+                                <button onclick="myFunction()" id="btn" type="button" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid" style="margin-top: 10px;">
+                                    Mua ngay
+                                </button>
                                 <script>
-                                    function myFunction(){
-
-                                        document.getElementById('btn').addEventListener('click', function(){
+                                    function myFunction() {
+                                        document.getElementById('btn').addEventListener('click', function () {
                                             swal({
                                                 title: "Are you sure?",
                                                 text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -252,12 +254,10 @@
                                                     if (willDelete) {
                                                         location.replace("/view-product-list/viewproduct/buynow/`<%=element.id%>`");
                                                     } else {
-
                                                     }
                                                 });
                                         })
                                     }
-
                                 </script>
                             </div>
                         </div>
@@ -275,7 +275,9 @@
                             </a>
                             <div class="store_info__center" style="padding-left: 30px;">
                                 <h4 class="store_info__name">
-                                    <a href="#"><%= owner.name%></a>
+                                    <a href="#">
+                                        <%= owner.name%>
+                                    </a>
                                 </h4>
                                 <div class="color_note">
                                     <strong class="color_text_primary">Diểm số : <%= owner.reviewPoint%> </strong> (96% Đánh giá uy tín)
@@ -295,8 +297,10 @@
                                 <img src="/images/Profile/<%= topOwner.image %>" lazyloading="" style="height: 100px;width: 100px;">
                             </a>
                             <div class="store_info__center" style="padding-left: 30px;">
-                                <h4 class="store_info__name" >
-                                    <a  id="mask1"> </a>
+                                <h4 class="store_info__name">
+                                    <a href="#">
+                                        <%= topOwner.name %>
+                                    </a>
                                 </h4>
                                 <div class="color_note">
                                     <strong class="color_text_primary">Diểm số : <%= topOwner.reviewPoint%> </strong> (96% Đánh giá uy tín)
@@ -307,24 +311,6 @@
                             </a>
                         </div>
                     </div>
-                    <script>
-                        var str_bidder= ('<%= topOwner.name %>');
-                        var mask_bidder="";
-                        for(var i=0;i<str_bidder.length;i++){
-                            if(i<(str_bidder.length /2 )){
-                                mask_bidder = mask_bidder + "*"
-                            }
-                            else{
-                                mask_bidder= mask_bidder + str_bidder[i]
-                            }
-                        }
-                        console.log('<%= topOwner.name %>')
-                        var countdown = document.getElementById("mask1");
-                        countdown.value = mask_bidder;
-
-                        // document.getElementById("mask1").innerHTML = mask_bidder;
-
-                    </script>
                 </div>
             </div>
             <div class="chitietsp">
@@ -334,13 +320,17 @@
                         <div class="mb-1">
                             <h1 class="color_note1"><strong>Thời gian bắt đầu</strong></h1>
                         </div>
-                        <div><%= element.timeStart.toLocaleString() %></div>
+                        <div>
+                            <%= element.timeStart.toLocaleString() %>
+                        </div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
                             <h1 class="color_note1"><strong>Thời gian kết thúc</strong></h1>
                         </div>
-                        <div><%= element.timeEnd.toLocaleString() %></div>
+                        <div>
+                            <%= element.timeEnd.toLocaleString() %>
+                        </div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
@@ -358,7 +348,13 @@
                         <div class="mb-1">
                             <h1 class="color_note1"><strong>Giá khởi điểm</strong></h1>
                         </div>
-                        <div><%= element.originalBidPrice %></div>
+                        <div id="originalPrice">
+                            <%= element.originalBidPrice %>
+                        </div>
+                        <script>
+                            const originalPrice = '<%=element.originalBidPrice%>';
+                            $('#originalPrice').html(formatter.format(originalPrice));
+                        </script>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
@@ -374,9 +370,11 @@
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
-                            <h1 class="color_note1"><strong>Brand</strong></h1>
+                            <h1 class="color_note1"><strong>Mặt hàng</strong></h1>
                         </div>
-                        <div><%= element.brand%></div>
+                        <div>
+                            <%= element.brand%>
+                        </div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
@@ -386,23 +384,32 @@
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
-                            <h1 class="color_note1"><strong>subBrand</strong></h1>
+                            <h1 class="color_note1"><strong>Loại sản phẩm</strong></h1>
                         </div>
-                        <div><%= element.subBrand%></div>
+                        <div>
+                            <%= element.subBrand%>
+                        </div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
                             <h1 class="color_note1"><strong>Giá cao nhất</strong></h1>
                         </div>
-                        <div>6000000 vnd</div>
+                        <div id="currentMaxPrice">
+                            <%= element.boughtPrice %>
+                        </div>
+                        <script>
+                            const maxPrice = '<%= element.boughtPrice %>';
+                            $('#currentMaxPrice').html(formatter.format(maxPrice));
+                        </script>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
                         <div class="mb-1">
                             <h1 class="color_note1"><strong>ID</strong></h1>
                         </div>
-                        <div><%= element._id%></div>
+                        <div>
+                            <%= element._id%>
+                        </div>
                     </div>
-
                 </div>
             </div>
             <div class="motachitietsp">
@@ -418,12 +425,10 @@
                     var temp = document.getElementById('decript');
                     temp.innerHTML = htmlDecode(myDescript);
                 </script>
-
                 <p class="text1" id="decript">
                     <span class="dots"> ...</span>
                     <span class="moreText1" class="show-more"> </span>
                     <script>
-
                         var getDecription = document.getElementById("decript");
                         getDecription.innerHTML(Product.description);
                     </script>
@@ -514,17 +519,14 @@
                     </div>
                 </div>
             </div>
-        </form>
-
-    </section>
-        <% }) %>
+            </form>
+        </section>
+    <% }) %>
 </div>
 
 <script>
-
     const readMoreBtn = document.querySelector(".read-more-btn");
     const text1 = document.querySelector(".text1");
-
     readMoreBtn.addEventListener("click", (e) => {
         text1.classList.toggle("show-more");
         if (readMoreBtn.innerText === "Xem thêm") {
@@ -536,7 +538,6 @@
     const imgs = document.querySelectorAll('.img-select a');
     const imgBtns = [...imgs];
     let imgId = 1;
-
     imgBtns.forEach((imgItem) => {
         imgItem.addEventListener('click', (event) => {
             event.preventDefault();
@@ -544,13 +545,10 @@
             slideImage();
         });
     });
-
     function slideImage() {
         const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
-
         document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
     }
-
     window.addEventListener('resize', slideImage);
 </script>
 <%- include('partials/footer'); -%>
