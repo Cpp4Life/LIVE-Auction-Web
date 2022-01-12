@@ -18,11 +18,11 @@ exports.getListView = (req, res) => {
         if (err)
             console.log(err);
         else {
-            for(let i = 0; i < ProductList.length; i++){
+            for (let i = 0; i < ProductList.length; i++) {
                 // console.log(ProductList[i].timeEnd);
                 // console.log(ProductList[i]);
 
-                if(ProductList[i].timeEnd.getTime() - new Date().getTime() < 0){
+                if (ProductList[i].timeEnd.getTime() - new Date().getTime() < 0) {
                     let currentProduct = {
                         status: 0,
                     };
@@ -61,11 +61,16 @@ exports.postListView = async (req, res) => {
     console.log(req.body);
     const content = req.body.search;
     const CategoryList = await Category.find({});
-    const ProductList = await Product.find({
-        $text: {
-            $search: content
-        }
-    });
+    var ProductList;
+    if (!content) {
+        ProductList = await Product.find({});
+    } else {
+        ProductList = await Product.find({
+            $text: {
+                $search: content
+            }
+        });
+    }
 
     res.render('view-product-list', {
         success: '',
@@ -110,7 +115,7 @@ exports.getPostProductPage = async (req, res) => {
 exports.getButtonBuy = async (req, res) => {
     Product.find({ _id: req.params.id }, async function (err, product, done) {
 
-        if(product[0].timeEnd.getTime() - new Date().getTime() > 0){
+        if (product[0].timeEnd.getTime() - new Date().getTime() > 0) {
             let currentProduct5 = {
                 status: false,
                 topPrice: product[0].boughtPrice,
@@ -132,8 +137,9 @@ exports.getButtonBuy = async (req, res) => {
                 message: "",
                 success: "Mua thành công",
                 Product: productList,
-                Category: categoryList[0].list });
-        } else{
+                Category: categoryList[0].list
+            });
+        } else {
             let currentProduct6 = {
                 status: false,
             };
@@ -153,7 +159,8 @@ exports.getButtonBuy = async (req, res) => {
                 message: "Mua không thành công",
                 success: "",
                 Product: productList,
-                Category: categoryList[0].list });
+                Category: categoryList[0].list
+            });
         }
 
     })
@@ -306,7 +313,8 @@ exports.postAuctionProduct = async (req, res) => {
             message: "",
             success: "Đấu giá thành công",
             Product: productList,
-            Category: categoryList[0].list });
+            Category: categoryList[0].list
+        });
     })
 
 }
