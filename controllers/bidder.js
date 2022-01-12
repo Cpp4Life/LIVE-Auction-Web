@@ -374,7 +374,7 @@ exports.getfavorites = async (req, res) => {
                 );
                 const categoryList = await Category.find({});
 
-                res.redirect('/view-product-list/viewproduct/' + id_user[1])
+                res.redirect('/view-product-list/view-product/' + id_user[1])
             }
             else{
                 let currentUser = {
@@ -397,7 +397,7 @@ exports.getfavorites = async (req, res) => {
                         }
                     }
                 );
-                res.redirect('/view-product-list/viewproduct/' + id_user[1])
+                res.redirect('/view-product-list/view-product/' + id_user[1])
             }
             })
         }
