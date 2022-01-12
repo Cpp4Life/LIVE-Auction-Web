@@ -16,27 +16,6 @@ exports.getHomePage = (req, res) => {
 }
 
 exports.getListView = (req, res) => {
-
-    Product.find({}).sort('timeEnd').exec(function (err, docs) {
-        if (err)
-            console.log(err);
-        else {
-            console.log('Ascending order');
-            for (var i = 0; i < docs.length; i++)
-                console.log(docs[i].timeEnd);
-        }
-    });
-
-    Product.find({}).sort([['originalBidPrice', -1]]).exec(function (err, docs) {
-        if (err)
-            console.log(err);
-        else {
-            console.log('Descending order');
-            for (var i = 0; i < docs.length; i++)
-                console.log(docs[i].originalBidPrice);
-        }
-    });
-
     dbModel.Product.find({}, (err, ProductList) => {
         if (err)
             console.log(err);
@@ -82,10 +61,11 @@ exports.getListView = (req, res) => {
 }
 
 exports.postListView = async (req, res) => {
-    console.log(req.body);
-    const content = req.body.search;
     const CategoryList = await Category.find({});
+    const content = req.body.search;
+    const sortType = req.body.sort;
     var ProductList;
+
     if (!content) {
         ProductList = await Product.find({});
     } else {
@@ -93,7 +73,15 @@ exports.postListView = async (req, res) => {
             $text: {
                 $search: content
             }
-        });
+        }).sort('currentPrice').exec();
+    }
+
+    if (sortType) {
+        if (sortType === 'ascendingPrice') {
+            ProductList = await Product.find({}).sort('currentPrice').exec();
+        } else if (sortType === 'descendingPrice') {
+            ProductList = await Product.find({}).sort([['currentPrice', -1]]).exec();
+        }
     }
 
     res.render('view-product-list', {
@@ -298,20 +286,20 @@ exports.postAuctionProduct = async (req, res) => {
                     );
                 } else {
                     //Trường hợp 2: Lớn hơn cả giá của top price
-                    if(product[0].topPrice === product[0].currentPrice){
+                    if (product[0].topPrice === product[0].currentPrice) {
                         let currentProduct21 = {
                             topPrice: arr[1],
                             topOwner: req.user,
                             currentPrice: Math.min((product[0].topPrice + product[0].stepPrice), parseInt(arr[1])),
                             $push: {
                                 bidders: {
-                                        bidTime: new Date().toLocaleString(),
-                                        user: req.user,
-                                        bidPrice: Math.min((product[0].topPrice + product[0].stepPrice), arr[1])
-                                    }
+                                    bidTime: new Date().toLocaleString(),
+                                    user: req.user,
+                                    bidPrice: Math.min((product[0].topPrice + product[0].stepPrice), arr[1])
                                 }
-
                             }
+
+                        }
                         Product.findOneAndUpdate(
                             { _id: arr[0] },
                             currentProduct21,
@@ -322,7 +310,7 @@ exports.postAuctionProduct = async (req, res) => {
                                 }
                             }
                         );
-                        } else {
+                    } else {
                         let currentProduct22 = {
                             topPrice: arr[1],
                             topOwner: req.user,
