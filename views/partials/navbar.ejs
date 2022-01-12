@@ -18,7 +18,7 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <% element.subBrand.forEach(itemType=> { %>
-                                            <li class="dropdown-item"><a href="/<%= _.kebabCase(element.brand.normalize('NFD').replace(/[\u0300-\u036f]/g, '')) %>/<%= _.kebabCase(itemType.normalize('NFD').replace(/[\u0300-\u036f]/g, '')) %>" class="text-decoration-none text-dark">
+                                            <li class="dropdown-item"><a href="/view/<%= _.kebabCase(element.brand.normalize('NFD').replace(/[\u0300-\u036f]/g, '')) %>/<%= _.kebabCase(itemType.normalize('NFD').replace(/[\u0300-\u036f]/g, '')) %>" class="text-decoration-none text-dark">
                                                     <%= itemType %>
                                                 </a></li>
                                             <% }) %>

@@ -2,6 +2,8 @@ const dbModel = require('../models/model');
 const { Category, Product, User } = require("../models/model");
 const { MongoClient: mongoClient } = require("mongodb");
 const fs = require("fs");
+const _ = require('lodash');
+const helper = require('../helpers/helper');
 
 exports.getHomePage = (req, res) => {
     dbModel.Category.find({}, (err, foundList) => {
@@ -81,6 +83,29 @@ exports.postListView = async (req, res) => {
     });
 }
 
+exports.getBrandItem = async (req, res) => {
+    const CategoryList = await Category.find({});
+    const products = await Product.find({});
+    const brand = req.params.brand;
+    const subBrand = req.params.subBrand;
+    const ProductList = [];
+
+    for (var i = 0; i < products.length; i++) {
+        const currentBrand = _.kebabCase(helper.normalizeText(products[i].brand));
+        const currentSubBrand = _.kebabCase(helper.normalizeText(products[i].subBrand));
+        if (currentBrand === brand && currentSubBrand === subBrand) {
+            ProductList.push(products[i]);
+        }
+    }
+
+    res.render('view-product-list', {
+        success: '',
+        message: '',
+        Product: ProductList,
+        Category: CategoryList[0].list
+    });
+}
+
 exports.getProductPage = async (req, res) => {
     // console.log(req.params.id)
     dbModel.Product.find({ _id: req.params.id }, (err, ProductList) => {
@@ -103,7 +128,7 @@ exports.getProductPage = async (req, res) => {
 
         }
     }
-    )
+    );
 }
 
 exports.getPostProductPage = async (req, res) => {
@@ -116,7 +141,7 @@ exports.getPostProductPage = async (req, res) => {
 exports.getButtonBuy = async (req, res) => {
     Product.find({ _id: req.params.id }, async function (err, product, done) {
 
-        if(product[0].timeEnd.getTime() - new Date().getTime() > 0){
+        if (product[0].timeEnd.getTime() - new Date().getTime() > 0) {
             let currentProduct5 = {
                 status: false,
                 topPrice: product[0].boughtPrice,
