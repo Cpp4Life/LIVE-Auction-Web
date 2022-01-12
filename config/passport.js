@@ -38,32 +38,64 @@ module.exports = (passport) => {
         });
     });
 
-    passport.use(new GoogleStrategy({
-        clientID: "430628000423-snc4munnnsgs606d70tkgr06mb7p6umn.apps.googleusercontent.com",
-        clientSecret: "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",
-        callbackURL: 'http://localhost:3000/auth/google/home'
-    }, (accessToken, refreshToken, profile, cb) => {
-        // console.log(profile);
-        User.findOne({ googleId: profile.id }, (err, user) => {
-            if (err) {
-                return done(err);
-            }
-            if (!user) {
-                user = new User({
-                    name: profile.displayName,
-                    email: profile.emails[0].value,
-                    password: 'password',
-                    googleId: profile.id,
-                    role: 'bidder'
-                });
-                user.save((err) => {
-                    if (err) console.log(err);
-                    return cb(err, user);
-                });
-            } else {
-                return cb(err, user);
-            }
-        });
-    }
-    ));
+
+
+    // passport.use(new GoogleStrategy({
+    //     clientID:  430628000423-snc4munnnsgs606d70tkgr06mb7p6umn.apps.googleusercontent.com,
+    //     clientSecret: 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,
+    //     callbackURL: 'http://localhost:3000/auth/google/home'
+    // }, (accessToken, refreshToken, profile, cb) => {
+    //     // console.log(profile);
+    //     User.findOne({ googleId: profile.id }, (err, user) => {
+    //         if (err) {
+    //             return done(err);
+    //         }
+    //         if (!user) {
+    //             user = new User({
+    //                 name: profile.displayName,
+    //                 email: profile.emails[0].value,
+    //                 password: 'password',
+    //                 googleId: profile.id,
+    //                 role: 'bidder'
+    //             });
+    //             user.save((err) => {
+    //                 if (err) console.log(err);
+    //                 return cb(err, user);
+    //             });
+    //         } else {
+    //             return cb(err, user);
+    //         }
+    //     });
+    // }
+    // ));
+
+    // passport.use(new GoogleStrategy({
+    //     clientID: '430628000423-snc4munnnsgs606d70tkgr06mb7p6umn.apps.googleusercontent.com',
+    //     clientSecret: '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',
+    //     callbackURL: 'http://localhost:3000/auth/google/home'
+    // }, (accessToken, refreshToken, profile, cb) => {
+    //     // console.log(profile);
+    //     User.findOne({ googleId: profile.id }, (err, user) => {
+    //         if (err) {
+    //             return done(err);
+    //         }
+    //         if (!user) {
+    //             user = new User({
+    //                 name: profile.displayName,
+    //                 email: profile.emails[0].value,
+    //                 password: 'password',
+    //                 googleId: profile.id,
+    //                 role: 'bidder'
+    //             });
+    //             user.save((err) => {
+    //                 if (err) console.log(err);
+    //                 return cb(err, user);
+    //             });
+    //         } else {
+    //             return cb(err, user);
+    //         }
+    //     });
+    // }
+    // ));
+
 };
