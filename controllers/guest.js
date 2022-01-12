@@ -16,6 +16,27 @@ exports.getHomePage = (req, res) => {
 }
 
 exports.getListView = (req, res) => {
+
+    Product.find({}).sort('timeEnd').exec(function (err, docs) {
+        if (err)
+            console.log(err);
+        else {
+            console.log('Ascending order');
+            for (var i = 0; i < docs.length; i++)
+                console.log(docs[i].timeEnd);
+        }
+    });
+
+    Product.find({}).sort([['originalBidPrice', -1]]).exec(function (err, docs) {
+        if (err)
+            console.log(err);
+        else {
+            console.log('Descending order');
+            for (var i = 0; i < docs.length; i++)
+                console.log(docs[i].originalBidPrice);
+        }
+    });
+
     dbModel.Product.find({}, (err, ProductList) => {
         if (err)
             console.log(err);

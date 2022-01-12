@@ -72,6 +72,8 @@ const productSchema = new mongoose.Schema({
 
 productSchema.index({
     name: 'text',
+    brand: 'text',
+    subBrand: 'text'
 });
 
 const brandSchema = new mongoose.Schema({
