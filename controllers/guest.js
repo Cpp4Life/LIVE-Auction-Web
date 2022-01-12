@@ -15,70 +15,113 @@ exports.getHomePage = (req, res) => {
     })
 }
 
-exports.getListView = (req, res) => {
+exports.getListView = async (req, res) => {
+    const CategoryList = await Category.find({});
+    const productLen = await Product.find({status: 1});
 
-    Product.find({}).sort('timeEnd').exec(function (err, docs) {
-        if (err)
-            console.log(err);
-        else {
-            console.log('Ascending order');
-            for (var i = 0; i < docs.length; i++)
-                console.log(docs[i].timeEnd);
-        }
-    });
-
-    Product.find({}).sort([['originalBidPrice', -1]]).exec(function (err, docs) {
-        if (err)
-            console.log(err);
-        else {
-            console.log('Descending order');
-            for (var i = 0; i < docs.length; i++)
-                console.log(docs[i].originalBidPrice);
-        }
-    });
-
-    dbModel.Product.find({}, (err, ProductList) => {
-        if (err)
-            console.log(err);
-        else {
-
-            for (let i = 0; i < ProductList.length; i++) {
-                // console.log(ProductList[i].timeEnd);
-                // console.log(ProductList[i]);
-
-                if (ProductList[i].timeEnd.getTime() - new Date().getTime() < 0) {
-                    let currentProduct = {
-                        status: 0,
-                    };
-                    Product.findOneAndUpdate(
-                        { _id: ProductList[i]._id },
-                        currentProduct,
-                        { new: true },
-                        (err, doc) => {
-                            if (err) {
-                                console.log(err);
-                            }
-                        }
-                    );
-                }
-            }
-            dbModel.Category.find({}, (err, CategoryList) => {
-                if (err)
-                    console.log(err);
-                else {
-
-                    res.render('view-product-list', {
-                        success: '',
-                        message: '',
-                        Product: ProductList,
-                        Category: CategoryList[0].list
-                    });
-                }
-            })
-
-        }
+    const numberProduct = 6;
+    let total = Object.keys(productLen).length;
+    let nPages = Math.floor(total / numberProduct) ;
+    if(total % numberProduct > 0){
+        nPages++;
     }
-    )
+
+    var page = parseInt(req.query.page) || 1;
+
+    const pageNumbers = [];
+    for(let i = 1; i <= nPages;i++){
+        pageNumbers.push({
+            value: i,
+            isCurrent: +page === i
+        })
+    }
+    console.log(page);
+    console.log(typeof page)
+    var start = (page-1) * numberProduct;
+    var end = page * numberProduct;
+    // const product = await Product.find({status: 1, productList: {$slice: [start, end]}});
+    Product.find({status: 1})
+        .skip(start)
+        .limit(numberProduct)
+        .then(data=>{
+            console.log(Object.keys(data).length);
+            res.render('view-product-list', {
+                success: '',
+                message: '',
+                Product: data,
+                Category: CategoryList[0].list,
+                pageNumbers: pageNumbers
+            });
+        })
+        .catch(err=>{
+            console.log("Lỗi phân trang");
+        })
+    // console.log(Object.keys(product).length)
+    // console.log(product)
+    // console.log(product[1].name)
+
+    // Product.find({}).sort('timeEnd').exec(function (err, docs) {
+    //     if (err)
+    //         console.log(err);
+    //     else {
+    //         // console.log('Ascending order');
+    //         // for (var i = 0; i < docs.length; i++)
+    //         //     console.log(docs[i].timeEnd);
+    //     }
+    // });
+    //
+    // Product.find({}).sort([['originalBidPrice', -1]]).exec(function (err, docs) {
+    //     if (err)
+    //         console.log(err);
+    //     else {
+    //         // console.log('Descending order');
+    //         // for (var i = 0; i < docs.length; i++)
+    //         //     console.log(docs[i].originalBidPrice);
+    //     }
+    // });
+    //
+    // dbModel.Product.find({}, (err, ProductList) => {
+    //     if (err)
+    //         console.log(err);
+    //     else {
+    //
+    //         for (let i = 0; i < ProductList.length; i++) {
+    //             // console.log(ProductList[i].timeEnd);
+    //             // console.log(ProductList[i]);
+    //
+    //             if (ProductList[i].timeEnd.getTime() - new Date().getTime() < 0) {
+    //                 let currentProduct = {
+    //                     status: 0,
+    //                 };
+    //                 Product.findOneAndUpdate(
+    //                     { _id: ProductList[i]._id },
+    //                     currentProduct,
+    //                     { new: true },
+    //                     (err, doc) => {
+    //                         if (err) {
+    //                             console.log(err);
+    //                         }
+    //                     }
+    //                 );
+    //             }
+    //         }
+    //         dbModel.Category.find({}, (err, CategoryList) => {
+    //             if (err)
+    //                 console.log(err);
+    //             else {
+    //
+    //                 res.render('view-product-list', {
+    //                     success: '',
+    //                     message: '',
+    //                     Product: ProductList,
+    //                     Category: CategoryList[0].list
+    //                 });
+    //             }
+    //         })
+    //
+    //     }
+    // }
+    // )
 }
 
 exports.postListView = async (req, res) => {
