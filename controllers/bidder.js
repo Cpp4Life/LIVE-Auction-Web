@@ -258,6 +258,36 @@ exports.postedownvoteSeller = async (req, res) => {
     res.redirect("/bidder/profile")
 
 };
+exports.postrequestseller = async (req, res) => {
+    const errors = [];
+    console.log(req.params.id);
+
+    User.find({_id: req.params.id}, async function (err, user, done) {
+
+        if (err) {
+            console.log(err)
+        }
+        if (user) {
+                let currentUser = {
+                    status: true,
+                };
+                User.findOneAndUpdate(
+                    {_id: req.params.id},
+                    currentUser,
+                    {new: true},
+                    (err, doc) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
+            }
+    });
+
+    res.redirect("/bidder/profile")
+
+};
+
 exports.postevaluateSeller = async (req, res) => {
     const errors = [];
     console.log(req.params);
