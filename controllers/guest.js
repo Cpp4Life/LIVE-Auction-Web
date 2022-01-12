@@ -17,6 +17,26 @@ exports.getListView = (req, res) => {
         if (err)
             console.log(err);
         else {
+            for(let i = 0; i < ProductList.length; i++){
+                // console.log(ProductList[i].timeEnd);
+                // console.log(ProductList[i]);
+
+                if(ProductList[i].timeEnd.getTime() - new Date().getTime() < 0){
+                    let currentProduct = {
+                        status: 0,
+                    };
+                    Product.findOneAndUpdate(
+                        { _id: ProductList[i]._id },
+                        currentProduct,
+                        { new: true },
+                        (err, doc) => {
+                            if (err) {
+                                console.log(err);
+                            }
+                        }
+                    );
+                }
+            }
             dbModel.Category.find({}, (err, CategoryList) => {
                 if (err)
                     console.log(err);
@@ -87,24 +107,53 @@ exports.getpostProductPage = async (req, res) => {
 exports.getButtonBuy = async (req, res) => {
     Product.find({ _id: req.params.id }, async function (err, product, done) {
 
-        let currentProduct = {
-            status: 0,
-            topPrice: product[0].boughtPrice,
-            topOwner: req.user,
-        };
-        Product.findOneAndUpdate(
-            { _id: req.params.id },
-            currentProduct,
-            { new: true },
-            (err, doc) => {
-                if (err) {
-                    console.log(err);
+        if(product[0].timeEnd.getTime() - new Date().getTime() > 0){
+            let currentProduct5 = {
+                status: false,
+                topPrice: product[0].boughtPrice,
+                topOwner: req.user,
+            };
+            Product.findOneAndUpdate(
+                { _id: req.params.id },
+                currentProduct5,
+                { new: true },
+                (err, doc) => {
+                    if (err) {
+                        console.log(err);
+                    }
                 }
-            }
-        );
-    })
+            );
+            const categoryList = await Category.find({});
+            const productList = await Product.find({});
+            res.render('view-product-list', {
+                message: "",
+                success: "Mua thành công",
+                Product: productList,
+                Category: categoryList[0].list });
+        } else{
+            let currentProduct6 = {
+                status: false,
+            };
+            Product.findOneAndUpdate(
+                { _id: req.params.id },
+                currentProduct6,
+                { new: true },
+                (err, doc) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                }
+            );
+            const categoryList = await Category.find({});
+            const productList = await Product.find({});
+            res.render('view-product-list', {
+                message: "Mua không thành công",
+                success: "",
+                Product: productList,
+                Category: categoryList[0].list });
+        }
 
-    res.redirect('/view-product-list');
+    })
 }
 exports.postAuctionProduct = async (req, res) => {
 
@@ -114,7 +163,7 @@ exports.postAuctionProduct = async (req, res) => {
     // Product.find({_id: arr[0]}, async function(err,product, done) {
 
     Product.find({ _id: arr[0] }, async function (err, product, done) {
-
+        //Nếu sản phẩm đã hết thời gian đấu giá
         if (product[0].timeEnd.getTime() - new Date().getTime() < 0) {
             let currentProduct0 = {
                 status: 0
@@ -129,17 +178,14 @@ exports.postAuctionProduct = async (req, res) => {
                     }
                 }
             );
-            dbModel.Category.find({}, (err, CategoryList) => {
-                if (err)
-                    console.log(err);
-                else {
-
-                    res.render('view-product-list', {
-                        message: 'Đấu giá sản phẩm không thành công',
-                        Category: CategoryList[0].list
-                    });
-                }
-            })
+            const categoryList = await Category.find({});
+            const productList = await Product.find({});
+            res.render('view-product-list', {
+                success: '',
+                message: 'Đấu giá sản phẩm không thành công',
+                Category: categoryList[0].list,
+                Product: productList
+            });
         } else {
             //Trường hợp chưa có ai đấu giá
             if (product[0].bidders.length === 0) {
@@ -249,27 +295,16 @@ exports.postAuctionProduct = async (req, res) => {
                 })
             }
         }
-    })
-    dbModel.Product.find({}, (err, ProductList) => {
-        if (err)
-            console.log(err);
-        else {
-            dbModel.Category.find({}, (err, CategoryList) => {
-                if (err)
-                    console.log(err);
-                else {
-                    res.render('view-product-list', {
-                        success: 'Đấu giá thành công',
-                        message: '',
-                        Product: ProductList,
-                        Category: CategoryList[0].list
-                    });
-                }
-            })
+        const categoryList = await Category.find({});
+        const productList = await Product.find({});
 
-        }
-    }
-    )
+        res.render('view-product-list', {
+            message: "",
+            success: "Đấu giá thành công",
+            Product: productList,
+            Category: categoryList[0].list });
+    })
+
 }
 
 
