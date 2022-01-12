@@ -1,5 +1,7 @@
 const express = require('express');
 const adminController = require('../controllers/admin');
+const isAuth = require("../middleware/auth");
+const bidderController = require("../controllers/bidder");
 const router = express.Router();
 
 router.get('/login', adminController.getAdminLoginPage);
@@ -17,5 +19,9 @@ router.post('/settings/category/:brand/delete-item', adminController.postDelBran
 router.post('/settings/category/:brand/add-item', adminController.postAddBrandItem);
 
 router.post('/settings/accounts/', adminController.postAccounts);
+
+router.post('/settings/updatebidder/:id', adminController.updaterequestseller);
+
+router.post('/settings/cancelupdatebidder/:id', adminController.updatecancelrequestseller);
 
 module.exports = router;

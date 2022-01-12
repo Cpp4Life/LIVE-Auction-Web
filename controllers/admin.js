@@ -241,3 +241,53 @@ exports.postAccounts = async (req, res) => {
     }
     res.redirect('/admin/settings');
 }
+
+exports.updaterequestseller = async (req, res) => {
+    User.find({_id: req.params.id}, async function (err, user, done) {
+        if (err) {
+            console.log(err)
+        }
+        if (user) {
+            let currentUser = {
+                role: "seller",
+            };
+            User.findOneAndUpdate(
+                {_id: req.params.id},
+                currentUser,
+                {new: true},
+                (err, doc) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                }
+            );
+        }
+    });
+    res.redirect('/admin/settings');
+}
+
+
+
+exports.updatecancelrequestseller = async (req, res) => {
+    User.find({_id: req.params.id}, async function (err, user, done) {
+        if (err) {
+            console.log(err)
+        }
+        if (user) {
+            let currentUser = {
+                status: false
+            };
+            User.findOneAndUpdate(
+                {_id: req.params.id},
+                currentUser,
+                {new: true},
+                (err, doc) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                }
+            );
+        }
+    });
+    res.redirect('/admin/settings');
+}

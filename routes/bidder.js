@@ -29,6 +29,8 @@ router.get('/view-product-list/view-product/favorite/:id', isAuth, bidderControl
 
 router.post('/bidder/profile/evaluateseller/:id', isAuth, bidderController.postevaluateSeller);
 router.post('/bidder/profile/evaluateseller/-1/:id', isAuth, bidderController.postedownvoteSeller);
+router.post('/bidder/profile/request/:id', isAuth, bidderController.postrequestseller);
+
 
 
 module.exports = router;

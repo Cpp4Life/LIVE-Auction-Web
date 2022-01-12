@@ -138,6 +138,76 @@
                                         </table>
                                     </div>
                                 </div>
+
+                                <div class="tab-pane fade" id="nav-update" role="tabpanel" aria-labelledby="nav-account-tab">
+                                    <div class="alert alert-info alert-dismissible fade show" id="resetAlert" role="alert" style="display: none;">
+                                        <p id="resetMsg" style="margin: 0;"></p>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="alert alert-danger alert-dismissible fade show" id="deleteAlert" role="alert" style="display: none;">
+                                        <p id="deleteMsg" style="margin: 0;"></p>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" style="margin:0">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <% var count=0; %>
+                                            <% for( let index=0; index < User.length; index++ ) { %>
+                                                <% if (User[index].role ==='bidder' && User[index].status === true ) { %>
+                                                    <% count+=1; %>
+                                                        <tr>
+                                                            <th scope="row">
+                                                                <%= count%>
+                                                            </th>
+                                                            <td class="usernameField">
+                                                                <%= User[index].name%>
+                                                            </td>
+                                                            <td class="emailField">
+                                                                <%= User[index].email%>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <div class="container">
+                                                                    <div class="row">
+                                                                        <div class="col-sm">
+                                                                            <form action="/admin/settings/updatebidder/<%= User[index].id%>" id="btnAuction" name="price" value=""   method="post">
+                                                                                <button  type="submit" class="btn shadow-none resetPasswordBtn" data-toggle="tooltip" data-placement="top"  title="Chấp nhận"  ><i   class="far fa-check-square fa-2x"></i></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="col-sm">
+                                                                            <form action="/admin/settings/cancelupdatebidder/<%= User[index].id%>" id="btnAuction" name="price" value=""   method="post">
+                                                                                <button  type="submit" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top"  title="Hủy yêu cầu"  ><i class="fas fa-window-close fa-2x"></i></button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+<!--                                                                    <form action="/admin/settings/updatebidder/<%= User[index].id%>" id="btnAuction" name="price" value=""   method="post">-->
+<!--                                                                        <button type="submit" class="btn shadow-none resetPasswordBtn" data-toggle="tooltip" data-placement="top"  title="Chấp nhận"  ><i class="far fa-check-square"></i></button>-->
+<!--                                                                    </form>-->
+<!--    &lt;!&ndash;                                                                <button type="button" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top" style="margin-top: 10px;" title="Xóa tài khoản"><i class="fas fa-window-close"></i></button>&ndash;&gt;-->
+<!--                                                                    <form action="/admin/settings/cancelupdatebidder/<%= User[index].id%>" id="btnAuction" name="price" value=""   method="post">-->
+<!--                                                                        <button  type="submit" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top"  title="Xóa tài khoản"  ><i class="fas fa-window-close"></i></button>-->
+<!--                                                                    </form>-->
+
+                                                            </td>
+                                                        </tr>
+                                                <% } %>
+                                            <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                     </div>
                 </div>
@@ -197,12 +267,13 @@
             const categoryTabHeight = $('#nav-category').outerHeight(true);
             const productTabHeight = $('#nav-product').outerHeight(true);
             const accountTabHeight = $('#nav-account').outerHeight(true);
-            const maxTabHeight = Math.max(categoryTabHeight, productTabHeight, accountTabHeight);
-            $('#nav-category, #nav-product, #nav-account').css('height', maxTabHeight);
+            const updateTabHeight = $('#nav-update').outerHeight(true);
+            const maxTabHeight = Math.max(categoryTabHeight, productTabHeight, accountTabHeight,updateTabHeight);
+            $('#nav-category, #nav-product, #nav-account , #nav-update').css('height', maxTabHeight);
 
             $(window).resize(() => {
                 if ($(window).width() <= 1080) {
-                    $('#nav-category, #nav-product, #nav-account').css('height', '');
+                    $('#nav-category, #nav-product, #nav-account, #nav-update').css('height', '');
                 }
             });
 

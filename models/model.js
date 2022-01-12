@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema({
             currentPrice_product: String,
         }
     ],
+    status: Boolean
 });
 
 const bidLogSchema = new mongoose.Schema({

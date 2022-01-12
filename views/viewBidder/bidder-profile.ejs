@@ -318,20 +318,15 @@
                                                         <td style="width: 250px;">
                                                             <form action="/bidder/profile/evaluateseller/<%=element1.owner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">
                                                                 <input style="font-size: 14px;margin-bottom: 10px;"  class="form-control" name="rate" id="rate"  title="enter your .">
-
                                                                 <button type="submit"  class="btn btn-primary btn-lg btn-block" style="background-color: green;">+1</button>
                                                             </form>
-
                                                         </td>
                                                         <td style="width: 250px;">
                                                             <form action="/bidder/profile/evaluateseller/-1/<%=element1.owner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">
                                                                 <input style="font-size: 14px;margin-bottom: 10px;"  class="form-control" name="rate1" id="rate1"  title="enter your .">
-
                                                                 <button type="submit"  class="btn btn-primary btn-lg btn-block" style="background-color: orangered;">-1</button>
                                                             </form>
-
                                                         </td>
-
                                                         <% }  %>
                                                     <%   } %>
                                                 <% }) %>
@@ -339,22 +334,26 @@
                                         <%   } %>
                                     <%   } %>
                             <% }) %>
-
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="upgrade" role="tabpanel" aria-labelledby="contact-tab">
                     <hr>
-                    <h2>Upgrade from bidder to seller on Online Auction.</h2>
-
+                    <h2>Xin Thăng cấp bidder thành seller.</h2>
+                    <% if((user.role == "bidder") && (user.status == false) ){ %>
                     <div class="form-group">
                         <div class="col-xs-12">
                             <br>
-
                             <button type="button" class="btn btn-primary btn-lg btn-block" style="background-color: green;" data-toggle="modal" data-target="#request">Send request.</button>
                         </div>
                     </div>
+                    <% } else  if((user.role == "bidder") && (user.status == true) ){ %>
+                        <h3> Đang chờ admin xử lí....</h3><div></div>
+
+                    <% } else { %>
+                        <h3> Hệ thống đá chấp nhận yêu cầu của bạn , bạn đã nâng cấp lên thành seller .Yêu cầu bạn đăng nhập lại .</h3><div></div>
+                    <% }%>
                 </div>
             </div>
         </div>
@@ -370,15 +369,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title mx-auto"> We will respond within 7 business days.</h3>
+                <h3 class="modal-title mx-auto" style="text-align: center;"> Chúng tôi sẽ phản hồi yêu cầu của bạn sau ít nhất 7 ngày </h3>
             </div>
             <div class="form-group">
 
-                <button type="submit" name="submit_request" class="btn btn-lg">Ok</button>
-
-
-                <button class="btn btn-lg" data-dismiss="modal">Cancel</button>
+                <form action="/bidder/profile/request/<%= user.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">
+                    <button type="submit"  class="btn btn-primary btn-lg btn-block" >OK</button>
+                </form>
+                <button style="padding-top: 0px;margin-top: 20px;" class="btn btn-primary btn-lg btn-block" data-dismiss="modal">Cancel</button>
             </div>
+
         </div>
     </div>
 </div>
