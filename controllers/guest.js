@@ -19,8 +19,7 @@ exports.getListView = (req, res) => {
             console.log(err);
         else {
             for(let i = 0; i < ProductList.length; i++){
-                // console.log(ProductList[i].timeEnd);
-                // console.log(ProductList[i]);
+                console.log(typeof ProductList[i].timeEnd);
 
                 if(ProductList[i].timeEnd.getTime() - new Date().getTime() < 0){
                     let currentProduct = {
@@ -109,7 +108,6 @@ exports.getPostProductPage = async (req, res) => {
 
 exports.getButtonBuy = async (req, res) => {
     Product.find({ _id: req.params.id }, async function (err, product, done) {
-
         if(product[0].timeEnd.getTime() - new Date().getTime() > 0){
             let currentProduct5 = {
                 status: false,
