@@ -242,13 +242,18 @@
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="price">
-                                                    <span style="text-align: center; font-style: inherit ; color:  black; font-size: 1.4rem; background: #f2f4f8;  border-radius: 20px;">Mua ngay:</span>
+                                                    <span id="text_muangay" style="text-align: center; font-style: inherit ; color:  black; font-size: 1.4rem; background: #f2f4f8;  border-radius: 20px;">Mua ngay:</span>
                                                     <span id="boughtPrice">
                                                         <%= element.boughtPrice %> &nbsp;VND
                                                     </span>
                                     <script>
                                         const boughtPrice = '<%=element.boughtPrice%>';
-                                        $('#boughtPrice').html(formatter.format(boughtPrice));
+                                        if (!boughtPrice){
+                                            document.getElementById("text_muangay").innerHTML = "";
+                                            document.getElementById("boughtPrice").innerHTML = "";
+                                        } else {
+                                            $('#boughtPrice').html(formatter.format(boughtPrice));
+                                        }
                                     </script>
                                     <br>
                                 </div>
@@ -258,23 +263,30 @@
                                     Mua ngay
                                 </button>
                                 <script>
-                                    function myFunction() {
-                                        document.getElementById('btn').addEventListener('click', function () {
-                                            swal({
-                                                title: "Are you sure?",
-                                                text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                icon: "info",
-                                                buttons: true,
-                                                dangerMode: true,
-                                            })
-                                                .then((willDelete) => {
-                                                    if (willDelete) {
-                                                        location.replace("/view-product-list/view-product/buy-now/<%= element.id %>");
-                                                    } else {
+                                    const boughtPrice1 = '<%=element.boughtPrice%>';
+                                    console.log(boughtPrice1);
+                                    if (!boughtPrice1){
+                                        document.getElementById("btn").style.visibility = 'hidden';
+                                    } else{
+                                        function myFunction() {
+                                            document.getElementById('btn').addEventListener('click', function () {
+                                                swal({
+                                                    title: "Are you sure?",
+                                                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                    icon: "info",
+                                                    buttons: true,
+                                                    dangerMode: true,
+                                                })
+                                                    .then((willDelete) => {
+                                                            if (willDelete) {
+                                                                location.replace("/view-product-list/view-product/buy-now/<%= element.id %>");
+                                                            } else {
 
-                                                    }
-                                                }
-                                                )})}
+                                                            }
+                                                        }
+                                                    )})}
+                                    }
+
                                                 </script>
                                             </div>
                                         </div>
