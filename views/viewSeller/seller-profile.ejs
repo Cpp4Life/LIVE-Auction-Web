@@ -33,6 +33,15 @@
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="profile" aria-selected="false">Review</a>
             </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="contact" aria-selected="false">Favorites</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#biddings" role="tab" aria-controls="contact" aria-selected="false">Bidding</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#wonbids" role="tab" aria-controls="contact" aria-selected="false">Successful bids</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -154,6 +163,152 @@
                                     </table>
                                 </div>
 
+                </div>
+                <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="contact-tab">
+                    <h4 class="card-header " style="text-align: center;">
+                        Favorites product
+                    </h4>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <% Product.forEach(element1=> {%>
+                                <% user.favorites.forEach(element => { %>
+                                    <% if((element1._id ).equals(element.id_product) ){ %>
+                                        <% if(element1.status){ %>
+                                            <div class="col-sm-4 mb-4">
+                                                <div class="card">
+                                                    <img src="/images/<%= element.id_product %>/3.jpg" style="height: 100px;" class="card-img-top" alt="...">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><%= element.name_product%></h5>
+                                                        <p class="card-text">Giá hiện tại: <%= element.currentPrice_product%>  VND</p>
+                                                        <p class="card-text">Ngày/giờ đăng: <%= element.timeStart_product%></p>
+                                                        <p class="card-text">Ngày/giờ Kết thúc: <%= element.timeEnd_product%></p>
+                                                    </div>
+
+                                                    <div class="card-footer text-muted">
+                                                        <a class="btn btn-sm btn-outline-primary" href="/view-product-list/view-product/<%= element.id_product %>" role="button">
+                                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                                            Details
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% } %>
+
+                                    <% } %>
+                                <% }) %>
+                            <% }) %>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade" id="biddings" role="tabpanel" aria-labelledby="contact-tab">
+                    <hr>
+                    <h4 class="card-header " style="text-align: center;">
+                        Bidding
+                    </h4>
+                    <div class="card-body">
+                        <div class="row">
+
+                            <% Product.forEach(element1=> {%>
+
+                                <% if( element1.status) { %>
+                                    <% var found = false%>
+                                    <% element1.bidders.forEach(element2=> { %>
+                                        <% if(( element2.user._id).equals( user._id) && !found) { %>
+                                            <div class="col-sm-4 mb-3">
+                                                <div class="card">
+                                                    <img src="/images/<%= element1._id %>/3.jpg" style="height: 120px;" class="card-img-top" alt="...">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title"><%= element1.name%></h5>
+                                                        <p class="card-text">Giá hiện tại: <%= element1.currentPrice%></p>
+                                                        <p class="card-text">Giá mua ngay:<%= element1.boughtPrice%></p>
+                                                        <p class="card-text">Người bán: <%= element1.owner.name%></p>
+                                                        <p class="card-text">Ngày/giờ Kết thúc: <%= element1.timeEnd %></p>
+                                                    </div>
+                                                    <div class="card-footer text-muted">
+                                                        <a class="btn btn-sm btn-outline-primary" href="/view-product-list/view-product/<%= element1._id %>" role="button">
+                                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                                            Details
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% found = true%>
+                                        <%   } %>
+                                    <% }) %>
+                                <%   } %>
+
+                            <% }) %>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="wonbids" role="tabpanel" aria-labelledby="contact-tab">
+                    <hr>
+                    <div class="container">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Category</th>
+                                <th>Seller</th>
+                                <th>Bid for</th>
+                                <th>Upvote</th>
+                                <th>Downvote</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% Product.forEach(element1=> {%>
+                                <% if((element1.topOwner._id ).equals(user._id) ){ %>
+                                    <% if(!element1.status){ %>
+                                        <tr>
+
+                                            <td style="width:9%"><%= element1.name %></td>
+                                            <td style="width:9%"><%= element1.brand %></td>
+                                            <td style="width:9%"><%= element1.owner.name %></td>
+                                            <td style="width:9%"><%= element1.topPrice %></td>
+
+                                            <% User.forEach(user1 => {%>
+                                                <% if((user1.id) == (element1.owner.id)){ %>
+                                                    <% var found = true%>
+                                                    <% user1.review.forEach(rv1=> {%>
+                                                        <% if((rv1.user_id) == (user.id) && (rv1.product_id) == (element1.id) ){ %>
+
+                                                            <% if(rv1.point == 1){ %>
+                                                                <td style="width:9%"><%= rv1.comment %></td>
+                                                                <td style="width:9%"></td>
+                                                            <% } %>
+                                                            <% if(rv1.point == -1){ %>
+                                                                <td style="width:9%"></td>
+                                                                <td style="width:9%"><%= rv1.comment %></td>
+                                                            <%   } %>
+                                                            <% found = false%>
+                                                        <% } else { %>
+                                                        <%   } %>
+                                                    <% }) %>
+                                                    <% if(found){ %>
+                                                    <td style="width: 250px;">
+                                                        <form action="/bidder/profile/evaluateseller/<%=element1.owner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">
+                                                            <input style="font-size: 14px;margin-bottom: 10px;"  class="form-control" name="rate" id="rate"  title="enter your .">
+                                                            <button type="submit"  class="btn btn-primary btn-lg btn-block" style="background-color: green;">+1</button>
+                                                        </form>
+                                                    </td>
+                                                    <td style="width: 250px;">
+                                                        <form action="/bidder/profile/evaluateseller/-1/<%=element1.owner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">
+                                                            <input style="font-size: 14px;margin-bottom: 10px;"  class="form-control" name="rate1" id="rate1"  title="enter your .">
+                                                            <button type="submit"  class="btn btn-primary btn-lg btn-block" style="background-color: orangered;">-1</button>
+                                                        </form>
+                                                    </td>
+                                                    <% }  %>
+                                                <%   } %>
+                                            <% }) %>
+                                        </tr>
+                                    <%   } %>
+                                <%   } %>
+                            <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="profile-tab">
                     <hr>

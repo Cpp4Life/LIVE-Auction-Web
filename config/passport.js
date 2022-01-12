@@ -38,9 +38,10 @@ module.exports = (passport) => {
         });
     });
 
+
     // passport.use(new GoogleStrategy({
-    //     clientID: process.env.GOOGLE_CLIENT_ID,
-    //     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    //     clientID:  430628000423-snc4munnnsgs606d70tkgr06mb7p6umn.apps.googleusercontent.com,
+    //     clientSecret: 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,
     //     callbackURL: 'http://localhost:3000/auth/google/home'
     // }, (accessToken, refreshToken, profile, cb) => {
     //     // console.log(profile);
