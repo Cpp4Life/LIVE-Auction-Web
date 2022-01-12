@@ -20,4 +20,8 @@ router.post('/seller/profile/:id',sellerController.editprofile);
 router.get('/seller/profile/changepassword', isAuth,sellerController.getPostchangepass);
 
 router.post('/seller/profile/changepassword/:id', isAuth, sellerController.editpassword)
+
+router.post('/seller/profile/evaluateseller/:id', isAuth, sellerController.postevaluatebidder);
+router.post('/seller/profile/evaluateseller/-1/:id', isAuth, sellerController.postedownvotebidder);
+
 module.exports = router;
