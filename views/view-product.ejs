@@ -4,6 +4,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     </head>
 
+<<<<<<< HEAD
     <body>
         <section class="colored-section" style="padding:0 15%;">
             <%- include('partials/navbar'); -%>
@@ -137,6 +138,99 @@
                                                     <li>Secs</li>
                                                 </div>
                                             </div>
+=======
+<body>
+<section class="colored-section" style="padding:0 15%;">
+    <%- include('partials/navbar'); -%>
+</section>
+<div>
+    <%if(success !=='' ) {%>
+    <script>
+        swal({
+            title: `<%=success%>`,
+            text: "Đấu giá thành công",
+            icon: "success",
+            button: "OK",
+        });
+    </script>
+    <%}%>
+    <% Product.forEach(element=> {%>
+        <section class="view-product">
+            <div class="feature">
+                <div class="col-lg-6">
+                    <div>
+                        <div class="img-display">
+                            <div class="img-showcase" style="height: 100%;">
+                                <img src="/images/<%= element.id %>/0.jpg" alt="rolex image">
+                                <img src="/images/<%= element.id %>/1.jpg" alt="rolex image">
+                                <img src="/images/<%= element.id %>/2.jpg" alt="rolex image">
+                                <img src="/images/<%= element.id %>/3.jpg" alt="rolex image">
+                                <img src="/images/<%= element.id %>/4.jpg" alt="rolex image">
+                            </div>
+                        </div>t
+                        <div class="img-select" style="align-items: center;">
+                            <div class="img-item">
+                                <a href="#" data-id="1">
+                                    <img src="/images/<%= element.id %>/0.jpg" alt="rolex image">
+                                </a>
+                            </div>
+                            <div class="img-item">
+                                <a href="#" data-id="2">
+                                    <img src="/images/<%= element.id %>/1.jpg" alt="rolex image">
+                                </a>
+                            </div>
+                            <div class="img-item">
+                                <a href="#" data-id="3">
+                                    <img src="/images/<%= element.id %>/2.jpg" alt="rolex image">
+                                </a>
+                            </div>
+                            <div class="img-item">
+                                <a href="#" data-id="4">
+                                    <img src="/images/<%= element.id %>/3.jpg" alt="rolex image">
+                                </a>
+                            </div>
+                            <div class="img-item">
+                                <a href="#" data-id="5">
+                                    <img src="/images/<%= element.id %>/4.jpg" alt="rolex image">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="social my-3" style="padding-bottom: 0px;">
+                        <span class="font-size1"> Chia sẻ : </span>
+                        <a href="#" class="ml-2"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="/view-product-list/view-product/favorite/<%= user.id%>+<%= element.id%>" id="favorite-product" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
+                            <i class="far fa-heart"></i>
+                            <span class="font-size1" style="padding-left: 10px;color: black;"> </span>
+                        </a>
+                        <a class="font-size1" data-toggle="modal" data-target="#request"> Lịch sử đấu giá</a>
+                    </div>
+                    <div class="modal fade" id="request">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <table id="mask1" class="table table-hover table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Thời điểm</th>
+                                            <th style="width: 120px;">Người mua</th>
+                                            <th>Giá</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <% element.bidders.forEach(element1=> { %>
+                                            <tr>
+                                                <td>
+                                                    <%= element1.bidTime%>
+                                                </td>
+                                                <td class="mask_name">
+                                                    <%= element1.user.name%>
+                                                </td>
+                                                <td >
+                                                    <%= element1.bidPrice %>
+                                                </td>
+                                            </tr>
+>>>>>>> cce2149b6396f8f42fccb79dfb087503dc50e066
                                             <script>
                                                 var target_date = new Date(`<%=element.timeEnd%>`).getTime();
                                                 var days, hours, minutes, seconds;
