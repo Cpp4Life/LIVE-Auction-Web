@@ -70,6 +70,10 @@ const productSchema = new mongoose.Schema({
 
 });
 
+productSchema.index({
+    name: 'text',
+});
+
 const brandSchema = new mongoose.Schema({
     brand: String,
     subBrand: [String]

@@ -12,6 +12,7 @@ exports.getHomePage = (req, res) => {
         }
     })
 }
+
 exports.getListView = (req, res) => {
     dbModel.Product.find({}, (err, ProductList) => {
         if (err)
@@ -59,19 +60,19 @@ exports.getListView = (req, res) => {
 exports.postListView = async (req, res) => {
     console.log(req.body);
     const content = req.body.search;
-    const result = await Product.aggregate([
-        {
-            '$search': {
-                'index': 'custom',
-                'text': {
-                    'query': content,
-                    'path': 'name',
-                    'fuzzy': {}
-                }
-            }
+    const CategoryList = await Category.find({});
+    const ProductList = await Product.find({
+        $text: {
+            $search: content
         }
-    ]);
-    console.log(result);
+    });
+
+    res.render('view-product-list', {
+        success: '',
+        message: '',
+        Product: ProductList,
+        Category: CategoryList[0].list
+    });
 }
 
 exports.getProductPage = async (req, res) => {
@@ -98,12 +99,14 @@ exports.getProductPage = async (req, res) => {
     }
     )
 }
-exports.getpostProductPage = async (req, res) => {
+
+exports.getPostProductPage = async (req, res) => {
     // console.log( req.params.id)
     const categoryList = await Category.find({});
 
     res.render('view-product', { Category: categoryList[0].list });
 }
+
 exports.getButtonBuy = async (req, res) => {
     Product.find({ _id: req.params.id }, async function (err, product, done) {
 
@@ -155,6 +158,7 @@ exports.getButtonBuy = async (req, res) => {
 
     })
 }
+
 exports.postAuctionProduct = async (req, res) => {
 
     console.log(req.params);
