@@ -213,7 +213,7 @@
                                         </div>
 
                                         <div class="card-footer text-muted">
-                                            <a class="btn btn-sm btn-outline-primary" href="/view-product-list/viewproduct/<%= element.id_product %>" role="button">
+                                            <a class="btn btn-sm btn-outline-primary" href="/view-product-list/view-product/<%= element.id_product %>" role="button">
                                                 <i class="fa fa-eye" aria-hidden="true"></i>
                                                 Details
                                             </a>
@@ -255,7 +255,7 @@
                                                         <p class="card-text">Ngày/giờ Kết thúc: <%= element1.timeEnd %></p>
                                                     </div>
                                                     <div class="card-footer text-muted">
-                                                        <a class="btn btn-sm btn-outline-primary" href="/view-product-list/viewproduct/<%= element1._id %>" role="button">
+                                                        <a class="btn btn-sm btn-outline-primary" href="/view-product-list/view-product/<%= element1._id %>" role="button">
                                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                                             Details
                                                         </a>
@@ -286,48 +286,58 @@
                             </tr>
                             </thead>
                             <tbody>
-
                             <% Product.forEach(element1=> {%>
                                     <% if((element1.topOwner._id ).equals(user._id) ){ %>
                                         <% if(!element1.status){ %>
-                            <tr>
+                                            <tr>
 
-                                <td style="width:9%"><%= element1.name %></td>
-                                <td style="width:9%"><%= element1.brand %></td>
-                                <td style="width:9%"><%= element1.owner.name %></td>
-                                <td style="width:9%"><%= element1.topPrice %></td>
+                                                <td style="width:9%"><%= element1.name %></td>
+                                                <td style="width:9%"><%= element1.brand %></td>
+                                                <td style="width:9%"><%= element1.owner.name %></td>
+                                                <td style="width:9%"><%= element1.topPrice %></td>
 
-                            <% User.forEach(user1 => {%>
-                                    <% if((user1.id) == (element1.owner.id)){ %>
-                                        <% var found = true%>
-                                            <% user1.review.forEach(rv1=> {%>
-                                                <% if((rv1.user_id) == (user.id) && (rv1.product_id) == (element1.id) ){ %>
-                                                        <% found = false%>
-                                            <% } else { %>
-                                                <%   } %>
-                                            <% }) %>
-                                                <% if(found){ %>
-                                        <td style="width: 250px;">
-                                            <form action="/bidder/profile/evaluateseller/<%=element1.owner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">
-                                                <input style="font-size: 14px;margin-bottom: 10px;"  class="form-control" name="rate" id="rate"  title="enter your .">
+                                            <% User.forEach(user1 => {%>
+                                                    <% if((user1.id) == (element1.owner.id)){ %>
+                                                        <% var found = true%>
+                                                            <% user1.review.forEach(rv1=> {%>
+                                                                <% if((rv1.user_id) == (user.id) && (rv1.product_id) == (element1.id) ){ %>
 
-                                                <button type="submit"  class="btn btn-primary btn-lg btn-block" style="background-color: green;">+1</button>
-                                            </form>
+                                                                        <% if(rv1.point == 1){ %>
+                                                                            <td style="width:9%"><%= rv1.comment %></td>
+                                                                            <td style="width:9%"></td>
+                                                                        <% } %>
+                                                                        <% if(rv1.point == -1){ %>
+                                                                            <td style="width:9%"></td>
+                                                                            <td style="width:9%"><%= rv1.comment %></td>
+                                                                        <%   } %>
+                                                                        <% found = false%>
+                                                                 <% } else { %>
+                                                                <%   } %>
+                                                            <% }) %>
+                                                                <% if(found){ %>
+                                                        <td style="width: 250px;">
+                                                            <form action="/bidder/profile/evaluateseller/<%=element1.owner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">
+                                                                <input style="font-size: 14px;margin-bottom: 10px;"  class="form-control" name="rate" id="rate"  title="enter your .">
 
-                                        </td>
-                                        <td><button type="button" class="btn btn-primary disabled" data-toggle="modal1" data-target="#review1">-1</button></td>
+                                                                <button type="submit"  class="btn btn-primary btn-lg btn-block" style="background-color: green;">+1</button>
+                                                            </form>
 
+                                                        </td>
+                                                        <td style="width: 250px;">
+                                                            <form action="/bidder/profile/evaluateseller/-1/<%=element1.owner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">
+                                                                <input style="font-size: 14px;margin-bottom: 10px;"  class="form-control" name="rate1" id="rate1"  title="enter your .">
 
-                                        <% }  %>
+                                                                <button type="submit"  class="btn btn-primary btn-lg btn-block" style="background-color: orangered;">-1</button>
+                                                            </form>
 
+                                                        </td>
+
+                                                        <% }  %>
+                                                    <%   } %>
+                                                <% }) %>
+                                            </tr>
+                                        <%   } %>
                                     <%   } %>
-                                <% }) %>
-
-                            </tr>
-
-                            <%   } %>
-                            <%   } %>
-
                             <% }) %>
 
                             </tbody>

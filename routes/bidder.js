@@ -25,8 +25,10 @@ router.post('/bidder/profile/changepassword/:id', isAuth, bidderController.editp
 //
 // router.post('/view-product-list/viewproduct/:id/auction/:id', isAuth, bidderController.getpostviewauction);
 
-router.get('/view-product-list/viewproduct/favorite/:id', isAuth, bidderController.getfavorites);
+router.get('/view-product-list/view-product/favorite/:id', isAuth, bidderController.getfavorites);
 
 router.post('/bidder/profile/evaluateseller/:id', isAuth, bidderController.postevaluateSeller);
+router.post('/bidder/profile/evaluateseller/-1/:id', isAuth, bidderController.postedownvoteSeller);
+
 
 module.exports = router;
