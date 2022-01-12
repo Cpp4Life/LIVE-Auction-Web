@@ -25,7 +25,7 @@
                 <div class="col-lg-6">
                     <div>
                         <div class="img-display">
-                            <div class="img-showcase">
+                            <div class="img-showcase" style="height: 100%;">
                                 <img src="/images/<%= element.id %>/0.jpg" alt="rolex image">
                                 <img src="/images/<%= element.id %>/1.jpg" alt="rolex image">
                                 <img src="/images/<%= element.id %>/2.jpg" alt="rolex image">
@@ -88,10 +88,10 @@
                                                 <td>
                                                     <%= element1.bidTime%>
                                                 </td>
-                                                <td>
+                                                <td class="mask_name">
                                                     <%= element1.user.name%>
                                                 </td>
-                                                <td class="bid-price">
+                                                <td >
                                                     <%= element1.bidPrice %>
                                                 </td>
                                             </tr>
@@ -106,12 +106,13 @@
                                                         mask_bidder = mask_bidder + str_bidder[i]
                                                     }
                                                 }
-                                                const a = document.getElementById("mask")
-                                                a.value = mask_bidder
-                                                // document.getElementById("mask").innerHTML = mask_bidder;
+                                                // const a = document.getElementById("mask")
+                                                // a.value = mask_bidder
+                                                document.getElementsByClassName("mask_name").innerHTML = mask_bidder;
                                             </script>
                                         <% }) %>
                                         </tbody>
+
                                     </table>
                                 </div>
                                 <div class="form-group">
@@ -138,7 +139,6 @@
                             </div>
                             <script>
                                 var target_date = new Date(`<%=element.timeEnd%>`).getTime();
-                                console.log(target_date);
                                 var days, hours, minutes, seconds;
                                 var countdown = document.getElementById("titles");
                                 getCountdown();
@@ -152,6 +152,22 @@
                                     seconds_left = seconds_left % 3600;
                                     minutes = pad(parseInt(seconds_left / 60));
                                     seconds = pad(parseInt(seconds_left % 60));
+                                    function indexOf(seconds, s) {
+                                        for(let i = 0; i < seconds.length; i++){
+                                            if(seconds[i] === s){
+                                                return 0;
+                                            }
+                                        }
+                                        return 1;
+                                    }
+
+                                    if(indexOf(seconds, '-') !== 1)
+                                    {
+                                        days = pad(0);
+                                        hours = pad(0);
+                                        minutes = pad(0);
+                                        seconds = pad(0);
+                                    }
                                     countdown.innerHTML = "<span>" + days + "</span><span>" + hours + "</span><span>" + minutes + "</span><span>" + seconds + "</span>";
                                 }
                                 function pad(n) {
@@ -193,8 +209,10 @@
                                 </a>
                                 <script>
                                     function promptMe() {
-                                        swal("Write something here:", {
+                                        swal({
                                             content: "input",
+                                            title: "Nhập số tiền mà bạn muốn đấu giá: ",
+                                            text: "Giá đề nghị: <%= element.currentPrice + element.stepPrice%>",
                                             button: {
                                                 text: "Submit",
                                                 closeModal: false,
@@ -205,7 +223,7 @@
                                                 swal("Vui lòng chỉ nhập chữ số. Xin hãy thực hiện lại thao tác.");
                                                 return;
                                             }
-                                            var currentPrice = parseInt(document.getElementById('currentprice').innerText);
+                                            var currentPrice = parseInt(<%=element.currentPrice %>);
                                             if (price < currentPrice) {
                                                 swal("Vui lòng nhập cao hơn giá hiện tại. Xin hãy thực hiện lại thao tác.");
                                                 return;
@@ -237,7 +255,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <button onclick="myFunction()" id="btn" type="button" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid" style="margin-top: 10px;">
+                                <button href="" onclick="myFunction()" id="btn" type="button" class="btn btn-primary btn-block mb-3 font_size_14 text-uppercase btn-open-bid" style="margin-top: 10px;">
                                     Mua ngay
                                 </button>
                                 <script>
@@ -252,7 +270,8 @@
                                             })
                                                 .then((willDelete) => {
                                                     if (willDelete) {
-                                                        location.replace("/view-product-list/view-product/buynow/`<%=element.id%>`");
+                                                        location.replace("/view-product-list/viewproduct/buynow/<%=element.id%>");
+
                                                     } else {
                                                     }
                                                 });

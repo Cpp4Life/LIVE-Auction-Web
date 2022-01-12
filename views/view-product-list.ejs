@@ -1,7 +1,8 @@
 <%- include('partials/header'); -%>
-    <link rel="stylesheet" href="/css/postproduct.css">
+    <link rel="stylesheet" href="/css/view-product-list.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
+    <script defer src="/js/view-product-list.js"></script>
+
     </head>
 
     <body>
@@ -9,77 +10,89 @@
             <%- include('partials/navbar'); -%>
         </section>
 
-
-        <div class="container my-5 px-5">
-            <div class="row">
-                <%if(message !=='' ) {%>
-                    <script>
-                        swal({
-                            title: `<%=message%>`,
-                            text: "Sản phẩm đã hết thời gian đấu giá",
-                            icon: "error",
-                            button: "OK",
-                        });
-                    </script>
-                    <%}%>
-                        <%if(success !=='' ) {%>
-                            <script>
-                                swal({
-                                    title: `<%=success%>`,
-                                    text: "áda",
-                                    icon: "success",
-                                    button: "OK",
-                                });
-                                var formatter;
-                                var price;
-                            </script>
-                            <%}%>
-                                <% Product.forEach(element=> {%>
-                                    <% if (element.status) { %>
-                                        <div class="col-sm-4 mb-4">
-                                            <div class="card">
-                                                <img class="card-img-top" src="/public/images/<%= element.id %>/0.jpg" width="100" height="300">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">
-                                                        <%= element.name %>
-                                                    </h4>
-                                                    <p class="card-text text-danger price-tag" id="<%= element.name %>">
-                                                        <%= element.currentPrice %>
-                                                    </p>
-                                                    <script>
-                                                        formatter = new Intl.NumberFormat('vi-VN', {
-                                                            style: 'currency',
-                                                            currency: 'VND'
-                                                        });
-                                                        price = Number((document.getElementById('<%=element.name%>').innerHTML).trim());
-                                                        document.getElementById('<%=element.name%>').innerHTML = (formatter.format(price)).toString();
-                                                    </script>
+        <section class="bg-white" id="products">
+            <div class="container-fluid">
+                <div>
+                    <h1 class="display-4 font-weight-bold big-heading">Các sản phẩm của <span class="text-warning" style="font-family: 'MonteCarlo', cursive; font-size: 4.5rem; font-weight: bold;"> Auct Boi</span></h1>
+                </div>
+                <form action="/view-product-list" method="POST">
+                    <div class="row justify-content-center" style="padding-bottom: 3%;">
+                        <div class="col-md-8">
+                            <div class="form">
+                                <i class="fas fa-search"></i><input type="text" name="search" class="form-control form-input" placeholder="Search anything...">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row shadow rounded">
+                    <%if(message !=='' ) {%>
+                        <script>
+                            swal({
+                                title: `<%=message%>`,
+                                text: "Sản phẩm đã hết thời gian đấu giá",
+                                icon: "error",
+                                button: "OK",
+                            });
+                        </script>
+                        <%}%>
+                            <%if(success !=='' ) {%>
+                                <script>
+                                    swal({
+                                        title: `<%=success%>`,
+                                        text: "áda",
+                                        icon: "success",
+                                        button: "OK",
+                                    });
+                                    var formatter;
+                                    var price;
+                                </script>
+                                <%}%>
+                                    <div class="col-lg-2 py-4">
+                                        <h1>Filter here</h1>
+                                    </div>
+                                    <div class="col-lg-10 py-4">
+                                        <div class="row">
+                                            <% if (Product.length===0) { %>
+                                                <div class="mx-auto">
+                                                    <h1 style="margin: 0;">Không có sản phẩm nào!</h1>
                                                 </div>
-                                                <script src="../js/view-product-list.js"></script>
+                                                <% } else { %>
+                                                    <% Product.forEach(element=> {%>
+                                                        <% if (element.status) { %>
+                                                            <div class="col-lg-4 col-md-6 mb-4">
+                                                                <div class="card h-100">
+                                                                    <img class="card-img-top" src="/public/images/<%= element.id %>/0.jpg" width="100" height="300">
+                                                                    <div class="card-body">
+                                                                        <h4 class="card-title">
+                                                                            <%= element.name %>
+                                                                        </h4>
+                                                                        <p class="card-text text-danger price-tag" id="<%= element.name %>">
+                                                                            <%= element.currentPrice %>
+                                                                        </p>
+                                                                        <script>
+                                                                            formatter = new Intl.NumberFormat('vi-VN', {
+                                                                                style: 'currency',
+                                                                                currency: 'VND'
+                                                                            });
+                                                                            price = Number((document.getElementById('<%=element.name%>').innerHTML).trim());
+                                                                            document.getElementById('<%=element.name%>').innerHTML = (formatter.format(price)).toString();
+                                                                        </script>
+                                                                    </div>
 
-                                                <div class="card-footer text-muted d-flex justify-content-center">
-                                                    <a class="btn btn-md btn-outline-primary btn-block" href="/view-product-list/view-product/<%= element.id %>" role="button">
-                                                        <i class="fa fa-eye" aria-hidden="true"></i>
-                                                        Detail
-                                                    </a>
-                                                </div>
-                                            </div>
+                                                                    <div class="card-footer text-muted d-flex justify-content-center">
+                                                                        <a class="btn btn-md btn-outline-primary btn-block" href="/view-product-list/view-product/<%= element.id %>" role="button">
+                                                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                                                            Detail
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <%} %>
+                                                                <% }) %>
+                                                                    <%} %>
                                         </div>
-                                        <%} %>
-                                            <% }) %>
+                                    </div>
+                </div>
             </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
+        </section>
         <%- include('partials/footer'); -%>

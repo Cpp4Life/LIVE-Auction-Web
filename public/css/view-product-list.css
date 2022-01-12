@@ -1,0 +1,36 @@
+body {
+  font-family: "Montserrat";
+  text-align: center;
+}
+
+.container-fluid {
+  padding: 2% 7% 7%;
+}
+
+.big-heading {
+  line-height: 1.5;
+}
+
+/* Search bar */
+.form {
+  position: relative;
+}
+
+.form .fa-search {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #9ca3af;
+}
+
+.form-input {
+  height: 55px;
+  text-indent: 33px;
+  border-radius: 10px;
+}
+
+.form-input:focus {
+  outline: none !important;
+  border: 2px solid #ffab4c;
+  box-shadow: none;
+}
