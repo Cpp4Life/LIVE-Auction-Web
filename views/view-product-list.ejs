@@ -48,7 +48,19 @@
                                 </script>
                                 <%}%>
                                     <div class="col-lg-2 py-4">
-                                        <h1>Filter here</h1>
+                                        <h2>Lọc sản phẩm</h2>
+                                        <div class="form-check text-left">
+                                            <input class="form-check-input" type="radio" name="ascendingPriceRadio" id="flexRadioDefault1">
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                Default radio
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-left">
+                                            <input class="form-check-input" type="radio" name="ascendingPriceRadio" id="flexRadioDefault2" checked>
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                Default checked radio
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="col-lg-10 py-4">
                                         <div class="row">
@@ -66,9 +78,12 @@
                                                                         <h4 class="card-title">
                                                                             <%= element.name %>
                                                                         </h4>
-                                                                        <p class="card-text text-danger price-tag" id="<%= element.name %>">
-                                                                            <%= element.currentPrice %>
-                                                                        </p>
+                                                                        <div class="text-left">
+                                                                            <span>Giá hiện tại:</span>
+                                                                            <span class="card-text price-tag text-danger" style="font-size: 1.5rem;" id="<%= element.name %>">
+                                                                                <%= element.currentPrice %>
+                                                                            </span>
+                                                                        </div>
                                                                         <script>
                                                                             formatter = new Intl.NumberFormat('vi-VN', {
                                                                                 style: 'currency',
@@ -80,7 +95,7 @@
                                                                     </div>
 
                                                                     <div class="card-footer text-muted d-flex justify-content-center">
-                                                                        <a class="btn btn-md btn-outline-primary btn-block" href="/view-product-list/view-product/<%= element.id %>" role="button">
+                                                                        <a class="btn btn-md btn-primary btn-block" href="/view-product-list/view-product/<%= element.id %>" role="button">
                                                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                                                             Detail
                                                                         </a>

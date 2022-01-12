@@ -50,15 +50,13 @@ exports.postProduct = async (req, res) => {
             cb(null, count++ + '.jpg');
         }
     })
-
     const upload = multer({storage});
     upload.array('image', 5)
     (req, res, function (err){
-        const { name, startPrice, stepprice, endPrice, mydecript, brand, subBrand, time } = req.body;
+        console.log(!req.body.datetime);
         const errors = [];
-
         if (!req.body.name || req.body.startPrice === 0|| req.body.stepprice === 0
-            || !req.body.brand || !req.body.subBrand || req.body.time) {
+            || !req.body.brand || !req.body.subBrand || !req.body.datetime) {
             errors.push({ msg: 'Bạn phải điền đầy đủ thông tin' });
         }
         const myTimeRemain = new Date(req.body.datetime).getTime() - (new Date()).getTime();
@@ -86,6 +84,7 @@ exports.postProduct = async (req, res) => {
             });
             res.render('viewSeller/post-product', {
                 errors,
+                success: "",
                 Category: categoryList[0].list
             });
         } else {

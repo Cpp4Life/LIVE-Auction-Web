@@ -10,6 +10,8 @@ router.get('/view-product-list', guestController.getListView);
 
 router.post('/view-product-list', guestController.postListView);
 
+router.get('/view/:brand/:subBrand', guestController.getBrandItem);
+
 router.get('/view-product-list/view-product/:id', isAuth, guestController.getProductPage);
 
 router.get('/view-product-list/view-product/auction/:price', isAuth, guestController.postAuctionProduct);
