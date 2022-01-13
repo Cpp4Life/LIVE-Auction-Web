@@ -10,24 +10,36 @@
 <section class="colored-section" style="padding:0 15%;">
     <%- include('partials/navbar'); -%>
 </section>
+<% User.forEach(user1=> {%>
 <div class="container emp-profile mt-5 mb-5 pt-5 pb-5">
     <form method="post">
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
-                         alt=""/>
+                    <img src="/images/Profile/<%= user1.image %> " alt="avatar" class="img-thumbnail" style="border-radius: 29px;margin-right: 20px;">
+
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="profile-head">
                     <h5>
-                        Lê Trung Hiếu
+                       <%= user1.name%>
                     </h5>
                     <h6>
-                        Web Developer and Designer
+<!--                        <%= user1.role%>-->
+<!--                        Web Developer and Designer-->
                     </h6>
-                    <p class="proile-rating">Điểm đánh giá: : <span>8/10</span></p>
+                    <% if(true){ %>
+                        <% var total = 0%>
+                        <% var count_1 =0%>
+                        <% user1.review.forEach(element =>{ %>
+                            <% total=total+1%>
+                            <% if(element.point == 1){%>
+                                <% count_1 =count_1 +1%>
+                            <% } %>
+                        <% })%>
+                    <% } %>
+                    <p class="proile-rating">Điểm đánh giá: : <span><%= count_1 %> / <%= total%></span></p>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
@@ -48,20 +60,20 @@
             <div class="col-md-8">
                 <div class="tab-content profile-tab" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label>Mã người dùng</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>Kshiti123</p>
-                            </div>
-                        </div>
+<!--                        <div class="row">-->
+<!--                            <div class="col-md-6">-->
+<!--                                <label>Mã người dùng</label>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-6">-->
+<!--                                <p>Kshiti123</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Name</label>
                             </div>
                             <div class="col-md-6">
-                                <p>Lê Trung Hiếu</p>
+                                <p><%= user1.name %></p>
                             </div>
                         </div>
                         <div class="row">
@@ -69,7 +81,7 @@
                                 <label>Email</label>
                             </div>
                             <div class="col-md-6">
-                                <p>kshitighelani@gmail.com</p>
+                                <p><%= user1.email %></p>
                             </div>
                         </div>
                         <div class="row">
@@ -77,17 +89,26 @@
                                 <label>Vai trò</label>
                             </div>
                             <div class="col-md-6">
-                                <p>Seller</p>
+                                <p><%= user1.role %></p>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="row">
+                            <% var count2=0%>
+                            <% Product.forEach(element1=> {%>
+                                <% if(!element1.status) { %>
+                                    <% if(( element1.topOwner._id).equals( user1._id)) { %>
+                                        <%  count2= count2 +1%>
+                                    <%   } %>
+                                <%   } %>
+
+                            <% }) %>
                             <div class="col-md-6">
-                                <label>Sản phẩm đấu giá thành công</label>
+                                <label>Sản phẩm đấu giá thắng</label>
                             </div>
                             <div class="col-md-6">
-                                <p>5</p>
+                                <p><%= count2 %></p>
                             </div>
                         </div>
                         <div class="row">
@@ -95,29 +116,57 @@
                                 <label>Sản phẩm yêu thích</label>
                             </div>
                             <div class="col-md-6">
-                                <p>4</p>
+
+                                <p><%= user1.favorites.length%> </p>
+
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
+                                <% var count=0%>
+                                <% Product.forEach(element1=> {%>
+
+                                    <% if( element1.status) { %>
+                                        <% var found = false%>
+                                        <% element1.bidders.forEach(element2=> { %>
+                                            <% if(( element2.user._id).equals( user1._id) && !found) { %>
+                                                <% found = true%>
+                                                <%  count= count +1%>
+                                            <%   } %>
+                                        <% }) %>
+                                    <%   } %>
+
+                                <% }) %>
                                 <label>Sản phẩm đang đấu giá</label>
                             </div>
                             <div class="col-md-6">
-                                <p>2</p>
+                                <p> <%= count %></p>
                             </div>
                         </div>
+                        <% if ( user1.role ==="seller") {%>
                         <div class="row">
                             <div class="col-md-6">
+                                <% var count1=0%>
+                                <% Product.forEach(element1=> {%>
+                                    <% if( element1.status) { %>
+                                            <% if(( element1.owner._id).equals( user1._id)) { %>
+                                                <%  count1= count1 +1%>
+                                            <%   } %>
+                                    <%   } %>
+
+                                <% }) %>
                                 <label>Sản phẩm đang bán</label>
                             </div>
                             <div class="col-md-6">
-                                <p>4</p>
+                                <p>   <%= count1 %></p>
                             </div>
                         </div>
+                        <%   } %>
                     </div>
                 </div>
             </div>
         </div>
     </form>
 </div>
+<% } )%>
 <%- include('partials/footer'); -%>

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', guestController.getHomePage);
 
-router.get('/profile', guestController.getProfile);
+router.get('/profile/:id',  isAuth, guestController.getProfile);
 
 router.get('/view-product-list', guestController.getListView);
 

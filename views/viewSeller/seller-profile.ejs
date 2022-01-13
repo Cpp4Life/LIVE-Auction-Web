@@ -175,7 +175,7 @@
                                         <% if(element1.status){ %>
                                             <div class="col-sm-4 mb-4">
                                                 <div class="card">
-                                                    <img src="/images/<%= element.id_product %>/3.jpg" style="height: 100px;" class="card-img-top" alt="...">
+                                                    <img src="/images/<%= element.id_product %>/0.jpg" style="height: 100px;" class="card-img-top" alt="...">
                                                     <div class="card-body">
                                                         <h5 class="card-title"><%= element.name_product%></h5>
                                                         <p class="card-text">Giá hiện tại: <%= element.currentPrice_product%>  VND</p>
@@ -213,13 +213,13 @@
                                         <% if(( element2.user._id).equals( user._id) && !found) { %>
                                             <div class="col-sm-4 mb-3">
                                                 <div class="card">
-                                                    <img src="/images/<%= element1._id %>/3.jpg" style="height: 120px;" class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title"><%= element1.name%></h5>
+                                                    <img src="/images/<%= element1._id %>/1.jpg" style="height: 120px;" class="card-img-top" alt="...">
+                                                    <div class="card-body" >
+                                                        <h5 class="card-title" ><%= element1.name%></h5>
                                                         <p class="card-text">Giá hiện tại: <%= element1.currentPrice%></p>
                                                         <p class="card-text">Giá mua ngay:<%= element1.boughtPrice%></p>
                                                         <p class="card-text">Người bán: <%= element1.owner.name%></p>
-                                                        <p class="card-text">Ngày/giờ Kết thúc: <%= element1.timeEnd %></p>
+                                                        <p class="card-text">Ngày/giờ Kết thúc: <%= element1.timeEnd.toLocaleString() %></p>
                                                     </div>
                                                     <div class="card-footer text-muted">
                                                         <a class="btn btn-sm btn-outline-primary" href="/view-product-list/view-product/<%= element1._id %>" role="button">
@@ -258,8 +258,12 @@
                                         <tr>
                                             <td style="width:9%"><%= element1.name %></td>
                                             <td style="width:9%"><%= element1.brand %></td>
-                                            <td style="width:9%"><%= element1.owner.name %></td>
+                                            <td style="width:9%"><a href="/profile/<%= element1.owner.id %>" role="button">
+                                                    <%= element1.owner.name %>
+                                                </a></td>
                                             <td style="width:9%"><%= element1.topPrice %></td>
+                                            <% if((user.id) === (element1.owner.id)  ){ %>
+                                            <% } else {%>
                                             <% User.forEach(user1 => {%>
                                                 <% if((user1.id) == (element1.owner.id)){ %>
                                                     <% var found = true%>
@@ -293,6 +297,7 @@
                                                     <% }  %>
                                                 <%   } %>
                                             <% }) %>
+                                            <%   } %>
                                         </tr>
                                     <%   } %>
                                 <%   } %>
@@ -369,6 +374,7 @@
                                 <th>Người thắng </th>
                                 <th>Upvote</th>
                                 <th>Downvote</th>
+                                <th>Cancel</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -377,19 +383,40 @@
                                     <% if(element1.owner._id == user.id){ %>
                                         <tr>
                                             <td style="width:9%"><%= element1.name %></td>
-                                            <td style="width:9%"><%= element1.topOwner.name %></td>
+                                            <td style="width:9%"><a href="/profile/<%= element1.topOwner.id %>" role="button">
+                                                    <%= element1.topOwner.name %>
+                                                </a></td>
+                                            <% if((user.id) === (element1.topOwner.id)  ){ %>
+                                                <td style="width:9%"></td>
+                                                <td style="width:9%"></td>
+                                            <td style="width: 250px;">
+                                                <form action="/view-product-list/view-product/kickbidder/<%=element1.topOwner.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""   method="post">
+                                                    <button  type="submit" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top"  title="kick bidder ra khỏi phiên đấu"  ><i class="fas fa-user-times"></i></button>
+                                                </form>
+                                            </td>
+                                            <% } else {%>
                                             <% User.forEach(user1 => {%>
-                                                <% if((user1.id) == (element1.topOwner.id)){ %>
+                                                <% if((user1.id) == (element1.topOwner.id)  ){ %>
                                                     <% var found = true%>
                                                     <% user1.review.forEach(rv1=> {%>
                                                         <% if((rv1.user_id) == (user.id) && (rv1.product_id) == (element1.id) ){ %>
                                                             <% if(rv1.point == 1){ %>
                                                                 <td style="width:9%"><%= rv1.comment %></td>
                                                                 <td style="width:9%"></td>
+                                                                    <td style="width: 250px;">
+                                                                        <form action="/view-product-list/view-product/kickbidder/<%=element1.topOwner.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""   method="post">
+                                                                            <button  type="submit" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top"  title="kick bidder ra khỏi phiên đấu"  ><i class="fas fa-user-times"></i></button>
+                                                                        </form>
+                                                                    </td>
                                                             <% } %>
                                                             <% if(rv1.point == -1){ %>
                                                                 <td style="width:9%"></td>
                                                                 <td style="width:9%"><%= rv1.comment %></td>
+                                                                    <td style="width: 250px;">
+                                                                        <form action="/view-product-list/view-product/kickbidder/<%=element1.topOwner.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""   method="post">
+                                                                            <button  type="submit" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top"  title="kick bidder ra khỏi phiên đấu"  ><i class="fas fa-user-times"></i></button>
+                                                                        </form>
+                                                                    </td>
                                                             <%   } %>
                                                             <% found = false%>
                                                         <% } else { %>
@@ -408,9 +435,16 @@
                                                             <button type="submit"  class="btn btn-primary btn-lg btn-block" style="background-color: orangered;">-1</button>
                                                         </form>
                                                     </td>
+                                                    <td style="width: 250px;">
+                                                        <form action="/view-product-list/view-product/kickbidder/<%=element1.topOwner.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""   method="post">
+                                                            <button  type="submit" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top"  title="kick bidder ra khỏi phiên đấu"  ><i class="fas fa-user-times"></i></button>
+                                                        </form>
+                                                    </td>
                                                     <% }  %>
                                                 <%   } %>
                                             <% }) %>
+                                            <% } %>
+
                                         </tr>
                                     <% } %>
                                 <% } %>
