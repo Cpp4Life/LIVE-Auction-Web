@@ -48,17 +48,26 @@ module.exports = (passport) => {
             if (err) {
                 return done(err);
             }
+
             if (!user) {
-                user = new User({
-                    name: profile.displayName,
-                    email: profile.emails[0].value,
-                    password: 'password',
-                    googleId: profile.id,
-                    role: 'bidder'
-                });
-                user.save((err) => {
-                    if (err) console.log(err);
-                    return cb(err, user);
+                bcrypt.genSalt(10, (err, salt) => {
+                    if (err) throw err;
+                    bcrypt.hash('password123', salt, (err, hash) => {
+                        if (err) throw err;
+                        user = new User({
+                            name: profile.displayName,
+                            email: profile.emails[0].value,
+                            password: hash,
+                            googleId: profile.id,
+                            role: 'bidder',
+                            status: false,
+                            reviewPoint: 0
+                        });
+                        user.save((err) => {
+                            if (err) console.log(err);
+                            return cb(err, user);
+                        });
+                    });
                 });
             } else {
                 return cb(err, user);
