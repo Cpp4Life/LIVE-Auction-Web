@@ -18,6 +18,7 @@
                                 <div class="text-center">
                                     <%- include('../partials/messages'); -%>
                                 </div>
+                                <!-- Category Tab -->
                                 <div class="tab-pane fade show active" id="nav-category" role="tabpanel" aria-labelledby="nav-category-tab">
                                     <div class="row">
                                         <% Category.forEach(element=> { %>
@@ -86,9 +87,78 @@
                                                 </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="nav-product" role="tabpanel" aria-labelledby="nav-product-tab">Neque viverra justo nec ultrices dui. Neque laoreet suspendisse interdum consectetur libero id faucibus nisl. Sed ullamcorper morbi tincidunt ornare massa eget egestas. Porttitor eget dolor morbi non. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus. Tellus mauris a diam maecenas sed enim ut. Nisi scelerisque eu ultrices vitae. Nec feugiat in fermentum posuere urna nec tincidunt praesent. Suspendisse ultrices gravida dictum fusce ut placerat orci nulla pellentesque. Turpis massa tincidunt dui ut ornare lectus sit amet. Gravida quis blandit turpis cursus in hac habitasse. Feugiat sed lectus vestibulum mattis. Risus in hendrerit gravida rutrum quisque non tellus orci ac. Leo in vitae turpis massa sed elementum tempus egestas sed. In fermentum posuere urna nec tincidunt praesent semper. Pulvinar sapien et ligula ullamcorper. Mauris pellentesque pulvinar pellentesque habitant.</div>
+                                <!-- Product Tab -->
+                                <script>
+                                    var currentPrice;
+                                    var buyPrice;
+                                    function formatMoney(money) {
+                                        const formatter = new Intl.NumberFormat('vi-VN', {
+                                            style: 'currency',
+                                            currency: 'VND'
+                                        });
+                                        return formatter.format(money);
+                                    }
+                                </script>
+                                <div class="tab-pane fade" id="nav-product" role="tabpanel" aria-labelledby="nav-product-tab">
+                                    <div class="alert alert-danger alert-dismissible fade show" id="deleteAlert" role="alert" style="display: none;">
+                                        <p id="deleteMsg" style="margin: 0;"></p>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" style="margin:0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Owner</th>
+                                                    <th scope="col">Original Price</th>
+                                                    <th scope="col">Buy Price</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% var count=0; %>
+                                                    <% for( let index=0; index < Product.length; index++ ) { %>
+                                                        <% count+=1; %>
+                                                            <form action="/admin/settings/product/delete/<%= Product[index].id%>" method="POST" class="product-form">
+                                                                <tr>
+                                                                    <th scope="row">
+                                                                        <%= count%>
+                                                                    </th>
+                                                                    <td class="productNameField">
+                                                                        <%= Product[index].name%>
+                                                                    </td>
+                                                                    <td class="ownerField">
+                                                                        <%= Product[index].owner.name%>
+                                                                    </td>
+                                                                    <td class="originalPriceField" id="originalPrice<%= Product[index].name %>">
+                                                                        <%= Product[index].originalBidPrice%>
+                                                                    </td>
+                                                                    <td class="buyPriceField" id="buyPrice<%= Product[index].name %>">
+                                                                        <%= Product[index].boughtPrice%>
+                                                                    </td>
+                                                                    <td class="text-right">
+                                                                        <button type="submit" class="btn shadow-none delProductBtn" style="font-size:3rem;" data-toggle="tooltip" data-placement="top" title="Xóa sản phẩm">&times;</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </form>
+                                                            <script>
+                                                                currentPrice = document.getElementById("originalPrice<%=Product[index].name%>").innerHTML;
+                                                                document.getElementById("originalPrice<%=Product[index].name%>").innerHTML = formatMoney(currentPrice);
+
+                                                                buyPrice = document.getElementById("buyPrice<%=Product[index].name%>").innerHTML;
+                                                                document.getElementById("buyPrice<%=Product[index].name%>").innerHTML = formatMoney(buyPrice);
+                                                            </script>
+                                                            <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- Account Tab -->
                                 <div class="tab-pane fade" id="nav-account" role="tabpanel" aria-labelledby="nav-account-tab">
-                                    <div class="alert alert-info alert-dismissible fade show" id="resetAlert" role="alert" style="display: none;">
+                                    <div class="alert alert-success alert-dismissible fade show" id="resetAlert" role="alert" style="display: none;">
                                         <p id="resetMsg" style="margin: 0;"></p>
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -138,8 +208,8 @@
                                         </table>
                                     </div>
                                 </div>
-
-                                <div class="tab-pane fade" id="nav-update" role="tabpanel" aria-labelledby="nav-account-tab">
+                                <!-- Update Tab -->
+                                <div class="tab-pane fade" id="nav-update" role="tabpanel" aria-labelledby="nav-update-tab">
                                     <div class="alert alert-info alert-dismissible fade show" id="resetAlert" role="alert" style="display: none;">
                                         <p id="resetMsg" style="margin: 0;"></p>
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -155,55 +225,47 @@
                                     <div class="table-responsive">
                                         <table class="table table-striped" style="margin:0">
                                             <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col"></th>
-                                            </tr>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col"></th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            <% var count=0; %>
-                                            <% for( let index=0; index < User.length; index++ ) { %>
-                                                <% if (User[index].role ==='bidder' && User[index].status === true ) { %>
-                                                    <% count+=1; %>
-                                                        <tr>
-                                                            <th scope="row">
-                                                                <%= count%>
-                                                            </th>
-                                                            <td class="usernameField">
-                                                                <%= User[index].name%>
-                                                            </td>
-                                                            <td class="emailField">
-                                                                <%= User[index].email%>
-                                                            </td>
-                                                            <td class="text-right">
-                                                                <div class="container">
-                                                                    <div class="row">
-                                                                        <div class="col-sm">
-                                                                            <form action="/admin/settings/updatebidder/<%= User[index].id%>" id="btnAuction" name="price" value=""   method="post">
-                                                                                <button  type="submit" class="btn shadow-none resetPasswordBtn" data-toggle="tooltip" data-placement="top"  title="Chấp nhận"  ><i   class="far fa-check-square fa-2x"></i></button>
-                                                                            </form>
+                                                <% var count=0; %>
+                                                    <% for( let index=0; index < User.length; index++ ) { %>
+                                                        <% if (User[index].role==='bidder' && User[index].status===true ) { %>
+                                                            <% count+=1; %>
+                                                                <tr>
+                                                                    <th scope="row">
+                                                                        <%= count%>
+                                                                    </th>
+                                                                    <td class="usernameField">
+                                                                        <%= User[index].name%>
+                                                                    </td>
+                                                                    <td class="emailField">
+                                                                        <%= User[index].email%>
+                                                                    </td>
+                                                                    <td class="text-right">
+                                                                        <div class="container">
+                                                                            <div class="row">
+                                                                                <div class="col-sm">
+                                                                                    <form action="/admin/settings/update-bidder/<%= User[index].id%>" id="btnAuction" name="price" value="" method="post">
+                                                                                        <button type="submit" class="btn shadow-none resetPasswordBtn" data-toggle="tooltip" data-placement="top" title="Chấp nhận"><i class="far fa-check-square fa-2x"></i></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="col-sm">
+                                                                                    <form action="/admin/settings/cancel-update-bidder/<%= User[index].id%>" id="btnAuction" name="price" value="" method="post">
+                                                                                        <button type="submit" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top" title="Hủy yêu cầu"><i class="fas fa-window-close fa-2x"></i></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-sm">
-                                                                            <form action="/admin/settings/cancelupdatebidder/<%= User[index].id%>" id="btnAuction" name="price" value=""   method="post">
-                                                                                <button  type="submit" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top"  title="Hủy yêu cầu"  ><i class="fas fa-window-close fa-2x"></i></button>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-<!--                                                                    <form action="/admin/settings/updatebidder/<%= User[index].id%>" id="btnAuction" name="price" value=""   method="post">-->
-<!--                                                                        <button type="submit" class="btn shadow-none resetPasswordBtn" data-toggle="tooltip" data-placement="top"  title="Chấp nhận"  ><i class="far fa-check-square"></i></button>-->
-<!--                                                                    </form>-->
-<!--    &lt;!&ndash;                                                                <button type="button" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top" style="margin-top: 10px;" title="Xóa tài khoản"><i class="fas fa-window-close"></i></button>&ndash;&gt;-->
-<!--                                                                    <form action="/admin/settings/cancelupdatebidder/<%= User[index].id%>" id="btnAuction" name="price" value=""   method="post">-->
-<!--                                                                        <button  type="submit" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top"  title="Xóa tài khoản"  ><i class="fas fa-window-close"></i></button>-->
-<!--                                                                    </form>-->
-
-                                                            </td>
-                                                        </tr>
-                                                <% } %>
-                                            <% } %>
+                                                                    </td>
+                                                                </tr>
+                                                                <% } %>
+                                                                    <% } %>
                                             </tbody>
                                         </table>
                                     </div>
@@ -239,36 +301,11 @@
                 }, 750);
             });
 
-            $(".delAccountBtn").click(function () {
-                var row = $(this).closest("tr");
-                var username = (row.find(".usernameField").text()).trim();
-                var email = (row.find(".emailField").text()).trim();
-
-                $('#deleteAlert').css('display', 'block');
-                $('#deleteMsg').html(`${email} đã bị xóa!`);
-
-                setTimeout(() => {
-                    var input = $("<input>")
-                        .attr("type", "hidden")
-                        .attr("name", "action").val("delete");
-                    var usernameInput = $("<input>")
-                        .attr("type", "hidden")
-                        .attr("name", "username").val(username);
-                    var emailInput = $("<input>")
-                        .attr("type", "hidden")
-                        .attr("name", "email").val(email);
-                    $('.account-form').append(input);
-                    $('.account-form').append(usernameInput);
-                    $('.account-form').append(emailInput);
-                    $('.account-form').submit();
-                }, 750);
-            });
-
             const categoryTabHeight = $('#nav-category').outerHeight(true);
             const productTabHeight = $('#nav-product').outerHeight(true);
             const accountTabHeight = $('#nav-account').outerHeight(true);
             const updateTabHeight = $('#nav-update').outerHeight(true);
-            const maxTabHeight = Math.max(categoryTabHeight, productTabHeight, accountTabHeight,updateTabHeight);
+            const maxTabHeight = Math.max(categoryTabHeight, productTabHeight, accountTabHeight, updateTabHeight);
             $('#nav-category, #nav-product, #nav-account , #nav-update').css('height', maxTabHeight);
 
             $(window).resize(() => {

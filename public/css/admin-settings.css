@@ -44,7 +44,8 @@
   border-bottom: 2px solid;
 }
 
-.delAccountBtn {
+.delAccountBtn,
+.delProductBtn {
   color: #dc3545;
   padding: 6px 3px;
 }
