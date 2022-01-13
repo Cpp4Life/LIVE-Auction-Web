@@ -254,13 +254,22 @@ exports.postAuctionProduct = async (req, res) => {
     var arr = req.params.price.split("+")
     //Lấy dữ liệu sản phẩm
     // Product.find({_id: arr[0]}, async function(err,product, done) {
-
+    var email = "";
+    const users = await User.find({});
     Product.find({ _id: arr[0] }, async function (err, product, done) {
         //Nếu sản phẩm đã hết thời gian đấu giá
         if (product[0].timeEnd.getTime() - new Date().getTime() < 0) {
+            // Lấy email của topOwner bằng cách so ID
+            for(let i = 0 ; i < users.length; i++){
+                if(users[i]._id.equals(product[0].topOwner._id)){
+                    email = users[i].email;
+                    helper.sendAuctionSuccess(email, "Đấu giá thành công sản phẩm" + product[0].name);
+                }
+            }
             let currentProduct0 = {
                 status: 0
             };
+
             Product.findOneAndUpdate(
                 { _id: arr[0] },
                 currentProduct0,
@@ -289,7 +298,7 @@ exports.postAuctionProduct = async (req, res) => {
                     topOwner: req.user,
                     $push: {
                         bidders: {
-                            bidTime: new Date().toLocaleString(), user: req.user, bidPrice: Math.min(parseInt(product[0].originalBidPrice + product[0].stepPrice), arr[1])
+                            bidTime: new Date(), user: req.user, bidPrice: Math.min(parseInt(product[0].originalBidPrice + product[0].stepPrice), arr[1])
                         }
                     }
                 };
@@ -303,6 +312,7 @@ exports.postAuctionProduct = async (req, res) => {
                         }
                     }
                 );
+                helper.sendAuctionSuccess(req.user.email, product[0].name + " với giá " + Math.min(parseInt(product[0].originalBidPrice + product[0].stepPrice), arr[1]));
             }
             //Trường hợp đã có người đấu giá trước đó
             else {
@@ -313,9 +323,9 @@ exports.postAuctionProduct = async (req, res) => {
                         $push: {
                             bidders: {
                                 $each: [
-                                    { bidTime: new Date().toLocaleString(), user: req.user, bidPrice: arr[1] },
+                                    { bidTime: new Date(), user: req.user, bidPrice: arr[1] },
                                     {
-                                        bidTime: new Date().toLocaleString(),
+                                        bidTime: new Date(),
                                         user: product[0].topOwner,
                                         bidPrice: Math.min((parseInt(arr[1]) + parseInt(product[0].stepPrice)), product[0].topPrice)
                                     }
@@ -333,6 +343,16 @@ exports.postAuctionProduct = async (req, res) => {
                             }
                         }
                     );
+                    //gửi cho người hiện tại đặt giá
+                    helper.sendAuctionSuccess(req.user.email, product[0].name + " với giá " + arr[1]);
+                    //gửi cho topOwner
+                    for(let i = 0 ; i < users.length; i++){
+                        console.log(users[i].name);
+                        if(users[i]._id.equals(product[0].topOwner._id)){
+                            email = users[i].email;
+                            helper.sendAuctionSuccess(email, product[0].name + " với giá " + Math.min(parseInt(arr[1]) + parseInt(product[0].stepPrice), product[0].topPrice));
+                        }
+                    }
                 } else {
                     //Trường hợp 2: Lớn hơn cả giá của top price
                     if (product[0].topPrice === product[0].currentPrice) {
@@ -342,7 +362,7 @@ exports.postAuctionProduct = async (req, res) => {
                             currentPrice: Math.min((product[0].topPrice + product[0].stepPrice), parseInt(arr[1])),
                             $push: {
                                 bidders: {
-                                    bidTime: new Date().toLocaleString(),
+                                    bidTime: new Date(),
                                     user: req.user,
                                     bidPrice: Math.min((product[0].topPrice + product[0].stepPrice), arr[1])
                                 }
@@ -359,6 +379,8 @@ exports.postAuctionProduct = async (req, res) => {
                                 }
                             }
                         );
+                        //gửi cho người hiện tại đặt giá
+                        helper.sendAuctionSuccess(req.user.email, product[0].name + " với giá " + Math.min((product[0].topPrice + product[0].stepPrice), arr[1]));
                     } else {
                         let currentProduct22 = {
                             topPrice: arr[1],
@@ -368,12 +390,12 @@ exports.postAuctionProduct = async (req, res) => {
                                 bidders: {
                                     $each: [
                                         {
-                                            bidTime: new Date().toLocaleString(),
+                                            bidTime: new Date(),
                                             user: product[0].topOwner,
                                             bidPrice: product[0].topPrice
                                         },
                                         {
-                                            bidTime: new Date().toLocaleString(),
+                                            bidTime: new Date(),
                                             user: req.user,
                                             bidPrice: Math.min((product[0].topPrice + product[0].stepPrice), arr[1])
                                         }]
@@ -391,6 +413,15 @@ exports.postAuctionProduct = async (req, res) => {
                                 }
                             }
                         );
+                        //gửi cho topOwner
+                        for(let i = 0 ; i < users.length; i++){
+                            if(users[i]._id.equals(product[0].topOwner._id)){
+                                email = users[i].email;
+                                helper.sendAuctionSuccess(email, product[0].name + " với giá " + product[0].topPrice);
+                            }
+                        }
+                        //gửi cho người hiện tại đặt giá
+                        helper.sendAuctionSuccess(req.user.email, product[0].name + " với giá " + (Math.min((product[0].topPrice + product[0].stepPrice), arr[1])).toString());
                     }
 
                 }
