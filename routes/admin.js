@@ -18,10 +18,12 @@ router.post('/settings/category/:brand/delete-item', adminController.postDelBran
 
 router.post('/settings/category/:brand/add-item', adminController.postAddBrandItem);
 
+router.post('/settings/product/delete/:id', adminController.postDeleteProduct);
+
 router.post('/settings/accounts/', adminController.postAccounts);
 
-router.post('/settings/updatebidder/:id', adminController.updaterequestseller);
+router.post('/settings/update-bidder/:id', adminController.updateRequestSeller);
 
-router.post('/settings/cancelupdatebidder/:id', adminController.updatecancelrequestseller);
+router.post('/settings/cancel-update-bidder/:id', adminController.updateCancelRequestSeller);
 
 module.exports = router;
