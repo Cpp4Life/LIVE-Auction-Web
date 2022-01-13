@@ -258,6 +258,22 @@
                                                                 swal("Vui lòng chỉ nhập chữ số. Xin hãy thực hiện lại thao tác.");
                                                                 return;
                                                             }
+                                                            if('<%=element.currentPrice%>' > 1000000){
+                                                                var count = 0;
+                                                                var sum= 0;
+                                                                '<%user.review.forEach(element => {%>'
+                                                                if('<%=element.point%>' === 1){
+                                                                    count = count +1
+                                                                }
+                                                                sum=sum +1
+                                                                '<%})%>'
+                                                                var point = Math.floor(count/sum);
+                                                                console.log(point)
+                                                                if(point < 0.8){
+                                                                    swal("Bạn không đủ điểm để tham gia vào phiên đấu giá này.");
+                                                                    return;
+                                                                }
+                                                            }
                                                             var currentPrice = parseInt('<%=element.currentPrice %>');
                                                             if (price < currentPrice) {
                                                                 swal("Vui lòng nhập cao hơn giá hiện tại. Xin hãy thực hiện lại thao tác.");
