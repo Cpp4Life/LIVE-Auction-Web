@@ -2,7 +2,7 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const helper = require('../helpers/helper');
-const { User, Category, Brand } = require('../models/model');
+const { User, Category, Product, Brand } = require('../models/model');
 
 exports.getAdminLoginPage = async (req, res) => {
     const categoryList = await Category.find({});
@@ -33,8 +33,10 @@ exports.postAdminLogin = async (req, res) => {
 exports.getAdminSettings = async (req, res) => {
     const categoryList = await Category.find({});
     const userList = await User.find({});
+    const productList = await Product.find({});
     res.render('viewAdmin/settings', {
         Category: categoryList[0].list,
+        Product: productList,
         User: userList
     });
 }
@@ -215,6 +217,16 @@ exports.postAddBrandItem = async (req, res) => {
     );
 }
 
+exports.postDeleteProduct = async (req, res) => {
+    const productId = req.params.id;
+    console.log(productId);
+    Product.deleteOne({ _id: productId }, (err, result) => {
+        if (err)
+            console.log(err);
+    })
+    res.redirect('/admin/settings');
+}
+
 exports.postAccounts = async (req, res) => {
     const action = req.body.action;
     const email = req.body.email;
@@ -242,8 +254,8 @@ exports.postAccounts = async (req, res) => {
     res.redirect('/admin/settings');
 }
 
-exports.updaterequestseller = async (req, res) => {
-    User.find({_id: req.params.id}, async function (err, user, done) {
+exports.updateRequestSeller = async (req, res) => {
+    User.find({ _id: req.params.id }, async function (err, user, done) {
         if (err) {
             console.log(err)
         }
@@ -252,9 +264,9 @@ exports.updaterequestseller = async (req, res) => {
                 role: "seller",
             };
             User.findOneAndUpdate(
-                {_id: req.params.id},
+                { _id: req.params.id },
                 currentUser,
-                {new: true},
+                { new: true },
                 (err, doc) => {
                     if (err) {
                         console.log(err);
@@ -268,8 +280,8 @@ exports.updaterequestseller = async (req, res) => {
 
 
 
-exports.updatecancelrequestseller = async (req, res) => {
-    User.find({_id: req.params.id}, async function (err, user, done) {
+exports.updateCancelRequestSeller = async (req, res) => {
+    User.find({ _id: req.params.id }, async function (err, user, done) {
         if (err) {
             console.log(err)
         }
@@ -278,9 +290,9 @@ exports.updatecancelrequestseller = async (req, res) => {
                 status: false
             };
             User.findOneAndUpdate(
-                {_id: req.params.id},
+                { _id: req.params.id },
                 currentUser,
-                {new: true},
+                { new: true },
                 (err, doc) => {
                     if (err) {
                         console.log(err);

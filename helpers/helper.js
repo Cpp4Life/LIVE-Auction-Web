@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer')
-const numeral = require('numeral');
 
 exports.normalizeText = (text) => {
     return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -31,8 +30,6 @@ exports.sendOtpMail = (email, otp) => {
             if (error) {
                 return console.log(error);
             }
-            // console.log('Message sent: %s', info.messageId);
-            // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
         });
     } catch (error) {
         console.log(error);
@@ -53,8 +50,6 @@ exports.sendNewPassword = (email, password) => {
             if (error) {
                 return console.log(error);
             }
-            // console.log('Message sent: %s', info.messageId);
-            // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
         });
     } catch (error) {
         console.log(error);
@@ -68,9 +63,6 @@ exports.formatter = new Intl.NumberFormat('vi-VN', {
     currency: 'VND'
 });
 
-exports.format_number = (val) => {
-    return numeral(val).format('0,0');
-}
 exports.sendAuctionSuccess = (email, message) => {
     console.log(`${email} ${message}`);
     try {
@@ -85,13 +77,12 @@ exports.sendAuctionSuccess = (email, message) => {
             if (error) {
                 return console.log(error);
             }
-            // console.log('Message sent: %s', info.messageId);
-            // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
         });
     } catch (error) {
         console.log(error);
     }
 }
+
 exports.kickUser = (email, message) => {
     console.log(`${email} ${message}`);
     try {
@@ -106,8 +97,6 @@ exports.kickUser = (email, message) => {
             if (error) {
                 return console.log(error);
             }
-            // console.log('Message sent: %s', info.messageId);
-            // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
         });
     } catch (error) {
         console.log(error);
