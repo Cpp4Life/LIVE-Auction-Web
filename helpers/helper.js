@@ -92,3 +92,24 @@ exports.sendAuctionSuccess = (email, message) => {
         console.log(error);
     }
 }
+exports.kickUser = (email, message) => {
+    console.log(`${email} ${message}`);
+    try {
+        const mailOptions = {
+            from: 'Mailing System <auctionboi@gmail.com>',
+            to: email,
+            subject: "Cảnh báo",
+            html: "<h3>Bạn đã bị kích khỏi phiên đấu giá của sản phẩm </h3>" + "<h1 style='font-weight:bold;'>" + message + "</h1>" // html body
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            // console.log('Message sent: %s', info.messageId);
+            // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}

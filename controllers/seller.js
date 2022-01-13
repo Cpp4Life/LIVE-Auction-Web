@@ -439,7 +439,8 @@ exports.postkickbidder = async (req, res) => {
     const errors = [];
     var arr = req.params.id.split("+")
 
-
+    const users = await User.find({});
+    var email = "";
     Product.find({_id: arr[1]}, async function (err, product, done) {
             if (err) {
                 console.log(err)
@@ -451,13 +452,15 @@ exports.postkickbidder = async (req, res) => {
                         }
                         if (user) {
                             if(product[0].bidders.length === 1){
-
-
+                                for(let i = 0 ; i < users.length; i++){
+                                    if(users[i]._id.equals(product[0].topOwner._id)){
+                                        email = users[i].email;
+                                        helper.kickUser(email, product[0].name);
+                                    }
+                                }
                                 let newproduct = {
                                     currentPrice: product[0].originalBidPrice,
                                     topOwner :  {
-
-
                                     }
                                 };
                                 Product.findOneAndUpdate(
@@ -494,12 +497,11 @@ exports.postkickbidder = async (req, res) => {
                                 if(j==0){
                                     for (let i = product[0].bidders.length -1 ; i > 0; i--) {
                                         if (!(product[0].bidders[i].user._id.equals( arr[0]))) {
+                                            helper.kickUser(product[0].bidders[i].user.email, product[0].name);
                                             let newproduct = {
-
                                                 topOwner :   product[0].bidders[i].user,
                                                 topPrice: product[0].bidders[i].user.bidPrice,
                                                 currentPrice: product[0].bidders[i].user.bidPrice,
-
                                             };
                                             Product.findOneAndUpdate(
                                                 {_id:arr[1]},
@@ -519,6 +521,7 @@ exports.postkickbidder = async (req, res) => {
                                 }if(j >0 && j<arr1.length ){
                                     for (let i = product[0].bidders.length -1 ; i > 0; i--) {
                                             if(product[0].bidders[i].user.id === arr1[j +1]  ){
+                                                helper.kickUser(product[0].bidders[i].user.email, product[0].name);
                                                 let newproduct = {
 
                                                     topOwner :   product[0].bidders[i].user,
@@ -542,7 +545,6 @@ exports.postkickbidder = async (req, res) => {
                                     }
 
                                 } if(j == arr1.length -1 ){
-
                                     let newproduct = {
 
                                         topOwner :  {

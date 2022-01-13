@@ -261,7 +261,7 @@ exports.postAuctionProduct = async (req, res) => {
         if (product[0].timeEnd.getTime() - new Date().getTime() < 0) {
             // Lấy email của topOwner bằng cách so ID
             for(let i = 0 ; i < users.length; i++){
-                if(users[i]._id === product[0].topOwner._id){
+                if(users[i]._id.equals(product[0].topOwner._id)){
                     email = users[i].email;
                     helper.sendAuctionSuccess(email, "Đấu giá thành công sản phẩm" + product[0].name);
                 }
