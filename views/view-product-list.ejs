@@ -1,7 +1,6 @@
 <%- include('partials/header'); -%>
 <link rel="stylesheet" href="/css/view-product-list.css">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script defer src="/js/view-product-list.js"></script>
 
 </head>
 
@@ -77,11 +76,10 @@
                     <% } else { %>
                         <% Product.forEach(element=> { %>
                             <% if (element.status) { %>
-                                <% if(element.topOwner.id === user.id) { %>
                                 <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="card h-100" style="border-color: red;">
+                                    <div class="card h-100">
                                         <img class="card-img-top" src="/public/images/<%= element.id %>/0.jpg" width="100" height="300">
-                                        <div class="card-body" style="background-color: 	#DDDDDD;">
+                                        <div class="card-body">
                                             <h4 class="card-title">
                                                 <%= element.name %>
                                             </h4>
@@ -100,64 +98,14 @@
                                                 document.getElementById('<%= element.name %>').innerHTML = (formatter.format(price)).toString();
                                             </script>
                                         </div>
-                                        <% if(element.topOwner.id === user.id) { %>
-                                        <div class="card-footer text-muted d-flex justify-content-center" style="border-color: red;">
+                                        <div class="card-footer text-muted d-flex justify-content-center">
                                             <a class="btn btn-md btn-primary btn-block" href="/view-product-list/view-product/<%= element.id %>" role="button">
                                                 <i class="fa fa-eye" aria-hidden="true"></i>
-                                                Xem chi tiết
+                                                Detail
                                             </a>
                                         </div>
-                                        <% } else{%>
-                                            <div class="card-footer text-muted d-flex justify-content-center">
-                                                <a class="btn btn-md btn-primary btn-block" href="/view-product-list/view-product/<%= element.id %>" role="button">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                                    Xem chi tiết
-                                                </a>
-                                            </div>
-                                        <% } %>
                                     </div>
                                 </div>
-                                <% } else {%>
-                                        <div class="col-lg-4 col-md-6 mb-4">
-                                            <div class="card h-100" >
-                                                <img class="card-img-top" src="/public/images/<%= element.id %>/0.jpg" width="100" height="300">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">
-                                                        <%= element.name %>
-                                                    </h4>
-                                                    <div class="text-left">
-                                                        <span>Giá hiện tại:</span>
-                                                        <span class="card-text price-tag text-danger" style="font-size: 1.5rem;" id="<%= element.name %>">
-                                                                                <%= element.currentPrice %>
-                                                                            </span>
-                                                    </div>
-                                                    <script>
-                                                        formatter = new Intl.NumberFormat('vi-VN', {
-                                                            style: 'currency',
-                                                            currency: 'VND'
-                                                        });
-                                                        price = Number((document.getElementById('<%= element.name %>').innerHTML).trim());
-                                                        document.getElementById('<%= element.name %>').innerHTML = (formatter.format(price)).toString();
-                                                    </script>
-                                                </div>
-                                                <% if(element.topOwner.id === user.id) { %>
-                                                    <div class="card-footer text-muted d-flex justify-content-center" style="border-color: red;">
-                                                        <a class="btn btn-md btn-primary btn-block" href="/view-product-list/view-product/<%= element.id %>" role="button">
-                                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                                            Xem chi tiết
-                                                        </a>
-                                                    </div>
-                                                <% } else{%>
-                                                    <div class="card-footer text-muted d-flex justify-content-center">
-                                                        <a class="btn btn-md btn-primary btn-block" href="/view-product-list/view-product/<%= element.id %>" role="button">
-                                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                                            Xem chi tiết
-                                                        </a>
-                                                    </div>
-                                                <% } %>
-                                            </div>
-                                        </div>
-                                <% } %>
                             <% } %>
                         <% }) %>
                     <% } %>
@@ -184,9 +132,6 @@
         <% }) %>
         <li id="next_page" onclick="next_page()" class="page-item"><a class="page-link">Next</a></li>
         <script>
-            console.log("asdasd" + document.getElementById("current_page").value);
-        </script>
-        <script>
             document.getElementById("pre_page").onclick = function () {
                 var currentPage = parseInt(document.getElementById("current_page").value);
                 if (currentPage === 1) {
@@ -202,6 +147,5 @@
             }
         </script>
     </ul>
-
 </section>
 <%- include('partials/footer'); -%>
