@@ -8,11 +8,31 @@ const helper = require('../helpers/helper');
 exports.getHomePage = async (req, res) => {
     const categoryList = await Category.find({});
     const top5HighestPrice = await Product.find({ status: 1 }).sort([['currentPrice', -1]]).limit(5);
-    const top5HighestBidding = await Product.find({ status: 1 }).sort([['bidders', -1]]).limit(5);
-    for (var i = 0; i < top5HighestBidding.length; i++)
-        console.log(top5HighestBidding[i].bidders.length);
+    const top5HighestBidding = await Product.aggregate(
+        [
+            {
+                "$project": {
+                    "_id": 1,
+                    "name": 1,
+                    "originalBidPrice": 1,
+                    "boughtPrice": 1,
+                    "currentPrice": 1,
+                    "stepPrice": 1,
+                    "brand": 1,
+                    "subBrand": 1,
+                    "topPrice": 1,
+                    "timeStart": 1,
+                    "bidders": 1,
+                    "length": { "$size": "$bidders" }
+                }
+            },
+            { "$sort": { "length": -1 } },
+            { "$limit": 5 }
+        ],
+    );
     res.render('home', {
         Category: categoryList[0].list,
+        fiveHighestBidding: top5HighestBidding,
         fiveHighestPrice: top5HighestPrice
     })
 }
@@ -102,26 +122,6 @@ exports.getListView = async (req, res) => {
     // console.log(product)
     // console.log(product[1].name)
 
-    // Product.find({}).sort('timeEnd').exec(function (err, docs) {
-    //     if (err)
-    //         console.log(err);
-    //     else {
-    //         // console.log('Ascending order');
-    //         // for (var i = 0; i < docs.length; i++)
-    //         //     console.log(docs[i].timeEnd);
-    //     }
-    // });
-    //
-    // Product.find({}).sort([['originalBidPrice', -1]]).exec(function (err, docs) {
-    //     if (err)
-    //         console.log(err);
-    //     else {
-    //         // console.log('Descending order');
-    //         // for (var i = 0; i < docs.length; i++)
-    //         //     console.log(docs[i].originalBidPrice);
-    //     }
-    // });
-    //
     // dbModel.Product.find({}, (err, ProductList) => {
     //     if (err)
     //         console.log(err);
@@ -218,7 +218,8 @@ exports.getBrandItem = async (req, res) => {
         success: '',
         message: '',
         Product: ProductList,
-        Category: CategoryList[0].list
+        Category: CategoryList[0].list,
+        pageNumbers: []
     });
 }
 
@@ -279,7 +280,8 @@ exports.getButtonBuy = async (req, res) => {
                 message: "",
                 success: "Mua thành công",
                 Product: productList,
-                Category: categoryList[0].list
+                Category: categoryList[0].list,
+                pageNumbers: []
             });
         } else {
             let currentProduct6 = {
@@ -301,7 +303,8 @@ exports.getButtonBuy = async (req, res) => {
                 message: "Mua không thành công",
                 success: "",
                 Product: productList,
-                Category: categoryList[0].list
+                Category: categoryList[0].list,
+                pageNumbers: []
             });
         }
 
@@ -336,7 +339,8 @@ exports.postAuctionProduct = async (req, res) => {
                 success: '',
                 message: 'Đấu giá sản phẩm không thành công',
                 Category: categoryList[0].list,
-                Product: productList
+                Product: productList,
+                pageNumbers: []
             });
         } else {
             //Trường hợp chưa có ai đấu giá
@@ -482,7 +486,8 @@ exports.postAuctionProduct = async (req, res) => {
             message: "",
             success: "Đấu giá thành công",
             Product: productList,
-            Category: categoryList[0].list
+            Category: categoryList[0].list,
+            pageNumbers: []
         });
     })
 
