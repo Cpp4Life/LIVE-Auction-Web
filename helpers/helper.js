@@ -71,3 +71,24 @@ exports.formatter = new Intl.NumberFormat('vi-VN', {
 exports.format_number = (val) => {
     return numeral(val).format('0,0');
 }
+exports.sendAuctionSuccess = (email, message) => {
+    console.log(`${email} ${message}`);
+    try {
+        const mailOptions = {
+            from: 'Mailing System <auctionboi@gmail.com>',
+            to: email,
+            subject: "Đấu giá thành công",
+            html: "<h3>Bạn đã đặt giá thành công </h3>" + "<h1 style='font-weight:bold;'>" + message + "</h1>" // html body
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            // console.log('Message sent: %s', info.messageId);
+            // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
