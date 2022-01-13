@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get('/', guestController.getHomePage);
 
+router.get('/profile', guestController.getProfile);
+
 router.get('/view-product-list', guestController.getListView);
 
 router.post('/view-product-list', guestController.postListView);
@@ -19,6 +21,5 @@ router.get('/view-product-list/view-product/auction/:price', isAuth, guestContro
 // router.post('/view-product-list/view-product/:id', isAuth, guestController.getPostProductPage);
 
 router.get('/view-product-list/view-product/buy-now/:id', isAuth, guestController.getButtonBuy);
-
 
 module.exports = router;

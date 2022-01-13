@@ -5,59 +5,174 @@ const fs = require("fs");
 const _ = require('lodash');
 const helper = require('../helpers/helper');
 
-exports.getHomePage = (req, res) => {
+exports.getHomePage = async (req, res) => {
+    const categoryList = await Category.find({});
+    const top5HighestPrice = await Product.find({ status: 1 }).sort([['currentPrice', -1]]).limit(5);
+    const top5HighestBidding = await Product.aggregate(
+        [
+            {
+                "$project": {
+                    "_id": 1,
+                    "name": 1,
+                    "originalBidPrice": 1,
+                    "boughtPrice": 1,
+                    "currentPrice": 1,
+                    "stepPrice": 1,
+                    "brand": 1,
+                    "subBrand": 1,
+                    "topPrice": 1,
+                    "timeStart": 1,
+                    "bidders": 1,
+                    "length": { "$size": "$bidders" }
+                }
+            },
+            { "$sort": { "length": -1 } },
+            { "$limit": 5 }
+        ],
+    );
+    res.render('home', {
+        Category: categoryList[0].list,
+        fiveHighestBidding: top5HighestBidding,
+        fiveHighestPrice: top5HighestPrice
+    })
+}
+exports.getProfile = (req, res) => {
     dbModel.Category.find({}, (err, foundList) => {
         if (err)
             console.log(err);
         else {
-            res.render('home', { Category: foundList[0].list });
+            res.render('profile', { Category: foundList[0].list });
         }
     })
 }
 
-exports.getListView = (req, res) => {
-    dbModel.Product.find({}, (err, ProductList) => {
-        if (err)
-            console.log(err);
-        else {
+exports.getListView = async (req, res) => {
+    const CategoryList = await Category.find({});
+    const productLen = await Product.find({ status: 1 });
 
-            for (let i = 0; i < ProductList.length; i++) {
-                // console.log(ProductList[i].timeEnd);
-                // console.log(ProductList[i]);
-
-                if (ProductList[i].timeEnd.getTime() - new Date().getTime() < 0) {
-                    let currentProduct = {
-                        status: 0,
-                    };
-                    Product.findOneAndUpdate(
-                        { _id: ProductList[i]._id },
-                        currentProduct,
-                        { new: true },
-                        (err, doc) => {
-                            if (err) {
-                                console.log(err);
-                            }
-                        }
-                    );
-                }
-            }
-            dbModel.Category.find({}, (err, CategoryList) => {
-                if (err)
-                    console.log(err);
-                else {
-
-                    res.render('view-product-list', {
-                        success: '',
-                        message: '',
-                        Product: ProductList,
-                        Category: CategoryList[0].list
-                    });
-                }
-            })
-
-        }
+    const numberProduct = 6;
+    let total = Object.keys(productLen).length;
+    let nPages = Math.floor(total / numberProduct);
+    if (total % numberProduct > 0) {
+        nPages++;
     }
-    )
+    // exports.getListView = (req, res) => {
+    //     dbModel.Product.find({}, (err, ProductList) => {
+    //         if (err)
+    //             console.log(err);
+    //         else {
+    //
+    //             for (let i = 0; i < ProductList.length; i++) {
+    //                 // console.log(ProductList[i].timeEnd);
+    //                 // console.log(ProductList[i]);
+    //
+    //                 if (ProductList[i].timeEnd.getTime() - new Date().getTime() < 0) {
+    //                     let currentProduct = {
+    //                         status: 0,
+    //                     };
+    //                     Product.findOneAndUpdate(
+    //                         { _id: ProductList[i]._id },
+    //                         currentProduct,
+    //                         { new: true },
+    //                         (err, doc) => {
+    //                             if (err) {
+    //                                 console.log(err);
+    //                             }
+    //                         }
+    //                     );
+    //                 }
+    //             }
+    //             dbModel.Category.find({}, (err, CategoryList) => {
+    //                 if (err)
+    //                     console.log(err);
+    //                 else {
+    //
+    //                     res.render('view-product-list', {
+    //                         success: '',
+    //                         message: '',
+    //                         Product: ProductList,
+    //                         Category: CategoryList[0].list
+    //                     });
+    //                 }
+    //             })
+    //
+    //         }
+
+
+    var page = parseInt(req.query.page) || 1;
+
+    const pageNumbers = [];
+    for (let i = 1; i <= nPages; i++) {
+        pageNumbers.push({
+            value: i,
+            isCurrent: +page === i
+        })
+    }
+    var start = (page - 1) * numberProduct;
+    var end = page * numberProduct;
+    // const product = await Product.find({status: 1, productList: {$slice: [start, end]}});
+    Product.find({ status: 1 })
+        .skip(start)
+        .limit(numberProduct)
+        .then(data => {
+            console.log(Object.keys(data).length);
+            res.render('view-product-list', {
+                success: '',
+                message: '',
+                Product: data,
+                Category: CategoryList[0].list,
+                pageNumbers: pageNumbers
+            });
+        })
+        .catch(err => {
+            console.log("Lỗi phân trang");
+        })
+    // console.log(Object.keys(product).length)
+    // console.log(product)
+    // console.log(product[1].name)
+
+    // dbModel.Product.find({}, (err, ProductList) => {
+    //     if (err)
+    //         console.log(err);
+    //     else {
+    //
+    //         for (let i = 0; i < ProductList.length; i++) {
+    //             // console.log(ProductList[i].timeEnd);
+    //             // console.log(ProductList[i]);
+    //
+    //             if (ProductList[i].timeEnd.getTime() - new Date().getTime() < 0) {
+    //                 let currentProduct = {
+    //                     status: 0,
+    //                 };
+    //                 Product.findOneAndUpdate(
+    //                     { _id: ProductList[i]._id },
+    //                     currentProduct,
+    //                     { new: true },
+    //                     (err, doc) => {
+    //                         if (err) {
+    //                             console.log(err);
+    //                         }
+    //                     }
+    //                 );
+    //             }
+    //         }
+    //         dbModel.Category.find({}, (err, CategoryList) => {
+    //             if (err)
+    //                 console.log(err);
+    //             else {
+    //
+    //                 res.render('view-product-list', {
+    //                     success: '',
+    //                     message: '',
+    //                     Product: ProductList,
+    //                     Category: CategoryList[0].list
+    //                 });
+    //             }
+    //         })
+    //
+    //     }
+    // }
+    // )
 }
 
 exports.postListView = async (req, res) => {
@@ -88,7 +203,8 @@ exports.postListView = async (req, res) => {
         success: '',
         message: '',
         Product: ProductList,
-        Category: CategoryList[0].list
+        Category: CategoryList[0].list,
+        pageNumbers: []
     });
 }
 
@@ -111,7 +227,8 @@ exports.getBrandItem = async (req, res) => {
         success: '',
         message: '',
         Product: ProductList,
-        Category: CategoryList[0].list
+        Category: CategoryList[0].list,
+        pageNumbers: []
     });
 }
 
@@ -172,7 +289,8 @@ exports.getButtonBuy = async (req, res) => {
                 message: "",
                 success: "Mua thành công",
                 Product: productList,
-                Category: categoryList[0].list
+                Category: categoryList[0].list,
+                pageNumbers: []
             });
         } else {
             let currentProduct6 = {
@@ -194,7 +312,8 @@ exports.getButtonBuy = async (req, res) => {
                 message: "Mua không thành công",
                 success: "",
                 Product: productList,
-                Category: categoryList[0].list
+                Category: categoryList[0].list,
+                pageNumbers: []
             });
         }
 
@@ -229,7 +348,8 @@ exports.postAuctionProduct = async (req, res) => {
                 success: '',
                 message: 'Đấu giá sản phẩm không thành công',
                 Category: categoryList[0].list,
-                Product: productList
+                Product: productList,
+                pageNumbers: []
             });
         } else {
             //Trường hợp chưa có ai đấu giá
@@ -375,7 +495,8 @@ exports.postAuctionProduct = async (req, res) => {
             message: "",
             success: "Đấu giá thành công",
             Product: productList,
-            Category: categoryList[0].list
+            Category: categoryList[0].list,
+            pageNumbers: []
         });
     })
 

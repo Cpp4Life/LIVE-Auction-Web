@@ -39,6 +39,7 @@ module.exports = (passport) => {
     });
 
 
+
     // passport.use(new GoogleStrategy({
     //     clientID:  430628000423-snc4munnnsgs606d70tkgr06mb7p6umn.apps.googleusercontent.com,
     //     clientSecret: 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,
