@@ -215,17 +215,18 @@
                     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5">
                         <% fiveHighestBidding.forEach(element=> { %>
                             <div class="col mb-3">
-                                <div class="card">
+                                <div class="card h-100">
                                     <img src="images/<%= element._id %>/0.jpg" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">
                                             <%= element.name %>
                                         </h5>
-                                        <p class="card-text price-tag">Giá hiện tại: <%= element.currentPrice %>
+                                        <p class="card-text" id="hb-currentPrice<%=element.name%>">Giá hiện tại: <%= element.currentPrice %>
                                         </p>
-                                        <p class="card-text">Người đặt cao nhất: admin</p>
-                                        <p class="card-text">Giá mua ngay: $</p>
-                                        <p class="card-text">Ngày đăng: 1/1/2022</p>
+                                        <p class="card-text" id="hb-buyPrice<%=element.name %>">Giá mua ngay: <%= element.boughtPrice %>
+                                        </p>
+                                        <p class="card-text" id="hb-time<%= element.name %>">Ngày đăng: <%= element.timeStart %>
+                                        </p>
                                         <p class="card-text">Số lượt ra giá: <span class="text-dark font-weight-bold">
                                                 <%= element.bidders.length %>
                                             </span></p>
@@ -236,14 +237,15 @@
                                 </div>
                             </div>
                             <script>
-                                // currentPrice = document.getElementById("currentPrice<%#element.name%>").innerHTML;
-                                // document.getElementById("currentPrice<%=element.name%>").innerHTML = 'Giá hiện tại: <span class="text-dark font-weight-bold">' + formatMoney(currentPrice.split(" ")[3]) + '</span>';
+                                currentPrice = document.getElementById("hb-currentPrice<%=element.name%>").innerHTML;
+                                console.log(currentPrice);
+                                document.getElementById("hb-currentPrice<%=element.name%>").innerHTML = 'Giá hiện tại: <span class="text-dark font-weight-bold">' + formatMoney(currentPrice.split(" ")[3]) + '</span>';
 
-                                buyPrice = document.getElementById("buyPrice<%=element.name%>").innerHTML;
-                                document.getElementById("buyPrice<%=element.name%>").innerHTML = 'Giá mua ngay: <span class="text-dark font-weight-bold">' + formatMoney(buyPrice.split(" ")[3]) + '</span>';
+                                buyPrice = document.getElementById("hb-buyPrice<%=element.name%>").innerHTML;
+                                document.getElementById("hb-buyPrice<%=element.name%>").innerHTML = 'Giá mua ngay: <span class="text-dark font-weight-bold">' + formatMoney(buyPrice.split(" ")[3]) + '</span>';
 
-                                startTime = document.getElementById("time<%=element.name%>").innerHTML;
-                                document.getElementById("time<%=element.name%>").innerHTML = 'Ngày đăng: <span class="text-dark font-weight-bold">' + convertTime(startTime) + '</span>';
+                                startTime = document.getElementById("hb-time<%=element.name%>").innerHTML;
+                                document.getElementById("hb-time<%=element.name%>").innerHTML = 'Ngày đăng: <span class="text-dark font-weight-bold">' + convertTime(startTime) + '</span>';
                             </script>
                             <% }) %>
                     </div>
@@ -261,13 +263,11 @@
                                         <h5 class="card-title">
                                             <%= element.name %>
                                         </h5>
-                                        <p class="card-text" id="currentPrice<%= element.name %>">Giá hiện tại: <%= element.currentPrice %>
+                                        <p class="card-text" id="hp-currentPrice<%= element.name %>">Giá hiện tại: <%= element.currentPrice %>
                                         </p>
-                                        <p class="card-text">Người đặt cao nhất: <span class="text-dark font-weight-bold">admin</span>
+                                        <p class="card-text" id="hp-buyPrice<%=element.name %>">Giá mua ngay: <%= element.boughtPrice %>
                                         </p>
-                                        <p class="card-text" id="buyPrice<%=element.name %>">Giá mua ngay: <%= element.boughtPrice %>
-                                        </p>
-                                        <p class="card-text" id="time<%= element.name %>">Ngày đăng: <%= element.timeStart %>
+                                        <p class="card-text" id="hp-time<%= element.name %>">Ngày đăng: <%= element.timeStart %>
                                         </p>
                                         <p class="card-text">Số lượt ra giá: <span class="text-dark font-weight-bold">
                                                 <%= element.bidders.length %>
@@ -280,14 +280,14 @@
                                 </div>
                             </div>
                             <script>
-                                currentPrice = document.getElementById("currentPrice<%=element.name%>").innerHTML;
-                                document.getElementById("currentPrice<%=element.name%>").innerHTML = 'Giá hiện tại: <span class="text-dark font-weight-bold">' + formatMoney(currentPrice.split(" ")[3]) + '</span>';
+                                currentPrice = document.getElementById("hp-currentPrice<%=element.name%>").innerHTML;
+                                document.getElementById("hp-currentPrice<%=element.name%>").innerHTML = 'Giá hiện tại: <span class="text-dark font-weight-bold">' + formatMoney(currentPrice.split(" ")[3]) + '</span>';
 
-                                buyPrice = document.getElementById("buyPrice<%=element.name%>").innerHTML;
-                                document.getElementById("buyPrice<%=element.name%>").innerHTML = 'Giá mua ngay: <span class="text-dark font-weight-bold">' + formatMoney(buyPrice.split(" ")[3]) + '</span>';
+                                buyPrice = document.getElementById("hp-buyPrice<%=element.name%>").innerHTML;
+                                document.getElementById("hp-buyPrice<%=element.name%>").innerHTML = 'Giá mua ngay: <span class="text-dark font-weight-bold">' + formatMoney(buyPrice.split(" ")[3]) + '</span>';
 
-                                startTime = document.getElementById("time<%=element.name%>").innerHTML;
-                                document.getElementById("time<%=element.name%>").innerHTML = 'Ngày đăng: <span class="text-dark font-weight-bold">' + convertTime(startTime) + '</span>';
+                                startTime = document.getElementById("hp-time<%=element.name%>").innerHTML;
+                                document.getElementById("hp-time<%=element.name%>").innerHTML = 'Ngày đăng: <span class="text-dark font-weight-bold">' + convertTime(startTime) + '</span>';
                             </script>
                             <% }) %>
                     </div>
