@@ -164,7 +164,7 @@
                                 document.getElementById("cp-startTime<%=element.name%>").innerHTML = 'Ngày đăng: <span class="text-dark font-weight-bold">' + convertStartTime(startTime) + '</span>';
 
                                 endTime = document.getElementById("cp-endTime<%=element.name%>").innerHTML;
-                                document.getElementById("cp-endTime<%=element.name%>").innerHTML = 'Ngày kết thúc: <span class="text-dark font-weight-bold">' + convertEndTime(endTime) + '</span>';
+                                document.getElementById("cp-endTime<%=element.name%>").innerHTML = 'Ngày kết thúc: <span class="text-danger font-weight-bold">' + convertEndTime(endTime) + '</span>';
                             </script>
                             <% }) %>
                     </div>
@@ -190,7 +190,7 @@
                                         </p>
                                         <p class="card-text" id="hb-endTime<%= element.name %>">Ngày kết thúc: <%= element.timeEnd %>
                                         </p>
-                                        <p class="card-text">Số lượt ra giá: <span class="text-dark font-weight-bold">
+                                        <p class="card-text">Số lượt ra giá: <span class="text-danger font-weight-bold">
                                                 <%= element.bidders.length %>
                                             </span></p>
                                     </div>
@@ -252,7 +252,7 @@
                             </div>
                             <script>
                                 currentPrice = document.getElementById("hp-currentPrice<%=element.name%>").innerHTML;
-                                document.getElementById("hp-currentPrice<%=element.name%>").innerHTML = 'Giá hiện tại: <span class="text-dark font-weight-bold">' + formatMoney(currentPrice.split(" ")[3]) + '</span>';
+                                document.getElementById("hp-currentPrice<%=element.name%>").innerHTML = 'Giá hiện tại: <span class="text-danger font-weight-bold">' + formatMoney(currentPrice.split(" ")[3]) + '</span>';
 
                                 buyPrice = document.getElementById("hp-buyPrice<%=element.name%>").innerHTML;
                                 document.getElementById("hp-buyPrice<%=element.name%>").innerHTML = 'Giá mua ngay: <span class="text-dark font-weight-bold">' + formatMoney(buyPrice.split(" ")[3]) + '</span>';
