@@ -1,6 +1,8 @@
 <%- include('../partials/header'); -%>
+
 <link rel="stylesheet" href="css/profilebidder.css" xmlns="http://www.w3.org/1999/html">
 <script src="js/product.js"></script>
+
 <!------ Include the above in your HEAD tag ---------->
 
 
@@ -67,6 +69,7 @@
                         <div class="modal-body" style="text-align: center;">
                             <div class="tab-pane" id="password">
                                 <div class="form-group">
+                                    <%- include ('../partials/messages'); -%>
                                     <div class="col-xs-12" style="width: 100%;margin-bottom: 20px;margin-top: 20px;">
                                         <label for="password" class="font_size1"><span>Current password </span></label>
                                         <input style="font-size: 14px;" type="password" class="form-control" name="password1" id="password1"  placeholder="*******" title="enter your password.">

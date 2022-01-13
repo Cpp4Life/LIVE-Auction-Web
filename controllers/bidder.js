@@ -127,6 +127,7 @@ exports.editpassword = async (req, res) => {
     pas1= req.body.password1
     pas2= req.body.password2
     pas3= req.body.password3
+
     let currentUser = {
         _id: req.params.id,
         pas1 : req.body.password1
@@ -140,6 +141,7 @@ exports.editpassword = async (req, res) => {
         res.render('viewBidder/change-pass', {
             errors,
         });
+        console.log(errors)
         console.log("hhi")
     }
     else
