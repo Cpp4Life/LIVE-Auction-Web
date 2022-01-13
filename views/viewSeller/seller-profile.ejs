@@ -214,17 +214,27 @@
                                             <div class="col-sm-4 mb-3">
                                                 <div class="card">
                                                     <img src="/images/<%= element1._id %>/1.jpg" style="height: 120px;" class="card-img-top" alt="...">
-                                                    <div class="card-body" >
-                                                        <h5 class="card-title" ><%= element1.name%></h5>
-                                                        <p class="card-text">Giá hiện tại: <%= element1.currentPrice%></p>
-                                                        <p class="card-text">Giá mua ngay:<%= element1.boughtPrice%></p>
-                                                        <p class="card-text">Người bán: <%= element1.owner.name%></p>
-                                                        <p class="card-text">Ngày/giờ Kết thúc: <%= element1.timeEnd.toLocaleString() %></p>
-                                                    </div>
+                                                    <% if(element1.topOwner.id === user.id) { %>
+                                                        <div class="card-body" style="background-color: #EEEEEE; border-color: red;">
+                                                            <h5 class="card-title" ><%= element1.name%></h5>
+                                                            <p class="card-text">Giá hiện tại: <%= element1.currentPrice%></p>
+                                                            <p class="card-text">Giá mua ngay:<%= element1.boughtPrice%></p>
+                                                            <p class="card-text">Người bán: <%= element1.owner.name%></p>
+                                                            <p class="card-text">Ngày/giờ Kết thúc: <%= element1.timeEnd.toLocaleString() %></p>
+                                                        </div>
+                                                    <% } else {%>
+                                                        <div class="card-body" >
+                                                            <h5 class="card-title" ><%= element1.name%></h5>
+                                                            <p class="card-text">Giá hiện tại: <%= element1.currentPrice%></p>
+                                                            <p class="card-text">Giá mua ngay:<%= element1.boughtPrice%></p>
+                                                            <p class="card-text">Người bán: <%= element1.owner.name%></p>
+                                                            <p class="card-text">Ngày/giờ Kết thúc: <%= element1.timeEnd.toLocaleString() %></p>
+                                                        </div>
+                                                    <% }%>
                                                     <div class="card-footer text-muted">
                                                         <a class="btn btn-sm btn-outline-primary" href="/view-product-list/view-product/<%= element1._id %>" role="button">
                                                             <i class="fa fa-eye" aria-hidden="true"></i>
-                                                            Details
+                                                            xem chi tiết
                                                         </a>
                                                     </div>
                                                 </div>
@@ -243,10 +253,10 @@
                         <table class="table table-hover table-bordered">
                             <thead>
                             <tr>
-                                <th>Item</th>
-                                <th>Category</th>
-                                <th>Seller</th>
-                                <th>Bid for</th>
+                                <th>Sản phẩm</th>
+                                <th>Danh mục</th>
+                                <th>Người bán</th>
+                                <th>Giá</th>
                                 <th>Upvote</th>
                                 <th>Downvote</th>
                             </tr>
@@ -355,7 +365,9 @@
                             <tbody>
                             <% user.review.forEach(element => { %>
                                 <tr>
-                                    <td> <img src="images/Adam.png" lazyloading="" style="height: 30px;width: 30px; border-radius: 15px"> </a> <%= element.name_rv%> </td>
+                                    <td> <a href="/profile/<%= element.user_id%>" role="button">
+                                            <%= element.name_rv%>
+                                        </a> </td>
                                     <td> <%= element.point %> </td>
                                     <td> <%= element.comment %> </td>
                                 </tr>
@@ -374,7 +386,7 @@
                                 <th>Người thắng </th>
                                 <th>Upvote</th>
                                 <th>Downvote</th>
-                                <th>Cancel</th>
+                                <th>Hủy</th>
                             </tr>
                             </thead>
                             <tbody>
