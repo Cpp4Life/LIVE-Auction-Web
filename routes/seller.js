@@ -4,6 +4,7 @@ const isAuth = require('../middleware/auth');
 const bidderController = require("../controllers/bidder");
 const {Category} = require("../models/model");
 const {Product} = require("../models/model");
+const guestController = require("../controllers/guest");
 const router = express.Router();
 
 router.get('/seller/post-product', isAuth, sellerController.getPostProductPage);
@@ -23,5 +24,6 @@ router.post('/seller/profile/changepassword/:id', isAuth, sellerController.editp
 
 router.post('/seller/profile/evaluateseller/:id', isAuth, sellerController.postevaluatebidder);
 router.post('/seller/profile/evaluateseller/-1/:id', isAuth, sellerController.postedownvotebidder);
+router.post('/view-product-list/view-product/editinfo/:id', isAuth, sellerController.posteditinfomation);
 
 module.exports = router;

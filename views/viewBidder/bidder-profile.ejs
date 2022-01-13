@@ -316,10 +316,7 @@
                                                             <% }) %>
                                                                 <% if(found){ %>
                                                         <td style="width: 250px;">
-                                                            <form action="/bidder/profile/evaluateseller/<%=element1.owner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">
-                                                                <input style="font-size: 14px;margin-bottom: 10px;"  class="form-control" name="rate" id="rate"  title="enter your .">
-                                                                <button type="submit"  class="btn btn-primary btn-lg btn-block" style="background-color: green;">+1</button>
-                                                            </form>
+
                                                         </td>
                                                         <td style="width: 250px;">
                                                             <form action="/bidder/profile/evaluateseller/-1/<%=element1.owner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">

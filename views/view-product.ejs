@@ -2,6 +2,8 @@
     <link rel="stylesheet" href="/css/view-product.css">
     <link rel="stylesheet" type="text/css" href="https://hocwebgiare.com/cpadmin/css/xzoom.css" media="all">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
+
     </head>
 
     <body>
@@ -466,6 +468,35 @@
                                     <a>Xem thêm</a>
                                 </div>
                             </div>
+                            <div class="motachitietsp">
+                                <% if(user.id === element.owner.id){ %>
+                                    <div data-toggle="modal" data-target="#editinfo" style="text-align: center; color: red" class="read-more-btn">
+                                        <a>Thêm thông tin sản phẩm</a>
+                                    </div>
+                                <% } %>
+                                    <div class="modal fade" id="editinfo">
+                                        <div class="modal-dialog">
+                                            <form action="/view-product-list/view-product/editinfo/<%=element.id%>" method="post">
+                                                <div class="modal-content">
+                                                    <div class="container form-group">
+                                                        <label class="font-weight-bold pl-3">Mô tả sản phẩm</label>
+                                                        <textarea class="container" id="description" name="description" text="<% element.description%>"></textarea>
+                                                    </div>
+                                                    <script>
+                                                        ClassicEditor.create(document.querySelector('#description')).catch(error => { console.error(error) });
+                                                    </script>
+                                                    <div class="form-group">
+                                                        <div class="container  text-center">
+                                                            <button type="submit" class="btn btn-primary btn-lg font-weight-bold" >Thêm thông tin</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                            </div>
+
+
                             <div class="top5">
                                 <h1 class="infor_details" style=" margin-bottom: 20px;font-size: 1.5rem; width: 480px">Top 5 sản phẩm cùng chuyên mục </h1>
                                 <div class="card-body">

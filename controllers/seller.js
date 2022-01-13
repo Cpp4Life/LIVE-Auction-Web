@@ -343,6 +343,38 @@ exports.postedownvotebidder = async (req, res) => {
     res.redirect("/seller/profile")
 
 };
+
+exports.posteditinfomation = async (req, res) => {
+    const errors = [];
+
+
+    Product.find({_id: req.params.id}, async function (err, product, done) {
+        if (err) {
+            console.log(err)
+        }
+        if (product) {
+
+            var edit = product[0].description + req.body.description
+                let newproduct = {
+                    description: edit,
+                };
+                Product.findOneAndUpdate(
+                    {_id: req.params.id},
+                    newproduct,
+                    {new: true},
+                    (err, doc) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    }
+                );
+
+            }
+        }
+    )
+    res.redirect("/view-product-list/view-product/"+ req.params.id)
+
+};
 exports.postevaluatebidder = async (req, res) => {
     const errors = [];
     console.log(req.params);

@@ -54,21 +54,21 @@
             <img src="/images/Profile/<%= user.image %> " class="avatar img-circle img-thumbnail" alt="avatar">
             <h1 style="text-align: center;"><%= user.name %></h1>
             </hr><br>
-<!--            <ul class="list-group">-->
-<!--                <li class="list-group-item text-muted" style="font-size: 15px;">Activity <i class="fa fa-dashboard fa-1x"></i></li>-->
-<!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
-<!--                    Bidding-->
-<!--                    <span class="badge  badge-pill">125</span>-->
-<!--                </li>-->
-<!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
-<!--                    Items Sold-->
-<!--                    <span class="badge  badge-pill">2</span>-->
-<!--                </li>-->
-<!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
-<!--                    Reviews-->
-<!--                    <span class="badge  badge-pill">1</span>-->
-<!--                </li>-->
-<!--            </ul>-->
+            <!--            <ul class="list-group">-->
+            <!--                <li class="list-group-item text-muted" style="font-size: 15px;">Activity <i class="fa fa-dashboard fa-1x"></i></li>-->
+            <!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
+            <!--                    Bidding-->
+            <!--                    <span class="badge  badge-pill">125</span>-->
+            <!--                </li>-->
+            <!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
+            <!--                    Items Sold-->
+            <!--                    <span class="badge  badge-pill">2</span>-->
+            <!--                </li>-->
+            <!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
+            <!--                    Reviews-->
+            <!--                    <span class="badge  badge-pill">1</span>-->
+            <!--                </li>-->
+            <!--            </ul>-->
 
         </div><!--/col-3-->
 
@@ -136,18 +136,18 @@
                 <div class="tab-pane fade" id="sellingitems" role="tabpanel" aria-labelledby="profile-tab">
                     <hr>
 
-                                <div class="container" style="margin-top: 40px;">
-                                    <table class="table table-hover table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th>Item</th>
-                                            <th>Category</th>
-                                            <th>Times remaining</th>
-                                        </tr>
-                                        </thead>
-                                        <% Product.forEach(element=> {%>
-                                            <% if(element.status){ %>
-                                                <% if((element.owner._id).equals(user.id)){ %>
+                    <div class="container" style="margin-top: 40px;">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Category</th>
+                                <th>Times remaining</th>
+                            </tr>
+                            </thead>
+                            <% Product.forEach(element=> {%>
+                                <% if(element.status){ %>
+                                    <% if((element.owner._id).equals(user.id)){ %>
                                         <tbody>
                                         <tr>
                                             <td><a class="info_ava" href="/view-product-list/view-product/<%= element.id %>"> <img src="/images/<%= element.id %>/1.jpg" lazyloading="" style="height: 90px;width: 90px; ">  </a> <%= element.name %> </td>
@@ -155,13 +155,11 @@
                                             <td> <%= element.timeEnd %> </td>
                                         </tr>
                                         </tbody>
-                                                    <% } %>
-
-                                            <% } %>
-
-                                        <% }) %>
-                                    </table>
-                                </div>
+                                    <% } %>
+                                <% } %>
+                            <% }) %>
+                        </table>
+                    </div>
 
                 </div>
                 <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="contact-tab">
@@ -184,7 +182,6 @@
                                                         <p class="card-text">Ngày/giờ đăng: <%= element.timeStart_product%></p>
                                                         <p class="card-text">Ngày/giờ Kết thúc: <%= element.timeEnd_product%></p>
                                                     </div>
-
                                                     <div class="card-footer text-muted">
                                                         <a class="btn btn-sm btn-outline-primary" href="/view-product-list/view-product/<%= element.id_product %>" role="button">
                                                             <i class="fa fa-eye" aria-hidden="true"></i>
@@ -194,7 +191,6 @@
                                                 </div>
                                             </div>
                                         <% } %>
-
                                     <% } %>
                                 <% }) %>
                             <% }) %>
@@ -211,7 +207,6 @@
                         <div class="row">
 
                             <% Product.forEach(element1=> {%>
-
                                 <% if( element1.status) { %>
                                     <% var found = false%>
                                     <% element1.bidders.forEach(element2=> { %>
@@ -238,7 +233,6 @@
                                         <%   } %>
                                     <% }) %>
                                 <%   } %>
-
                             <% }) %>
                         </div>
                     </div>
@@ -262,18 +256,15 @@
                                 <% if((element1.topOwner._id ).equals(user._id) ){ %>
                                     <% if(!element1.status){ %>
                                         <tr>
-
                                             <td style="width:9%"><%= element1.name %></td>
                                             <td style="width:9%"><%= element1.brand %></td>
                                             <td style="width:9%"><%= element1.owner.name %></td>
                                             <td style="width:9%"><%= element1.topPrice %></td>
-
                                             <% User.forEach(user1 => {%>
                                                 <% if((user1.id) == (element1.owner.id)){ %>
                                                     <% var found = true%>
                                                     <% user1.review.forEach(rv1=> {%>
                                                         <% if((rv1.user_id) == (user.id) && (rv1.product_id) == (element1.id) ){ %>
-
                                                             <% if(rv1.point == 1){ %>
                                                                 <td style="width:9%"><%= rv1.comment %></td>
                                                                 <td style="width:9%"></td>
@@ -323,16 +314,15 @@
                                 <strong class="font_size2">Review Point</strong>
                                 <br>
                                 <% if(true){ %>
-
-                                  <% var total = 0%>
+                                    <% var total = 0%>
                                     <% var count =0%>
                                     <% user.review.forEach(element =>{ %>
                                         <% total=total+1%>
                                         <% if(element.point == 1){%>
                                             <% count =count +1%>
                                         <% } %>
-                                   <% })%>
-                                <span class="color_note"> ( +/(+-)) = <%= count%> / <%= total%></span>
+                                    <% })%>
+                                    <span class="color_note"> ( +/(+-)) = <%= count%> / <%= total%></span>
                                 <% } %>
                             </div>
                             <div class="col-md-4">
@@ -343,9 +333,7 @@
                         </div>
                     </div>
                     <div class="container" style="margin-top: 40px;">
-
                         <table class="table table-hover table-bordered">
-
                             <thead>
                             <tr>
                                 <th>User</th>
@@ -373,7 +361,6 @@
                 </div>
                 <div class="tab-pane fade"  id="solditems" role="tabpanel" aria-labelledby="contact-tab">
                     <hr>
-
                     <div class="container">
                         <table class="table table-hover table-bordered">
                             <thead>
@@ -382,75 +369,60 @@
                                 <th>Người thắng </th>
                                 <th>Upvote</th>
                                 <th>Downvote</th>
-
                             </tr>
                             </thead>
                             <tbody>
                             <% Product.forEach(element1=> {%>
                                 <% if(!element1.status){ %>
                                     <% if(element1.owner._id == user.id){ %>
-                            <tr>
-
-                                <td style="width:9%"><%= element1.name %></td>
-                                <td style="width:9%"><%= element1.topOwner.name %></td>
-                                <% User.forEach(user1 => {%>
-                                    <% if((user1.id) == (element1.topOwner.id)){ %>
-                                        <% var found = true%>
-                                        <% user1.review.forEach(rv1=> {%>
-                                            <% if((rv1.user_id) == (user.id) && (rv1.product_id) == (element1.id) ){ %>
-
-                                                <% if(rv1.point == 1){ %>
-                                                    <td style="width:9%"><%= rv1.comment %></td>
-                                                    <td style="width:9%"></td>
-                                                <% } %>
-                                                <% if(rv1.point == -1){ %>
-                                                    <td style="width:9%"></td>
-                                                    <td style="width:9%"><%= rv1.comment %></td>
+                                        <tr>
+                                            <td style="width:9%"><%= element1.name %></td>
+                                            <td style="width:9%"><%= element1.topOwner.name %></td>
+                                            <% User.forEach(user1 => {%>
+                                                <% if((user1.id) == (element1.topOwner.id)){ %>
+                                                    <% var found = true%>
+                                                    <% user1.review.forEach(rv1=> {%>
+                                                        <% if((rv1.user_id) == (user.id) && (rv1.product_id) == (element1.id) ){ %>
+                                                            <% if(rv1.point == 1){ %>
+                                                                <td style="width:9%"><%= rv1.comment %></td>
+                                                                <td style="width:9%"></td>
+                                                            <% } %>
+                                                            <% if(rv1.point == -1){ %>
+                                                                <td style="width:9%"></td>
+                                                                <td style="width:9%"><%= rv1.comment %></td>
+                                                            <%   } %>
+                                                            <% found = false%>
+                                                        <% } else { %>
+                                                        <%   } %>
+                                                    <% }) %>
+                                                    <% if(found){ %>
+                                                    <td style="width: 250px;">
+                                                        <form action="/seller/profile/evaluateseller/<%=element1.topOwner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">
+                                                            <input style="font-size: 14px;margin-bottom: 10px;"  class="form-control" name="rate" id="rate"  title="enter your .">
+                                                            <button type="submit"  class="btn btn-primary btn-lg btn-block" style="background-color: green;">+1</button>
+                                                        </form>
+                                                    </td>
+                                                    <td style="width: 250px;">
+                                                        <form action="/seller/profile/evaluateseller/-1/<%=element1.topOwner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">
+                                                            <input style="font-size: 14px;margin-bottom: 10px;"  class="form-control" name="rate1" id="rate1"  title="enter your .">
+                                                            <button type="submit"  class="btn btn-primary btn-lg btn-block" style="background-color: orangered;">-1</button>
+                                                        </form>
+                                                    </td>
+                                                    <% }  %>
                                                 <%   } %>
-                                                <% found = false%>
-                                            <% } else { %>
-                                            <%   } %>
-                                        <% }) %>
-                                        <% if(found){ %>
-                                        <td style="width: 250px;">
-                                            <form action="/seller/profile/evaluateseller/<%=element1.topOwner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">
-                                                <input style="font-size: 14px;margin-bottom: 10px;"  class="form-control" name="rate" id="rate"  title="enter your .">
-
-                                                <button type="submit"  class="btn btn-primary btn-lg btn-block" style="background-color: green;">+1</button>
-                                            </form>
-
-                                        </td>
-                                        <td style="width: 250px;">
-                                            <form action="/seller/profile/evaluateseller/-1/<%=element1.topOwner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value=""  style="margin-top: 10px;" method="post">
-                                                <input style="font-size: 14px;margin-bottom: 10px;"  class="form-control" name="rate1" id="rate1"  title="enter your .">
-
-                                                <button type="submit"  class="btn btn-primary btn-lg btn-block" style="background-color: orangered;">-1</button>
-                                            </form>
-
-                                        </td>
-
-                                        <% }  %>
-                                    <%   } %>
-                                <% }) %>
-
-                            </tr>
+                                            <% }) %>
+                                        </tr>
                                     <% } %>
-
                                 <% } %>
-
                             <% }) %>
-
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         </div><!--/tab-content-->
-
     </div><!--/col-9-->
 </div><!--/row-->
-
 <div class="modal fade" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -465,7 +437,6 @@
                     </div>
                     <div class="form-group">
                         <button type="submit" name="submit_password" class="btn btn-lg">Ok</button>
-
                         <button class="btn btn-lg" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
@@ -485,17 +456,12 @@
                 </form>
             </div>
             <div class="form-group">
-
                 <button type="submit" name="submit_review" class="btn btn-lg">Ok</button>
-
                 <button class="btn btn-lg" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
 <script>
-
 </script>
-
-
 <%- include('../partials/footer'); -%>
