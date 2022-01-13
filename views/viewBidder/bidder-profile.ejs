@@ -72,21 +72,21 @@
             </h1>
             </hr><br>
 
-            <ul class="list-group">
-                <li class="list-group-item text-muted" style="font-size: 15px;">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Bidding
-                    <span class="badge  badge-pill">125</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Items bought
-                    <span class="badge  badge-pill">2</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Reviews
-                    <span class="badge  badge-pill">1</span>
-                </li>
-            </ul>
+<!--            <ul class="list-group">-->
+<!--                <li class="list-group-item text-muted" style="font-size: 15px;">Activity <i class="fa fa-dashboard fa-1x"></i></li>-->
+<!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
+<!--                    Bidding-->
+<!--                    <span class="badge  badge-pill">125</span>-->
+<!--                </li>-->
+<!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
+<!--                    Items bought-->
+<!--                    <span class="badge  badge-pill">2</span>-->
+<!--                </li>-->
+<!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
+<!--                    Reviews-->
+<!--                    <span class="badge  badge-pill">1</span>-->
+<!--                </li>-->
+<!--            </ul>-->
         </div>
         <div class="col-sm-9">
             <div class="tab-content" id="myTabContent">
@@ -199,7 +199,7 @@
                             <tbody>
                             <% user.review.forEach(element=> { %>
                                 <tr>
-                                    <td><a class="info_ava" href="/viewprofile/<%= element.user_id%> "> <img src="images/Adam.png" lazyloading="" style="height: 30px;width: 30px; border-radius: 15px"> </a>
+                                    <td><a class="info_ava" href="/viewprofile/<%= element.user_id%> ">  </a>
                                         <%= element.name_rv%>
                                     </td>
                                     <td>
@@ -401,13 +401,9 @@
                 </div>
             </div>
         </div>
-        <!--/tab-content-->
-
     </div>
-    <!--/col-9-->
 </div>
 
-<!--/row-->
 
 <div class="modal fade" id="request">
     <div class="modal-dialog">
@@ -446,30 +442,6 @@
     </div>
 </div>
 
-<!--                                            <div class="info time">-->
-<!--                                                <div class="countdown">-->
-<!--                                                    <div class="far fa-clock">-->
-<!--                                                        <script>-->
-<!--                                                            var target_date = new Date().getTime() + (1000 * 3600 * 48);-->
-<!--                                                            var days, hours, minutes, seconds;-->
-<!--                                                            var countdown = document.getElementById("hihi1");-->
-<!--                                                            getCountdown();-->
-<!--                                                            setInterval(function () { getCountdown(); }, 1000);-->
-<!--                                                            function getCountdown() {-->
-<!--                                                                var current_date = new Date().getTime();-->
-<!--                                                                var seconds_left = (target_date - current_date) / 1000;-->
-<!--                                                                days = pad(parseInt(seconds_left / 86400));-->
-<!--                                                                seconds_left = seconds_left % 86400;-->
-<!--                                                                hours = pad(parseInt(seconds_left / 3600));-->
-<!--                                                                seconds_left = seconds_left % 3600;-->
-<!--                                                                minutes = pad(parseInt(seconds_left / 60));-->
-<!--                                                                seconds = pad(parseInt(seconds_left % 60));-->
-<!--                                                                countdown.innerHTML = "<span>" + " " + days + "d " + "</span><span>" + hours + "h " + "</span><span>" + minutes + "' " + "</span><span>" + seconds + "s " + "</span>";-->
-<!--                                                            }-->
-<!--                                                            function pad(n) {-->
-<!--                                                                return (n < 10 ? '0' : '') + n;-->
-<!--                                                            }-->
-<!--                                                        </script>-->
 <script>
     function getInfo() {
         document.getElementById("registrationForm").innerHTML = 1

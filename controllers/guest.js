@@ -39,33 +39,27 @@ exports.getHomePage = async (req, res) => {
         fiveClosingProducts: top5ClosingProducts
     })
 }
-exports.getProfile = (req, res) => {
-    // dbModel.Category.find({}, (err, foundList) => {
-    //     if (err)
-    //         console.log(err);
-    //     else {
-    //         res.render('profile', { Category: foundList[0].list });
-    //     }
-    // })
-    dbModel.User.find({_id: req.params.id}, (err, user) => {
-        dbModel.Product.find({}, (err, ProductList) => {
-                if (err)
-                    console.log(err);
-                else {
-                    dbModel.Category.find({}, (err, CategoryList) => {
-                        if (err)
-                            console.log(err);
-                        else {
-                            res.render('profile',  {
-                                User: user,
-                                Product: ProductList,
-                                Category: CategoryList[0].list
-                            });
-                        }
-                    })
 
-                }
+exports.getProfile = (req, res) => {
+    dbModel.User.find({ _id: req.params.id }, (err, user) => {
+        dbModel.Product.find({}, (err, ProductList) => {
+            if (err)
+                console.log(err);
+            else {
+                dbModel.Category.find({}, (err, CategoryList) => {
+                    if (err)
+                        console.log(err);
+                    else {
+                        res.render('profile', {
+                            User: user,
+                            Product: ProductList,
+                            Category: CategoryList[0].list
+                        });
+                    }
+                })
+
             }
+        }
         )
     })
 }
@@ -80,49 +74,6 @@ exports.getListView = async (req, res) => {
     if (total % numberProduct > 0) {
         nPages++;
     }
-    // exports.getListView = (req, res) => {
-    //     dbModel.Product.find({}, (err, ProductList) => {
-    //         if (err)
-    //             console.log(err);
-    //         else {
-    //
-    //             for (let i = 0; i < ProductList.length; i++) {
-    //                 // console.log(ProductList[i].timeEnd);
-    //                 // console.log(ProductList[i]);
-    //
-    //                 if (ProductList[i].timeEnd.getTime() - new Date().getTime() < 0) {
-    //                     let currentProduct = {
-    //                         status: 0,
-    //                     };
-    //                     Product.findOneAndUpdate(
-    //                         { _id: ProductList[i]._id },
-    //                         currentProduct,
-    //                         { new: true },
-    //                         (err, doc) => {
-    //                             if (err) {
-    //                                 console.log(err);
-    //                             }
-    //                         }
-    //                     );
-    //                 }
-    //             }
-    //             dbModel.Category.find({}, (err, CategoryList) => {
-    //                 if (err)
-    //                     console.log(err);
-    //                 else {
-    //
-    //                     res.render('view-product-list', {
-    //                         success: '',
-    //                         message: '',
-    //                         Product: ProductList,
-    //                         Category: CategoryList[0].list
-    //                     });
-    //                 }
-    //             })
-    //
-    //         }
-
-
     var page = parseInt(req.query.page) || 1;
 
     const pageNumbers = [];
@@ -133,8 +84,6 @@ exports.getListView = async (req, res) => {
         })
     }
     var start = (page - 1) * numberProduct;
-    var end = page * numberProduct;
-    // const product = await Product.find({status: 1, productList: {$slice: [start, end]}});
     Product.find({ status: 1 })
         .skip(start)
         .limit(numberProduct)
@@ -151,52 +100,8 @@ exports.getListView = async (req, res) => {
         .catch(err => {
             console.log("Lỗi phân trang");
         })
-    // console.log(Object.keys(product).length)
-    // console.log(product)
-    // console.log(product[1].name)
-
-    // dbModel.Product.find({}, (err, ProductList) => {
-    //     if (err)
-    //         console.log(err);
-    //     else {
-    //
-    //         for (let i = 0; i < ProductList.length; i++) {
-    //             // console.log(ProductList[i].timeEnd);
-    //             // console.log(ProductList[i]);
-    //
-    //             if (ProductList[i].timeEnd.getTime() - new Date().getTime() < 0) {
-    //                 let currentProduct = {
-    //                     status: 0,
-    //                 };
-    //                 Product.findOneAndUpdate(
-    //                     { _id: ProductList[i]._id },
-    //                     currentProduct,
-    //                     { new: true },
-    //                     (err, doc) => {
-    //                         if (err) {
-    //                             console.log(err);
-    //                         }
-    //                     }
-    //                 );
-    //             }
-    //         }
-    //         dbModel.Category.find({}, (err, CategoryList) => {
-    //             if (err)
-    //                 console.log(err);
-    //             else {
-    //
-    //                 res.render('view-product-list', {
-    //                     success: '',
-    //                     message: '',
-    //                     Product: ProductList,
-    //                     Category: CategoryList[0].list
-    //                 });
-    //             }
-    //         })
-    //
-    //     }
-    // }
-    // )
+    // var end = page * numberProduct;
+    // const product = await Product.find({status: 1, productList: {$slice: [start, end]}});
 }
 
 exports.postListView = async (req, res) => {

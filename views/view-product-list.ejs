@@ -1,7 +1,6 @@
 <%- include('partials/header'); -%>
 <link rel="stylesheet" href="/css/view-product-list.css">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script defer src="/js/view-product-list.js"></script>
 
 </head>
 
@@ -133,9 +132,6 @@
         <% }) %>
         <li id="next_page" onclick="next_page()" class="page-item"><a class="page-link">Next</a></li>
         <script>
-            console.log("asdasd" + document.getElementById("current_page").value);
-        </script>
-        <script>
             document.getElementById("pre_page").onclick = function () {
                 var currentPage = parseInt(document.getElementById("current_page").value);
                 if (currentPage === 1) {
@@ -151,6 +147,5 @@
             }
         </script>
     </ul>
-
 </section>
 <%- include('partials/footer'); -%>
