@@ -9,8 +9,9 @@ const username = 'hieule';
 const swal = require('sweetalert');
 const helper = require('../helpers/helper');
 exports.getPostProductPage = async (req, res) => {
-    const categoryList = await Category.find({});
-    res.render('viewSeller/post-product', { success: '',Category: categoryList[0].list });
+            const categoryList = await Category.find({});
+            res.render('viewSeller/post-product', {success: '', Category: categoryList[0].list});
+
 }
 exports.getProductselling = async (req,res) =>{
     dbModel.User.find({}, (err, user) => {

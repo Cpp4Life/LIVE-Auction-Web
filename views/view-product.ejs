@@ -253,6 +253,8 @@
                                                                 closeModal: false,
                                                             },
                                                         }).then((value) => {
+
+
                                                             var price = parseInt(value);
                                                             if (isNaN(price)) {
                                                                 swal("Vui lòng chỉ nhập chữ số. Xin hãy thực hiện lại thao tác.");
@@ -263,6 +265,7 @@
                                                                 swal("Vui lòng nhập cao hơn giá hiện tại. Xin hãy thực hiện lại thao tác.");
                                                                 return;
                                                             }
+
                                                             location.replace("/view-product-list/view-product/auction/<%= element.id%>+" + price);
                                                         });
                                                     }
