@@ -103,7 +103,7 @@ exports.postProduct = async (req, res) => {
                     brand: req.body.brand,
                     subBrand: req.body.subBrand,
                     owner: req.user,
-                    timeStart: new Date().toLocaleDateString(),
+                    timeStart: new Date(),
                     timeEnd: new Date(req.body.datetime).toLocaleString(),
                     description: req.body.description,
                     topPrice: 0,
