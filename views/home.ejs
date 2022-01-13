@@ -97,6 +97,23 @@
         </section>
 
         <!-- Products -->
+        <script>
+            // var formatter;
+            var currentPrice;
+            var buyPrice;
+            var startTime;
+            function convertTime(str) {
+                var date = str.split(" ");
+                return [date[3], [date[4]], date[5]].join(" ");
+            }
+            function formatMoney(money) {
+                const formatter = new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                });
+                return formatter.format(money);
+            }
+        </script>
         <section class="bg-white position-relative">
             <div id="testimonial-card" class="card text-center">
                 <div class="card-header bg-light">
@@ -288,91 +305,43 @@
                 </div>
                 <div class="card-body">
                     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5">
-                        <div class="col mb-3">
-                            <div class="card">
-                                <img src="images/Adam.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Adam</h5>
-                                    <p class="card-text">Giá hiện tại: $</p>
-                                    <p class="card-text">Người đặt cao nhất: admin</p>
-                                    <p class="card-text">Giá mua ngay: $</p>
-                                    <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                    <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
-                                    <p class="card-text">Số lượt ra giá: 10</p>
-                                    <p class="more-info">
-                                        <a href="#" class="text-decoration-none">Read more...</a>
-                                    </p>
+                        <% fiveHighestPrice.forEach(element=> { %>
+                            <div class="col mb-3">
+                                <div class="card h-100">
+                                    <img src="images/<%= element.id %>/0.jpg" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <%= element.name %>
+                                        </h5>
+                                        <p class="card-text" id="currentPrice<%= element.name %>">Giá hiện tại: <%= element.currentPrice %>
+                                        </p>
+                                        <p class="card-text">Người đặt cao nhất: <span class="text-dark font-weight-bold">admin</span>
+                                        </p>
+                                        <p class="card-text" id="buyPrice<%=element.name %>">Giá mua ngay: <%= element.boughtPrice %>
+                                        </p>
+                                        <p class="card-text" id="time<%= element.name %>">Ngày đăng: <%= element.timeStart %>
+                                        </p>
+                                        <p class="card-text">Số lượt ra giá: <span class="text-dark font-weight-bold">
+                                                <%= element.bidders.length %>
+                                            </span>
+                                        </p>
+                                        <p class="more-info">
+                                            <a href="/view-product-list/view-product/<%= element.id %>" class="text-decoration-none">Read more...</a>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col mb-3">
-                            <div class="card">
-                                <img src="images/logo-clock/image1.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Rolex</h5>
-                                    <p class="card-text">Giá hiện tại: $</p>
-                                    <p class="card-text">Người đặt cao nhất: admin</p>
-                                    <p class="card-text">Giá mua ngay: $</p>
-                                    <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                    <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
-                                    <p class="card-text">Số lượt ra giá: 10</p>
-                                    <p class="more-info">
-                                        <a href="#" class="text-decoration-none">Read more...</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-3">
-                            <div class="card">
-                                <img src="images/logo-clock/image2.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Rolex</h5>
-                                    <p class="card-text">Giá hiện tại: $</p>
-                                    <p class="card-text">Người đặt cao nhất: admin</p>
-                                    <p class="card-text">Giá mua ngay: $</p>
-                                    <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                    <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
-                                    <p class="card-text">Số lượt ra giá: 10</p>
-                                    <p class="more-info">
-                                        <a href="#" class="text-decoration-none">Read more...</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-3">
-                            <div class="card">
-                                <img src="images/logo-clock/image3.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Rolex</h5>
-                                    <p class="card-text">Giá hiện tại: $</p>
-                                    <p class="card-text">Người đặt cao nhất: admin</p>
-                                    <p class="card-text">Giá mua ngay: $</p>
-                                    <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                    <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
-                                    <p class="card-text">Số lượt ra giá: 10</p>
-                                    <p class="more-info">
-                                        <a href="#" class="text-decoration-none">Read more...</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-3">
-                            <div class="card">
-                                <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Rolex</h5>
-                                    <p class="card-text">Giá hiện tại: $</p>
-                                    <p class="card-text">Người đặt cao nhất: admin</p>
-                                    <p class="card-text">Giá mua ngay: $</p>
-                                    <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                    <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
-                                    <p class="card-text">Số lượt ra giá: 10</p>
-                                    <p class="more-info">
-                                        <a href="#" class="text-decoration-none">Read more...</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                            <script>
+                                currentPrice = document.getElementById("currentPrice<%=element.name%>").innerHTML;
+                                document.getElementById("currentPrice<%=element.name%>").innerHTML = 'Giá hiện tại: <span class="text-dark font-weight-bold">' + formatMoney(currentPrice.split(" ")[3]) + '</span>';
+
+                                buyPrice = document.getElementById("buyPrice<%=element.name%>").innerHTML;
+                                document.getElementById("buyPrice<%=element.name%>").innerHTML = 'Giá mua ngay: <span class="text-dark font-weight-bold">' + formatMoney(buyPrice.split(" ")[3]) + '</span>';
+
+                                startTime = document.getElementById("time<%=element.name%>").innerHTML;
+                                document.getElementById("time<%=element.name%>").innerHTML = 'Ngày đăng: <span class="text-dark font-weight-bold">' + convertTime(startTime) + '</span>';
+                            </script>
+                            <% }) %>
                     </div>
                 </div>
             </div>
