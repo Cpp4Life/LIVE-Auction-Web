@@ -375,8 +375,8 @@ exports.getfavorites = async (req, res) => {
 
             let currentproduct = {
                 name: product[0].name,
-                timest: product[0].timeStart,
-                timeend:product[0].timeEnd,
+                timest: product[0].timeStart.toLocaleString(),
+                timeend:product[0].timeEnd.toLocaleString(),
                 current: product[0].currentPrice
             };
 

@@ -26,4 +26,7 @@ router.post('/seller/profile/evaluateseller/:id', isAuth, sellerController.poste
 router.post('/seller/profile/evaluateseller/-1/:id', isAuth, sellerController.postedownvotebidder);
 router.post('/view-product-list/view-product/editinfo/:id', isAuth, sellerController.posteditinfomation);
 
+router.post('/view-product-list/view-product/kickbidder/:id', isAuth, sellerController.postkickbidder);
+
+
 module.exports = router;

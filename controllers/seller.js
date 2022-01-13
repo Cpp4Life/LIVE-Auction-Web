@@ -433,3 +433,160 @@ exports.postevaluatebidder = async (req, res) => {
     res.redirect("/seller/profile")
 
 };
+
+// chu3a hoan thành
+exports.postkickbidder = async (req, res) => {
+    const errors = [];
+    var arr = req.params.id.split("+")
+
+
+    Product.find({_id: arr[1]}, async function (err, product, done) {
+            if (err) {
+                console.log(err)
+            }
+            if (product) {
+                User.find({}, async function (err, user, done) {
+                        if (err) {
+                            console.log(err)
+                        }
+                        if (user) {
+                            if(product[0].bidders.length === 1){
+
+
+                                let newproduct = {
+                                    currentPrice: product[0].originalBidPrice,
+                                    topOwner :  {
+
+
+                                    }
+                                };
+                                Product.findOneAndUpdate(
+                                    {_id:arr[1]},
+                                    newproduct,
+                                    {new: true},
+                                    (err, doc) => {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                    }
+                                );
+                                res.redirect("/seller/profile")
+                            }
+                            if(product[0].bidders.length > 1){
+                                var arr1= []
+                                var check= product[0].bidders[product[0].bidders.length -1].user.id
+                                arr1.push(product[0].bidders[product[0].bidders.length -1].user.id)
+                                for (let i = product[0].bidders.length -2 ; i > 0; i--) {
+                                    if (!(product[0].bidders[i].user._id.equals( check))) {
+                                        arr1.push(product[0].bidders[i].user.id)
+                                        check=product[0].bidders[i].user.id
+                                    }
+                                }
+
+                                var j=0;
+                                for (let i = 0 ; i < arr1.length; i++) {
+                                    if ((arr1[i] === arr[0])) {
+                                        j=i;
+                                        break;
+                                    }
+                                }
+                                console.log(arr1[j])
+                                if(j==0){
+                                    for (let i = product[0].bidders.length -1 ; i > 0; i--) {
+                                        if (!(product[0].bidders[i].user._id.equals( arr[0]))) {
+                                            let newproduct = {
+
+                                                topOwner :   product[0].bidders[i].user,
+                                                topPrice: product[0].bidders[i].user.bidPrice,
+                                                currentPrice: product[0].bidders[i].user.bidPrice,
+
+                                            };
+                                            Product.findOneAndUpdate(
+                                                {_id:arr[1]},
+                                                newproduct,
+                                                {new: true},
+                                                (err, doc) => {
+                                                    if (err) {
+                                                        console.log(err);
+                                                    }
+                                                }
+                                            );
+                                            res.redirect("/seller/profile")
+                                            break;
+                                        }
+                                     }
+
+                                }if(j >0 && j<arr1.length ){
+                                    for (let i = product[0].bidders.length -1 ; i > 0; i--) {
+                                            if(product[0].bidders[i].user.id === arr1[j +1]  ){
+                                                let newproduct = {
+
+                                                    topOwner :   product[0].bidders[i].user,
+                                                    topPrice: product[0].bidders[i].user.bidPrice,
+                                                    currentPrice: product[0].bidders[i].user.bidPrice,
+
+                                                };
+                                                Product.findOneAndUpdate(
+                                                    {_id:arr[1]},
+                                                    newproduct,
+                                                    {new: true},
+                                                    (err, doc) => {
+                                                        if (err) {
+                                                            console.log(err);
+                                                        }
+                                                    }
+                                                );
+                                                res.redirect("/seller/profile")
+                                                break;
+                                            }
+                                    }
+
+                                } if(j == arr1.length -1 ){
+
+                                    let newproduct = {
+
+                                        topOwner :  {
+
+
+                                        }
+                                    };
+                                    Product.findOneAndUpdate(
+                                        {_id:arr[1]},
+                                        newproduct,
+                                        {new: true},
+                                        (err, doc) => {
+                                            if (err) {
+                                                console.log(err);
+                                            }
+                                        }
+                                    );
+                                    res.redirect("/seller/profile")
+
+                                }
+
+                            }
+                        }
+                    }
+                )
+
+                // var edit = product[0].description + req.body.description
+                // let newproduct = {
+                //     description: edit,
+                // };
+                // Product.findOneAndUpdate(
+                //     {_id: req.params.id},
+                //     newproduct,
+                //     {new: true},
+                //     (err, doc) => {
+                //         if (err) {
+                //             console.log(err);
+                //         }
+                //     }
+                // );
+
+            }
+        }
+    )
+
+
+};

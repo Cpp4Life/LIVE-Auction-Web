@@ -40,12 +40,33 @@ exports.getHomePage = async (req, res) => {
     })
 }
 exports.getProfile = (req, res) => {
-    dbModel.Category.find({}, (err, foundList) => {
-        if (err)
-            console.log(err);
-        else {
-            res.render('profile', { Category: foundList[0].list });
-        }
+    // dbModel.Category.find({}, (err, foundList) => {
+    //     if (err)
+    //         console.log(err);
+    //     else {
+    //         res.render('profile', { Category: foundList[0].list });
+    //     }
+    // })
+    dbModel.User.find({_id: req.params.id}, (err, user) => {
+        dbModel.Product.find({}, (err, ProductList) => {
+                if (err)
+                    console.log(err);
+                else {
+                    dbModel.Category.find({}, (err, CategoryList) => {
+                        if (err)
+                            console.log(err);
+                        else {
+                            res.render('profile',  {
+                                User: user,
+                                Product: ProductList,
+                                Category: CategoryList[0].list
+                            });
+                        }
+                    })
+
+                }
+            }
+        )
     })
 }
 
