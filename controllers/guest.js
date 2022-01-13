@@ -14,6 +14,15 @@ exports.getHomePage = (req, res) => {
         }
     })
 }
+exports.getProfile = (req, res) => {
+    dbModel.Category.find({}, (err, foundList) => {
+        if (err)
+            console.log(err);
+        else {
+            res.render('profile', { Category: foundList[0].list });
+        }
+    })
+}
 
 exports.getListView = async (req, res) => {
     const CategoryList = await Category.find({});
