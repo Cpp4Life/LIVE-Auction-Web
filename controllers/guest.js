@@ -22,6 +22,7 @@ exports.getHomePage = async (req, res) => {
                     "subBrand": 1,
                     "topPrice": 1,
                     "timeStart": 1,
+                    "timeEnd": 1,
                     "bidders": 1,
                     "length": { "$size": "$bidders" }
                 }
@@ -30,10 +31,12 @@ exports.getHomePage = async (req, res) => {
             { "$limit": 5 }
         ],
     );
+    const top5ClosingProducts = await Product.find({ status: 1 }).sort('timeEnd').limit(5);
     res.render('home', {
         Category: categoryList[0].list,
         fiveHighestBidding: top5HighestBidding,
-        fiveHighestPrice: top5HighestPrice
+        fiveHighestPrice: top5HighestPrice,
+        fiveClosingProducts: top5ClosingProducts
     })
 }
 exports.getProfile = (req, res) => {

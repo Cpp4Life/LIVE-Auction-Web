@@ -102,9 +102,14 @@
             var currentPrice;
             var buyPrice;
             var startTime;
-            function convertTime(str) {
+            var endTime;
+            function convertStartTime(str) {
                 var date = str.split(" ");
-                return [date[3], [date[4]], date[5]].join(" ");
+                return [date[2], date[3], [date[4]], date[5]].join(" ");
+            }
+            function convertEndTime(str) {
+                var date = str.split(" ");
+                return [date[3], [date[4]], date[5], date[6]].join(" ");
             }
             function formatMoney(money) {
                 const formatter = new Intl.NumberFormat('vi-VN', {
@@ -121,91 +126,47 @@
                 </div>
                 <div class="card-body">
                     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5">
-                        <div class="col mb-3">
-                            <div class="card">
-                                <img src="images/Adam.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Adam</h5>
-                                    <p class="card-text">Giá hiện tại: $</p>
-                                    <p class="card-text">Người đặt cao nhất: admin</p>
-                                    <p class="card-text">Giá mua ngay: $</p>
-                                    <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                    <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
-                                    <p class="card-text">Số lượt ra giá: 10</p>
-                                    <p class="more-info">
-                                        <a href="#" class="text-decoration-none">Read more...</a>
-                                    </p>
+                        <% fiveClosingProducts.forEach(element=> { %>
+                            <div class="col mb-3">
+                                <div class="card h-100">
+                                    <img src="images/<%= element._id %>/0.jpg" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <%= element.name %>
+                                        </h5>
+                                        <p class="card-text" id="cp-currentPrice<%=element.name%>">Giá hiện tại: <%= element.currentPrice %>
+                                        </p>
+                                        <p class="card-text" id="cp-buyPrice<%=element.name %>">Giá mua ngay: <%= element.boughtPrice %>
+                                        </p>
+                                        <p class="card-text" id="cp-startTime<%= element.name %>">Ngày đăng: <%= element.timeStart %>
+                                        </p>
+                                        <p class="card-text" id="cp-endTime<%= element.name %>">Ngày kết thúc: <%= element.timeEnd %>
+                                        </p>
+                                        <p class="card-text">Số lượt ra giá: <span class="text-dark font-weight-bold">
+                                                <%= element.bidders.length %>
+                                            </span></p>
+                                    </div>
+                                    <div class="card-footer" style="background-color: transparent; border-top: none;">
+                                        <p class="more-info">
+                                            <a href="/view-product-list/view-product/<%= element._id %>" class="text-decoration-none">Read more...</a>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col mb-3">
-                            <div class="card">
-                                <img src="images/logo-clock/image1.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Rolex</h5>
-                                    <p class="card-text">Giá hiện tại: $</p>
-                                    <p class="card-text">Người đặt cao nhất: admin</p>
-                                    <p class="card-text">Giá mua ngay: $</p>
-                                    <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                    <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
-                                    <p class="card-text">Số lượt ra giá: 10</p>
-                                    <p class="more-info">
-                                        <a href="#" class="text-decoration-none">Read more...</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-3">
-                            <div class="card">
-                                <img src="images/logo-clock/image2.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Rolex</h5>
-                                    <p class="card-text">Giá hiện tại: $</p>
-                                    <p class="card-text">Người đặt cao nhất: admin</p>
-                                    <p class="card-text">Giá mua ngay: $</p>
-                                    <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                    <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
-                                    <p class="card-text">Số lượt ra giá: 10</p>
-                                    <p class="more-info">
-                                        <a href="#" class="text-decoration-none">Read more...</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-3">
-                            <div class="card">
-                                <img src="images/logo-clock/image3.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Rolex</h5>
-                                    <p class="card-text">Giá hiện tại: $</p>
-                                    <p class="card-text">Người đặt cao nhất: admin</p>
-                                    <p class="card-text">Giá mua ngay: $</p>
-                                    <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                    <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
-                                    <p class="card-text">Số lượt ra giá: 10</p>
-                                    <p class="more-info">
-                                        <a href="#" class="text-decoration-none">Read more...</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col mb-3">
-                            <div class="card">
-                                <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <h5 class="card-title">Rolex</h5>
-                                    <p class="card-text">Giá hiện tại: $</p>
-                                    <p class="card-text">Người đặt cao nhất: admin</p>
-                                    <p class="card-text">Giá mua ngay: $</p>
-                                    <p class="card-text">Ngày đăng: 1/1/2022</p>
-                                    <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
-                                    <p class="card-text">Số lượt ra giá: 10</p>
-                                    <p class="more-info">
-                                        <a href="#" class="text-decoration-none">Read more...</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                            <script>
+                                currentPrice = document.getElementById("cp-currentPrice<%=element.name%>").innerHTML;
+                                document.getElementById("cp-currentPrice<%=element.name%>").innerHTML = 'Giá hiện tại: <span class="text-dark font-weight-bold">' + formatMoney(currentPrice.split(" ")[3]) + '</span>';
+
+                                buyPrice = document.getElementById("cp-buyPrice<%=element.name%>").innerHTML;
+                                document.getElementById("cp-buyPrice<%=element.name%>").innerHTML = 'Giá mua ngay: <span class="text-dark font-weight-bold">' + formatMoney(buyPrice.split(" ")[3]) + '</span>';
+
+                                startTime = document.getElementById("cp-startTime<%=element.name%>").innerHTML;
+                                document.getElementById("cp-startTime<%=element.name%>").innerHTML = 'Ngày đăng: <span class="text-dark font-weight-bold">' + convertStartTime(startTime) + '</span>';
+
+                                endTime = document.getElementById("cp-endTime<%=element.name%>").innerHTML;
+                                document.getElementById("cp-endTime<%=element.name%>").innerHTML = 'Ngày kết thúc: <span class="text-dark font-weight-bold">' + convertEndTime(endTime) + '</span>';
+                            </script>
+                            <% }) %>
                     </div>
                 </div>
                 <div class="card-header bg-light">
@@ -217,7 +178,7 @@
                             <div class="col mb-3">
                                 <div class="card h-100">
                                     <img src="images/<%= element._id %>/0.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body">
+                                    <div class="card-body h-100">
                                         <h5 class="card-title">
                                             <%= element.name %>
                                         </h5>
@@ -227,9 +188,13 @@
                                         </p>
                                         <p class="card-text" id="hb-time<%= element.name %>">Ngày đăng: <%= element.timeStart %>
                                         </p>
+                                        <p class="card-text" id="hb-endTime<%= element.name %>">Ngày kết thúc: <%= element.timeEnd %>
+                                        </p>
                                         <p class="card-text">Số lượt ra giá: <span class="text-dark font-weight-bold">
                                                 <%= element.bidders.length %>
                                             </span></p>
+                                    </div>
+                                    <div class="card-footer" style="background-color: transparent; border-top: none;">
                                         <p class="more-info">
                                             <a href="/view-product-list/view-product/<%= element._id %>" class="text-decoration-none">Read more...</a>
                                         </p>
@@ -238,14 +203,16 @@
                             </div>
                             <script>
                                 currentPrice = document.getElementById("hb-currentPrice<%=element.name%>").innerHTML;
-                                console.log(currentPrice);
                                 document.getElementById("hb-currentPrice<%=element.name%>").innerHTML = 'Giá hiện tại: <span class="text-dark font-weight-bold">' + formatMoney(currentPrice.split(" ")[3]) + '</span>';
 
                                 buyPrice = document.getElementById("hb-buyPrice<%=element.name%>").innerHTML;
                                 document.getElementById("hb-buyPrice<%=element.name%>").innerHTML = 'Giá mua ngay: <span class="text-dark font-weight-bold">' + formatMoney(buyPrice.split(" ")[3]) + '</span>';
 
                                 startTime = document.getElementById("hb-time<%=element.name%>").innerHTML;
-                                document.getElementById("hb-time<%=element.name%>").innerHTML = 'Ngày đăng: <span class="text-dark font-weight-bold">' + convertTime(startTime) + '</span>';
+                                document.getElementById("hb-time<%=element.name%>").innerHTML = 'Ngày đăng: <span class="text-dark font-weight-bold">' + convertStartTime(startTime) + '</span>';
+
+                                endTime = document.getElementById("hb-endTime<%=element.name%>").innerHTML;
+                                document.getElementById("hb-endTime<%=element.name%>").innerHTML = 'Ngày kết thúc: <span class="text-dark font-weight-bold">' + convertEndTime(endTime) + '</span>';
                             </script>
                             <% }) %>
                     </div>
@@ -269,10 +236,14 @@
                                         </p>
                                         <p class="card-text" id="hp-time<%= element.name %>">Ngày đăng: <%= element.timeStart %>
                                         </p>
+                                        <p class="card-text" id="hp-endTime<%= element.name %>">Ngày kết thúc: <%= element.timeEnd %>
+                                        </p>
                                         <p class="card-text">Số lượt ra giá: <span class="text-dark font-weight-bold">
                                                 <%= element.bidders.length %>
                                             </span>
                                         </p>
+                                    </div>
+                                    <div class="card-footer" style="background-color: transparent; border-top: none;">
                                         <p class="more-info">
                                             <a href="/view-product-list/view-product/<%= element.id %>" class="text-decoration-none">Read more...</a>
                                         </p>
@@ -287,7 +258,10 @@
                                 document.getElementById("hp-buyPrice<%=element.name%>").innerHTML = 'Giá mua ngay: <span class="text-dark font-weight-bold">' + formatMoney(buyPrice.split(" ")[3]) + '</span>';
 
                                 startTime = document.getElementById("hp-time<%=element.name%>").innerHTML;
-                                document.getElementById("hp-time<%=element.name%>").innerHTML = 'Ngày đăng: <span class="text-dark font-weight-bold">' + convertTime(startTime) + '</span>';
+                                document.getElementById("hp-time<%=element.name%>").innerHTML = 'Ngày đăng: <span class="text-dark font-weight-bold">' + convertStartTime(startTime) + '</span>';
+
+                                endTime = document.getElementById("hp-endTime<%=element.name%>").innerHTML;
+                                document.getElementById("hp-endTime<%=element.name%>").innerHTML = 'Ngày kết thúc: <span class="text-dark font-weight-bold">' + convertEndTime(endTime) + '</span>';
                             </script>
                             <% }) %>
                     </div>
