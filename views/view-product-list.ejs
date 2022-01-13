@@ -1,155 +1,158 @@
 <%- include('partials/header'); -%>
-<link rel="stylesheet" href="/css/view-product-list.css">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script defer src="/js/view-product-list.js"></script>
+    <link rel="stylesheet" href="/css/view-product-list.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script defer src="/js/view-product-list.js"></script>
 
-</head>
+    </head>
 
-<body>
-<section class="colored-section" style="padding:0 15%;">
-    <%- include('partials/navbar'); -%>
-</section>
+    <body>
+        <section class="colored-section" style="padding:0 15%;">
+            <%- include('partials/navbar'); -%>
+        </section>
 
-<section class="bg-white" id="products">
-    <div class="container-fluid">
-        <div>
-            <h1 class="display-4 font-weight-bold big-heading">Các sản phẩm của <span class="text-warning"
-                                                                                      style="font-family: 'MonteCarlo', cursive; font-size: 4.5rem; font-weight: bold;"> Auct Boi</span>
-            </h1>
-        </div>
-        <form action="/view-product-list" method="POST">
-            <div class="row justify-content-center" style="padding-bottom: 3%;">
-                <div class="col-md-8">
-                    <div class="form">
-                        <i class="fas fa-search"></i>
-                        <input type="text" name="search" class="form-control form-input" placeholder="Search anything...">
-                    </div>
+        <section class="bg-white" id="products">
+            <div class="container-fluid">
+                <div>
+                    <h1 class="display-4 font-weight-bold big-heading">Các sản phẩm của <span class="text-warning" style="font-family: 'MonteCarlo', cursive; font-size: 4.5rem; font-weight: bold;"> Auct Boi</span>
+                    </h1>
                 </div>
-            </div>
-        </form>
-        <div class="row shadow rounded">
-            <% if(message !== '' ) { %>
-            <script>
-                swal({
-                    title: `<%= message %>`,
-                    text: "Sản phẩm đã hết thời gian đấu giá",
-                    icon: "error",
-                    button: "OK",
-                });
-            </script>
-            <% } %>
-            <% if(success !== '' ) { %>
-            <script>
-                swal({
-                    title: `<%= success %>`,
-                    text: "áda",
-                    icon: "success",
-                    button: "OK",
-                });
-                var formatter;
-                var price;
-            </script>
-            <% } %>
-            <div class="col-lg-2 py-4">
-                <h2>Lọc sản phẩm</h2>
-                <div class="form-check text-left">
-                    <input class="form-check-input" type="radio" name="ascendingPriceRadio" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        Default radio
-                    </label>
-                </div>
-                <div class="form-check text-left">
-                    <input class="form-check-input" type="radio" name="ascendingPriceRadio" id="flexRadioDefault2"
-                           checked>
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        Default checked radio
-                    </label>
-                </div>
-            </div>
-            <div class="col-lg-10 py-4">
-                <div class="row">
-                    <% if (Product.length === 0) { %>
-                        <div class="mx-auto">
-                            <h1 style="margin: 0;">Không có sản phẩm nào!</h1>
+                <form action="/view-product-list" method="POST">
+                    <div class="row justify-content-center" style="padding-bottom: 3%;">
+                        <div class="col-md-8">
+                            <div class="form">
+                                <i class="fas fa-search"></i>
+                                <input type="text" name="search" class="form-control form-input" placeholder="Search anything...">
+                            </div>
                         </div>
-                    <% } else { %>
-                        <% Product.forEach(element=> { %>
-                            <% if (element.status) { %>
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="card h-100">
-                                        <img class="card-img-top" src="/public/images/<%= element.id %>/0.jpg"
-                                             width="100" height="300">
-                                        <div class="card-body">
-                                            <h4 class="card-title">
-                                                <%= element.name %>
-                                            </h4>
-                                            <div class="text-left">
-                                                <span>Giá hiện tại:</span>
-                                                <span class="card-text price-tag text-danger" style="font-size: 1.5rem;"
-                                                      id="<%= element.name %>">
+                    </div>
+                </form>
+                <div class="row shadow rounded">
+                    <% if(message !=='' ) { %>
+                        <script>
+                            swal({
+                                title: `<%= message %>`,
+                                text: "Sản phẩm đã hết thời gian đấu giá",
+                                icon: "error",
+                                button: "OK",
+                            });
+                        </script>
+                        <% } %>
+                            <% if(success !=='' ) { %>
+                                <script>
+                                    swal({
+                                        title: `<%= success %>`,
+                                        text: "áda",
+                                        icon: "success",
+                                        button: "OK",
+                                    });
+                                    var formatter;
+                                    var price;
+                                </script>
+                                <% } %>
+                                    <div class="col-lg-2 py-4">
+                                        <h2>Lọc sản phẩm</h2>
+                                        <form action="/view-product-list" method="POST">
+                                            <div class="form-check text-left" style="margin: 25px;">
+                                                <input class="form-check-input" type="checkbox" name="sort" value="ascendingPrice" id="flexCheckDefault" onChange="this.form.submit()">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Giá tăng dần
+                                                </label>
+                                            </div>
+                                        </form>
+                                        <form action="/view-product-list" method="POST">
+                                            <div class="form-check text-left" style="margin: 25px;">
+                                                <input class="form-check-input" type="checkbox" name="sort" value="descendingPrice" id="flexCheckChecked" onChange="this.form.submit()">
+                                                <label class="form-check-label" for="flexCheckChecked">
+                                                    Giá giảm dần
+                                                </label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-10 py-4">
+                                        <div class="row">
+                                            <% if (Product.length===0) { %>
+                                                <div class="mx-auto">
+                                                    <h1 style="margin: 0;">Không có sản phẩm nào!</h1>
+                                                </div>
+                                                <% } else { %>
+                                                    <% Product.forEach(element=> { %>
+                                                        <% if (element.status) { %>
+                                                            <div class="col-lg-4 col-md-6 mb-4">
+                                                                <div class="card h-100">
+                                                                    <img class="card-img-top" src="/public/images/<%= element.id %>/0.jpg" width="100" height="300">
+                                                                    <div class="card-body">
+                                                                        <h4 class="card-title">
+                                                                            <%= element.name %>
+                                                                        </h4>
+                                                                        <div class="text-left">
+                                                                            <span>Giá hiện tại:</span>
+                                                                            <span class="card-text price-tag text-danger" style="font-size: 1.5rem;" id="<%= element.name %>">
                                                                                 <%= element.currentPrice %>
                                                                             </span>
-                                            </div>
-                                            <script>
-                                                formatter = new Intl.NumberFormat('vi-VN', {
-                                                    style: 'currency',
-                                                    currency: 'VND'
-                                                });
-                                                price = Number((document.getElementById('<%= element.name %>').innerHTML).trim());
-                                                document.getElementById('<%= element.name %>').innerHTML = (formatter.format(price)).toString();
-                                            </script>
-                                        </div>
+                                                                        </div>
+                                                                        <script>
+                                                                            formatter = new Intl.NumberFormat('vi-VN', {
+                                                                                style: 'currency',
+                                                                                currency: 'VND'
+                                                                            });
+                                                                            price = Number((document.getElementById('<%= element.name %>').innerHTML).trim());
+                                                                            document.getElementById('<%= element.name %>').innerHTML = (formatter.format(price)).toString();
+                                                                        </script>
+                                                                    </div>
 
-                                        <div class="card-footer text-muted d-flex justify-content-center">
-                                            <a class="btn btn-md btn-primary btn-block"
-                                               href="/view-product-list/view-product/<%= element.id %>" role="button">
-                                                <i class="fa fa-eye" aria-hidden="true"></i>
-                                                Detail
-                                            </a>
+                                                                    <div class="card-footer text-muted d-flex justify-content-center">
+                                                                        <a class="btn btn-md btn-primary btn-block" href="/view-product-list/view-product/<%= element.id %>" role="button">
+                                                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                                                            Detail
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <% } %>
+                                                                <% }) %>
+                                                                    <% } %>
                                         </div>
                                     </div>
-                                </div>
-                            <% } %>
-                        <% }) %>
-                    <% } %>
                 </div>
             </div>
-        </div>
-    </div>
-    <ul class="pagination d-flex justify-content-center">
-        <li id="pre_page" class="page-item"><a class="page-link">Previous</a></li>
-        <% pageNumbers.forEach(element=> { %>
-        <% if(element.isCurrent){ %>
-        <li id="current_page" class="page-item active">
-            <a class="page-link" href="javascript:;"><%= element.value %></a>
-        </li>
-        <% } else{ %>
-        <li class="page-item">
-            <a class="page-link" href="?page=<%= element.value %>"><%= element.value %></a>
-        </li>
-        <% } %>
+            <ul class="pagination d-flex justify-content-center">
+                <li id="pre_page" class="page-item"><a class="page-link">Previous</a></li>
+                <% pageNumbers.forEach(element=> { %>
+                    <% if(element.isCurrent){ %>
+                        <li id="current_page" class="page-item active">
+                            <a class="page-link" href="javascript:;">
+                                <%= element.value %>
+                            </a>
+                        </li>
+                        <% } else{ %>
+                            <li class="page-item">
+                                <a class="page-link" href="?page=<%= element.value %>">
+                                    <%= element.value %>
+                                </a>
+                            </li>
+                            <% } %>
 
-        <% }) %>
-        <li id="next_page" onclick="next_page()" class="page-item"><a class="page-link">Next</a></li>
-        <script>
-            console.log("asdasd" + document.getElementById("current_page").value);
-        </script>
-        <script>
-            document.getElementById("pre_page").onclick = function (){
-                var currentPage = parseInt(document.getElementById("current_page").value);
-                if(currentPage === 1){
-                    window.location.href = "?page=" + currentPage;
-                }else{
-                    window.location.href = "?page=" + Math.floor(currentPage);
-                }
-            }
-            function next_page(){
-                var currentPage1 = document.getElementById("current_page").value + 1;
-                console.log("len: " + currentPage1);
-                window.location.href = "?page=" + currentPage1;
-            }
-        </script>
-    </ul>
+                                <% }) %>
+                                    <li id="next_page" onclick="next_page()" class="page-item"><a class="page-link">Next</a></li>
+                                    <script>
+                                        console.log("asdasd" + document.getElementById("current_page").value);
+                                    </script>
+                                    <script>
+                                        document.getElementById("pre_page").onclick = function () {
+                                            var currentPage = parseInt(document.getElementById("current_page").value);
+                                            if (currentPage === 1) {
+                                                window.location.href = "?page=" + currentPage;
+                                            } else {
+                                                window.location.href = "?page=" + Math.floor(currentPage);
+                                            }
+                                        }
+                                        function next_page() {
+                                            var currentPage1 = document.getElementById("current_page").value + 1;
+                                            console.log("len: " + currentPage1);
+                                            window.location.href = "?page=" + currentPage1;
+                                        }
+                                    </script>
+            </ul>
 
-</section>
-<%- include('partials/footer'); -%>
+        </section>
+        <%- include('partials/footer'); -%>
