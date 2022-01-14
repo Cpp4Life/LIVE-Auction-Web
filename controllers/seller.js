@@ -480,14 +480,23 @@ exports.postkickbidder = async (req, res) => {
                                 var arr1= []
                                 var check= product[0].bidders[product[0].bidders.length -1].user.id
                                 arr1.push(product[0].bidders[product[0].bidders.length -1].user.id)
-                                for (let i = product[0].bidders.length -2 ; i > 0; i--) {
-                                    if (!(product[0].bidders[i].user._id.equals( check))) {
-                                        arr1.push(product[0].bidders[i].user.id)
-                                        check=product[0].bidders[i].user.id
+                                for (let i = product[0].bidders.length -2 ; i > 0; --i) {
+                                    if(!(product[0].bidders[i].user._id.equals( check))){
+                                        var check2 =1;
+                                        for(var j=0;j<arr1.length;j++){
+                                            if(product[0].bidders[i].user._id.equals( arr1[j])){
+                                                        check2=0;
+                                            }
+                                        }
+                                        if(check2 ==1){
+                                            arr1.push(product[0].bidders[i].user.id)
+                                            check=product[0].bidders[i].user.id
+                                        }
                                     }
-                                }
 
-                                var j=0;
+                                }
+                                console.log(arr1)
+                                // var j=0;
                                 for (let i = 0 ; i < arr1.length; i++) {
                                     if ((arr1[i] === arr[0])) {
                                         j=i;

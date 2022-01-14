@@ -1,0 +1,500 @@
+<%- include('partials/header'); -%>
+<link rel="stylesheet" href="/css/view-product.css">
+<link rel="stylesheet" type="text/css" href="https://hocwebgiare.com/cpadmin/css/xzoom.css" media="all">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
+
+</head>
+
+<body>
+<section class="colored-section" style="padding:0 15%;">
+    <%- include('partials/navbar'); -%>
+</section>
+<div>
+    <% Product.forEach(element=> {%>
+        <section class="view-product">
+            <div class="feature">
+                <div class="col-lg-6">
+                    <div>
+                        <div class="img-display">
+                            <div class="img-showcase" style="height: 100%;">
+                                <img src="/images/<%= element.id %>/0.jpg" alt="rolex image">
+                                <img src="/images/<%= element.id %>/1.jpg" alt="rolex image">
+                                <img src="/images/<%= element.id %>/2.jpg" alt="rolex image">
+                                <img src="/images/<%= element.id %>/3.jpg" alt="rolex image">
+                                <img src="/images/<%= element.id %>/4.jpg" alt="rolex image">
+                            </div>
+                        </div>
+                        <div class="img-select" style="align-items: center;">
+                            <div class="img-item">
+                                <a href="#" data-id="1">
+                                    <img src="/images/<%= element.id %>/0.jpg" alt="rolex image">
+                                </a>
+                            </div>
+                            <div class="img-item">
+                                <a href="#" data-id="2">
+                                    <img src="/images/<%= element.id %>/1.jpg" alt="rolex image">
+                                </a>
+                            </div>
+                            <div class="img-item">
+                                <a href="#" data-id="3">
+                                    <img src="/images/<%= element.id %>/2.jpg" alt="rolex image">
+                                </a>
+                            </div>
+                            <div class="img-item">
+                                <a href="#" data-id="4">
+                                    <img src="/images/<%= element.id %>/3.jpg" alt="rolex image">
+                                </a>
+                            </div>
+                            <div class="img-item">
+                                <a href="#" data-id="5">
+                                    <img src="/images/<%= element.id %>/4.jpg" alt="rolex image">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="request">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <table id="mask1" class="table table-hover table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Thời điểm</th>
+                                            <th style="width: 120px;">Người mua</th>
+                                            <th>Giá</th>
+                                            <% if( user.role ==="seller" && element.owner.id === user.id)  { %>
+                                                <th> Quản lí</th>
+                                            <% } %>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <% element.bidders.forEach(element1=> { %>
+                                            <tr>
+                                                <td>
+                                                    <%= element1.bidTime.toLocaleString()%>
+                                                </td>
+                                                <td class="mask_name">
+                                                    <% if( user.role ==="seller" && element.owner.id === user.id)  { %>
+                                                        <a href="/profile/<%= element1.user.id %>" role="button">
+                                                            <%= element1.user.name%>
+                                                        </a>
+                                                    <% } else {%>
+
+
+                                                        <% if (true) {%>
+
+                                                            <%var str_bidder = (element1.user.name) %>
+                                                            <% var mask_bidder1 = "" %>
+                                                            <%for (var i = 0; i < str_bidder.length; i++) {
+
+                                                                if (i < (str_bidder.length / 2)) {
+                                                                    mask_bidder1 = mask_bidder1 + "*"
+                                                                }
+                                                                else {
+                                                                    mask_bidder1 = mask_bidder1 + str_bidder[i]
+                                                                } %>
+
+                                                            <% }%>
+                                                        <% }%>
+
+                                                        <%= mask_bidder1 %>
+                                                    <% }%>
+                                                </td>
+                                                <td>
+                                                    <%= element1.bidPrice %>
+                                                </td>
+                                                <% if( user.role ==="seller" && element.owner.id === user.id)  { %>
+                                                    <td>
+                                                        <!--                                                                            <form action="/view-product-list/view-product/kickbidder/<%= element1.user._id%>+<%= element._id %>" id="btnAuction" name="price" value=""   method="post">-->
+                                                        <button  type="submit" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top"  title="kick bidder ra khỏi phiên đấu"  ><i class="fas fa-user-times"></i></button>
+                                                        <!--                                                                            </form>-->
+                                                    </td>
+                                                <% } %>
+                                            </tr>
+                                            <script>
+                                                var str_bidder = ('<%= element1.user.name %>');
+                                                var mask_bidder = "";
+                                                for (var i = 0; i < str_bidder.length; i++) {
+                                                    if (i < (str_bidder.length / 2)) {
+                                                        mask_bidder = mask_bidder + "*"
+                                                    }
+                                                    else {
+                                                        mask_bidder = mask_bidder + str_bidder[i]
+                                                    }
+                                                }
+                                                // const a = document.getElementById("mask")
+                                                // a.value = mask_bidder
+                                                document.getElementsByClassName("mask_name").innerHTML = mask_bidder;
+                                            </script>
+                                        <% }) %>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg" data-dismiss="modal" style="text-align: center;">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h1 class="product-detail-name">
+                        <%= element.name %>
+                    </h1>
+                    <div class="info product_detail__box">
+                        <div class="product_detail__box_current_price">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="price">
+                                    <span style="text-align: center; font-style: inherit ; color:  black ; font-size: 1.4rem; background: #f2f4f8;  border-radius: 20px;  ">Giá hiện tại:</span>
+                                    <span id="currentprice">
+
+                                                    </span>
+                                    <br>
+                                </div>
+                                <div>
+                                    <strong class="color_note">Thuế: <span class="color_text_primary">0 %</span></strong>
+                                </div>
+                                <div>
+                                    <strong class="color_note">Phí vận chuyển nội địa: <span class="color_text_primary">Không</span></strong>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info product_detail__box">
+                        <div class="product_detail__box_current_price">
+                            <strong>
+                            </strong>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="price">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--                        </div>-->
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-lg-6">
+                    <div class="info_seller">
+                        <h1 class="infor_details" style="margin-bottom: 20px;font-size: 1.335rem; background-color: #EBF2EB; border-radius: 5px">Thông tin người bán </h1>
+                        <div class="storeinfodata">
+                            <a class="storeinfoavarta" href="#">
+                                <img src="/images/Profile/<%= element.owner.image %> " lazyloading="" style="height: 100px;width: 100px;">
+                            </a>
+                            <div class="store_info__center" style="padding-left: 30px;">
+                                <h4 class="store_info__name">
+                                    <a href="/profile/<%= element.owner.id %>" role="button">
+                                        <%= element.owner.name %>
+                                    </a>
+                                </h4>
+                                <div class="color_note">
+                                    <% if(true){ %>
+                                        <% var total = 0%>
+                                        <% var count =0%>
+                                        <% element.owner.review.forEach(element =>{ %>
+                                            <% total=total+1%>
+                                            <% if(element.point == 1){%>
+                                                <% count =count +1%>
+                                            <% } %>
+                                        <% })%>
+                                        <strong class="color_text_primary">Diểm số : <%= Math.floor(count/total) * 100%> </strong> (<%= Math.floor(count/total) * 100%> %  Đánh giá uy tín)
+
+                                    <% } %>
+                                </div>
+                            </div>
+                            <a href="#" id="favorite-seller" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
+                                <i class="far fa-heart"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="info-buy_hight">
+                        <h1 class="infor_details" style=" text-align:center; margin-bottom: 20px;font-size: 1.335rem; background-color: #EBF2EB; border-radius: 5px;">Thông tin người đặt giá cao nhất </h1>
+                        <div class="storeinfodata">
+                            <a class="storeinfoavarta" href="#">
+                                <img src="/images/Profile/<%= element.topOwner.image %> " lazyloading="" style="height: 100px;width: 100px;">
+                                <!--                                                <a class="btn btn-md btn-primary btn-block" href="/profile/<%= topOwner.id %>" role="button">-->
+                                <!--                                                    Detail-->
+                                <!--                                                </a>-->
+                            </a>
+                            <div class="store_info__center" style="padding-left: 30px;">
+                                <h4 class="store_info__name">
+                                    <a href="/profile/<%= element.topOwner.id %>" role="button" >
+                                        <%= element.topOwner.name %>
+                                    </a>
+                                </h4>
+                                <div class="color_note">
+                                    <% if(true){ %>
+                                        <% var total = 0%>
+                                        <% var count =0%>
+                                        <% element.topOwner.review.forEach(element =>{ %>
+                                            <% total=total+1%>
+                                            <% if(element.point == 1){%>
+                                                <% count =count +1%>
+                                            <% } %>
+                                        <% })%>
+                                        <strong class="color_text_primary">Diểm số : <%= Math.floor(count/total) * 100%>  </strong> (<%= Math.floor(count/total) * 100%> %  Đánh giá uy tín)
+
+                                    <% } %>
+                                </div>
+                            </div>
+                            <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
+                                <i class="far fa-heart"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chitietsp">
+                <h1 class="infor_details" style="  margin-bottom: 20px;font-size: 1.5rem; width: 480px">Mô tả sản phẩm </h1>
+                <div class="row">
+                    <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
+                        <div class="mb-1">
+                            <h1 class="color_note1"><strong>Thời gian bắt đầu</strong></h1>
+                        </div>
+                        <div>
+                            <%= element.timeStart.toLocaleString() %>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
+                        <div class="mb-1">
+                            <h1 class="color_note1"><strong>Thời gian kết thúc</strong></h1>
+                        </div>
+                        <div>
+                            <%= element.timeEnd.toLocaleString() %>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
+                        <div class="mb-1">
+                            <h1 class="color_note1"><strong>Kết thúc sớm</strong></h1>
+                        </div>
+                        <div>Không </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
+                        <div class="mb-1">
+                            <h1 class="color_note1"><strong>Thêm thời gian đấu giá</strong></h1>
+                        </div>
+                        <div> </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
+                        <div class="mb-1">
+                            <h1 class="color_note1"><strong>Giá khởi điểm</strong></h1>
+                        </div>
+                        <div id="originalPrice">
+                            <%= element.originalBidPrice %>
+                        </div>
+                        <script>
+                            const originalPrice = '<%=element.originalBidPrice%>';
+                            $('#originalPrice').html(formatter.format(originalPrice));
+                        </script>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
+                        <div class="mb-1">
+                            <h1 class="color_note1"><strong>Số lượng</strong></h1>
+                        </div>
+                        <div>1 </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
+                        <div class="mb-1">
+                            <h1 class="color_note1"><strong>Tình trạng</strong></h1>
+                        </div>
+                        <div>đã qua sử dụng </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
+                        <div class="mb-1">
+                            <h1 class="color_note1"><strong>Mặt hàng</strong></h1>
+                        </div>
+                        <div>
+                            <%= element.brand%>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
+                        <div class="mb-1">
+                            <h1 class="color_note1"><strong>Hoàn trả</strong></h1>
+                        </div>
+                        <div>có</div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
+                        <div class="mb-1">
+                            <h1 class="color_note1"><strong>Loại sản phẩm</strong></h1>
+                        </div>
+                        <div>
+                            <%= element.subBrand%>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
+                        <div class="mb-1">
+                            <h1 class="color_note1"><strong>Giá cao nhất</strong></h1>
+                        </div>
+                        <div id="currentMaxPrice">
+                            <%= element.boughtPrice %>
+                        </div>
+                        <script>
+                            const maxPrice = '<%= element.boughtPrice %>';
+                            $('#currentMaxPrice').html(formatter.format(maxPrice));
+                        </script>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 mb-3">
+                        <div class="mb-1">
+                            <h1 class="color_note1"><strong>ID</strong></h1>
+                        </div>
+                        <div>
+                            <%= element._id%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="motachitietsp">
+                <h1 class="infor_details" style="  margin-bottom: 20px;font-size: 1.5rem; width: 480px">Mô tả chi tiết sản phẩm </h1>
+                <div id="decript"></div>
+                <script>
+                    function htmlDecode(input) {
+                        var doc = new DOMParser().parseFromString(input, "text/html");
+                        return doc.documentElement.textContent;
+                    }
+                    var myDescript = '<%=element.description%>';
+                    console.log(htmlDecode(myDescript));
+                    var temp = document.getElementById('decript');
+                    temp.innerHTML = htmlDecode(myDescript);
+                </script>
+                <p class="text1" id="decript">
+                    <span class="dots"> ...</span>
+                    <span class="moreText1" class="show-more"> </span>
+                    <script>
+                        var getDecription = document.getElementById("decript");
+                        getDecription.innerHTML(Product.description);
+                    </script>
+                </p>
+                <div style="text-align: center; color: red" class="read-more-btn">
+                    <a>Xem thêm</a>
+                </div>
+            </div>
+            <div class="top5">
+                <h1 class="infor_details" style=" margin-bottom: 20px;font-size: 1.5rem; width: 480px">Top 5 sản phẩm cùng chuyên mục </h1>
+                <div class="card-body">
+                    <div class="card-deck">
+                        <div class="card">
+                            <img src="images/Adam.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Adam</h5>
+                                <p class="card-text">Giá hiện tại: $</p>
+                                <p class="card-text">Người đặt cao nhất: admin</p>
+                                <p class="card-text">Giá mua ngay: $</p>
+                                <p class="card-text">Ngày đăng: 1/1/2022</p>
+                                <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
+                                <p class="card-text">Số lượt ra giá: 10</p>
+                                <p class="more-info">
+                                    <a href="#" class="text-decoration-none">Read more...</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="images/logo-clock/image1.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Rolex</h5>
+                                <p class="card-text">Giá hiện tại: $</p>
+                                <p class="card-text">Người đặt cao nhất: admin</p>
+                                <p class="card-text">Giá mua ngay: $</p>
+                                <p class="card-text">Ngày đăng: 1/1/2022</p>
+                                <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
+                                <p class="card-text">Số lượt ra giá: 10</p>
+                                <p class="more-info">
+                                    <a href="#" class="text-decoration-none">Read more...</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="images/logo-clock/image2.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Rolex</h5>
+                                <p class="card-text">Giá hiện tại: $</p>
+                                <p class="card-text">Người đặt cao nhất: admin</p>
+                                <p class="card-text">Giá mua ngay: $</p>
+                                <p class="card-text">Ngày đăng: 1/1/2022</p>
+                                <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
+                                <p class="card-text">Số lượt ra giá: 10</p>
+                                <p class="more-info">
+                                    <a href="#" class="text-decoration-none">Read more...</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="images/logo-clock/image3.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Rolex</h5>
+                                <p class="card-text">Giá hiện tại: $</p>
+                                <p class="card-text">Người đặt cao nhất: admin</p>
+                                <p class="card-text">Giá mua ngay: $</p>
+                                <p class="card-text">Ngày đăng: 1/1/2022</p>
+                                <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
+                                <p class="card-text">Số lượt ra giá: 10</p>
+                                <p class="more-info">
+                                    <a href="#" class="text-decoration-none">Read more...</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="images/logo-clock/image4.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Rolex</h5>
+                                <p class="card-text">Giá hiện tại: $</p>
+                                <p class="card-text">Người đặt cao nhất: admin</p>
+                                <p class="card-text">Giá mua ngay: $</p>
+                                <p class="card-text">Ngày đăng: 1/1/2022</p>
+                                <p class="card-text">Thời gian còn lại: 7d 15h 20m 10s</p>
+                                <p class="card-text">Số lượt ra giá: 10</p>
+                                <p class="more-info">
+                                    <a href="#" class="text-decoration-none">Read more...</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </section>
+    <% }) %>
+</div>
+
+<script>
+    const readMoreBtn = document.querySelector(".read-more-btn");
+    const text1 = document.querySelector(".text1");
+    readMoreBtn.addEventListener("click", (e) => {
+        text1.classList.toggle("show-more");
+        if (readMoreBtn.innerText === "Xem thêm") {
+            readMoreBtn.innerText = "Thu gọn";
+        } else {
+            readMoreBtn.innerText = "Xem thêm";
+        }
+    });
+    const imgs = document.querySelectorAll('.img-select a');
+    const imgBtns = [...imgs];
+    let imgId = 1;
+    imgBtns.forEach((imgItem) => {
+        imgItem.addEventListener('click', (event) => {
+            event.preventDefault();
+            imgId = imgItem.dataset.id;
+            slideImage();
+        });
+    });
+    function slideImage() {
+        const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
+        document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
+    }
+    window.addEventListener('resize', slideImage);
+</script>
+<%- include('partials/footer'); -%>

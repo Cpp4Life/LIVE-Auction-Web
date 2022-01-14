@@ -72,7 +72,7 @@
             </h1>
             </hr><br>
 
-<!--            <ul class="list-group">-->
+<!--           -->
 <!--                <li class="list-group-item text-muted" style="font-size: 15px;">Activity <i class="fa fa-dashboard fa-1x"></i></li>-->
 <!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
 <!--                    Bidding-->
@@ -167,10 +167,17 @@
                             <div class="col-md-4">
                                 <strong class="font_size2">Review Point</strong>
                                 <br>
-
-                                <span class="color_note">
-                                            <%= user.reviewPoint %>
-                                        </span>
+                                <% if(true){ %>
+                                    <% var total = 0%>
+                                    <% var count =0%>
+                                    <% user.review.forEach(element =>{ %>
+                                        <% total=total+1%>
+                                        <% if(element.point == 1){%>
+                                            <% count =count +1%>
+                                        <% } %>
+                                    <% })%>
+                                    <span class="color_note" style="size: 1.5rem; "> <%= Math.floor(count/total) * 100%> % </span>
+                                <% } %>
                             </div>
                             <div class="col-md-4">
                                 <!--                                <strong class="font_size2">25</strong>-->
@@ -329,7 +336,11 @@
                                     <% if(!element1.status){ %>
                                         <tr>
                                             <td style="width:9%">
-                                                <%= element1.name %>
+
+                                                <a  href="/view-product-list/view-product/view-seller/<%= element1._id %>" role="button">
+                                                    <%= element1.name %>
+                                                </a>
+
                                             </td>
                                             <td style="width:9%">
                                                 <%= element1.brand %>
