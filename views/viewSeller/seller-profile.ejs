@@ -255,7 +255,11 @@
                                 <% if((element1.topOwner._id ).equals(user._id) ){ %>
                                     <% if(!element1.status){ %>
                                         <tr>
-                                            <td style="width:9%"><%= element1.name %></td>
+                                            <td style="width:9%">
+                                                <a  href="/view-product-list/view-product/view-seller/<%= element1._id %>" role="button">
+                                                    <%= element1.name %>
+                                                </a>
+                                            </td>
                                             <td style="width:9%"><%= element1.brand %></td>
                                             <td style="width:9%"><a href="/profile/<%= element1.owner.id %>" role="button">
                                                     <%= element1.owner.name %>
@@ -326,7 +330,7 @@
                                             <% count =count +1%>
                                         <% } %>
                                     <% })%>
-                                    <span class="color_note"> ( +/(+-)) = <%= count%> / <%= total%></span>
+                                    <span class="color_note" style="size: 1.5rem; "> <%= Math.floor(count/total) * 100%> % </span>
                                 <% } %>
                             </div>
                             <div class="col-md-4">

@@ -78,77 +78,70 @@
                                                 <div class="modal-header">
                                                     <table id="mask1" class="table table-hover table-bordered">
                                                         <thead>
-                                                            <tr>
-                                                                <th>Thời điểm</th>
-                                                                <th style="width: 120px;">Người mua</th>
-                                                                <th>Giá</th>
-                                                                <% if( user.role ==="seller" && element.owner.id === user.id)  { %>
-                                                                    <th> Quản lí</th>
-                                                                <% } %>
-                                                            </tr>
+                                                        <tr>
+                                                            <th>Thời điểm</th>
+                                                            <th style="width: 120px;">Người mua</th>
+                                                            <th>Giá</th>
+                                                            <% if( user.role ==="seller" && element.owner.id === user.id)  { %>
+                                                                <th> Quản lí</th>
+                                                            <% } %>
+                                                        </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <% element.bidders.forEach(element1=> { %>
-                                                                <tr>
-                                                                    <td>
-                                                                        <%= element1.bidTime.toLocaleString()%>
-                                                                    </td>
-                                                                    <td class="mask_name">
-                                                                        <% if( user.role ==="seller" && element.owner.id === user.id)  { %>
-                                                                            <a href="/profile/<%= element1.user.id %>" role="button">
-                                                                                <%= element1.user.name%>
-                                                                            </a>
-                                                                        <% } else {%>
-
-
-                                                                                <% if (true) {%>
-
-                                                                                    <%var str_bidder = (element1.user.name) %>
-                                                                                    <% var mask_bidder1 = "" %>
-                                                                                    <%for (var i = 0; i < str_bidder.length; i++) {
-
-                                                                                        if (i < (str_bidder.length / 2)) {
-                                                                                            mask_bidder1 = mask_bidder1 + "*"
-                                                                                        }
-                                                                                        else {
-                                                                                            mask_bidder1 = mask_bidder1 + str_bidder[i]
-                                                                                        } %>
-
-                                                                                    <% }%>
-                                                                                <% }%>
-
-                                                                            <%= mask_bidder1 %>
-                                                                        <% }%>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%= element1.bidPrice %>
-                                                                    </td>
+                                                        <% element.bidders.forEach(element1=> { %>
+                                                            <tr>
+                                                                <td>
+                                                                    <%= element1.bidTime.toLocaleString()%>
+                                                                </td>
+                                                                <td class="mask_name">
                                                                     <% if( user.role ==="seller" && element.owner.id === user.id)  { %>
-                                                                        <td>
-<!--                                                                            <form action="/view-product-list/view-product/kickbidder/<%= element1.user._id%>+<%= element._id %>" id="btnAuction" name="price" value=""   method="post">-->
-                                                                                <button  type="submit" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top"  title="kick bidder ra khỏi phiên đấu"  ><i class="fas fa-user-times"></i></button>
-<!--                                                                            </form>-->
-                                                                        </td>
-                                                                    <% } %>
-                                                                </tr>
-                                                                <script>
-                                                                    var str_bidder = ('<%= element1.user.name %>');
-                                                                    var mask_bidder = "";
-                                                                    for (var i = 0; i < str_bidder.length; i++) {
-                                                                        if (i < (str_bidder.length / 2)) {
-                                                                            mask_bidder = mask_bidder + "*"
-                                                                        }
-                                                                        else {
-                                                                            mask_bidder = mask_bidder + str_bidder[i]
-                                                                        }
+                                                                        <a href="/profile/<%= element1.user.id %>" role="button">
+                                                                            <%= element1.user.name%>
+                                                                        </a>
+                                                                    <% } else {%>
+                                                                        <% if (true) {%>
+                                                                            <%var str_bidder = (element1.user.name) %>
+                                                                            <% var mask_bidder1 = "" %>
+                                                                            <%for (var i = 0; i < str_bidder.length; i++) {
+                                                                                if (i < (str_bidder.length / 2)) {
+                                                                                    mask_bidder1 = mask_bidder1 + "*"
+                                                                                }
+                                                                                else {
+                                                                                    mask_bidder1 = mask_bidder1 + str_bidder[i]
+                                                                                } %>
+                                                                            <% }%>
+                                                                        <% }%>
+                                                                        <%= mask_bidder1 %>
+                                                                    <% }%>
+                                                                </td>
+                                                                <td>
+                                                                    <%= element1.bidPrice %>
+                                                                </td>
+                                                                <% if( user.role ==="seller" && element.owner.id === user.id)  { %>
+                                                                    <td>
+                                                                        <!--                                                                            <form action="/view-product-list/view-product/kickbidder/<%= element1.user._id%>+<%= element._id %>" id="btnAuction" name="price" value=""   method="post">-->
+                                                                        <button  type="submit" class="btn shadow-none delAccountBtn" data-toggle="tooltip" data-placement="top"  title="kick bidder ra khỏi phiên đấu"  ><i class="fas fa-user-times"></i></button>
+                                                                        <!--                                                                            </form>-->
+                                                                    </td>
+                                                                <% } %>
+                                                            </tr>
+                                                            <script>
+                                                                var str_bidder = ('<%= element1.user.name %>');
+                                                                var mask_bidder = "";
+                                                                for (var i = 0; i < str_bidder.length; i++) {
+                                                                    if (i < (str_bidder.length / 2)) {
+                                                                        mask_bidder = mask_bidder + "*"
                                                                     }
-                                                                    // const a = document.getElementById("mask")
-                                                                    // a.value = mask_bidder
-                                                                    document.getElementsByClassName("mask_name").innerHTML = mask_bidder;
-                                                                </script>
-                                                                <% }) %>
+                                                                    else {
+                                                                        mask_bidder = mask_bidder + str_bidder[i]
+                                                                    }
+                                                                }
+                                                                // const a = document.getElementById("mask")
+                                                                // a.value = mask_bidder
+                                                                document.getElementsByClassName("mask_name").innerHTML = mask_bidder;
+                                                            </script>
+                                                        <% }) %>
                                                         </tbody>
-
                                                     </table>
                                                 </div>
                                                 <div class="form-group">
@@ -326,8 +319,7 @@
                                         function myFunction() {
                                             document.getElementById('btn').addEventListener('click', function () {
                                                 swal({
-                                                    title: "Are you sure?",
-                                                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                    title: "Bạn chấp nhận mua sản phẩm?",
                                                     icon: "info",
                                                     buttons: true,
                                                     dangerMode: true,
@@ -360,11 +352,37 @@
                                             <div class="store_info__center" style="padding-left: 30px;">
                                                 <h4 class="store_info__name">
                                                     <a href="/profile/<%= element.owner.id %>" role="button">
-                                                        <%= element.owner.name%>
+                                                        <% if (true) {%>
+
+                                                            <%var str_bidder = (element.owner.name) %>
+                                                            <% var mask_bidder1 = "" %>
+                                                            <%for (var i = 0; i < str_bidder.length; i++) {
+
+                                                                if (i < (str_bidder.length / 2)) {
+                                                                    mask_bidder1 = mask_bidder1 + "*"
+                                                                }
+                                                                else {
+                                                                    mask_bidder1 = mask_bidder1 + str_bidder[i]
+                                                                } %>
+
+                                                            <% }%>
+                                                        <% }%>
+                                                        <%= mask_bidder1 %>
                                                     </a>
                                                 </h4>
                                                 <div class="color_note">
-                                                    <strong class="color_text_primary">Diểm số : <%= owner.reviewPoint%> </strong> (96% Đánh giá uy tín)
+                                                    <% if(true){ %>
+                                                        <% var total = 0%>
+                                                        <% var count =0%>
+                                                        <% element.owner.review.forEach(element =>{ %>
+                                                            <% total=total+1%>
+                                                            <% if(element.point == 1){%>
+                                                                <% count =count +1%>
+                                                            <% } %>
+                                                        <% })%>
+                                                        <strong class="color_text_primary">Diểm số : <%= Math.floor(count/total) * 100%> </strong> (<%= Math.floor(count/total) * 100%> %  Đánh giá uy tín)
+
+                                                    <% } %>
                                                 </div>
                                             </div>
                                             <a href="#" id="favorite-seller" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">
@@ -386,11 +404,39 @@
                                             <div class="store_info__center" style="padding-left: 30px;">
                                                 <h4 class="store_info__name">
                                                     <a href="/profile/<%= element.topOwner.id %>" role="button" >
-                                                        <%= element.topOwner.name %>
+<!--                                                        <%= element.topOwner.name %>-->
+                                                        <% if (typeof element.topOwner.name != "undefined") {%>
+
+                                                            <%var str_bidder = (element.owner.name) %>
+                                                            <% var mask_bidder1 = "" %>
+                                                            <%for (var i = 0; i < str_bidder.length; i++) {
+
+                                                                if (i < (str_bidder.length / 2)) {
+                                                                    mask_bidder1 = mask_bidder1 + "*"
+                                                                }
+                                                                else {
+                                                                    mask_bidder1 = mask_bidder1 + str_bidder[i]
+                                                                } %>
+
+                                                            <% }%>
+                                                            <%= mask_bidder1 %>
+                                                        <% }%>
+
                                                     </a>
                                                 </h4>
                                                 <div class="color_note">
-                                                    <strong class="color_text_primary">Diểm số : <%= element.topOwner.reviewPoint%> (96% Đánh giá uy tín)</strong>
+                                                    <% if(true){ %>
+                                                        <% var total = 0%>
+                                                        <% var count =0%>
+                                                        <% element.topOwner.review.forEach(element =>{ %>
+                                                            <% total=total+1%>
+                                                            <% if(element.point == 1){%>
+                                                                <% count =count +1%>
+                                                            <% } %>
+                                                        <% })%>
+                                                        <strong class="color_text_primary">Diểm số : <%= Math.floor(count/total) * 100%>  </strong> (<%= Math.floor(count/total) * 100%> %  Đánh giá uy tín)
+
+                                                    <% } %>
                                                 </div>
                                             </div>
                                             <a href="#" id="favorite-buy-hight" data-sellerid="#" data-type="AUCTION" class="btn btn-icon-wish btn-light" style="padding-left: 30px; padding-right: 30px; color:red;">

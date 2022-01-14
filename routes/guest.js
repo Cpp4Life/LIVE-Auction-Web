@@ -22,4 +22,6 @@ router.get('/view-product-list/view-product/auction/:price', isAuth, guestContro
 
 router.get('/view-product-list/view-product/buy-now/:id', isAuth, guestController.getButtonBuy);
 
+router.get('/view-product-list/view-product/view-seller/:id', isAuth, guestController.getsellerpage);
+
 module.exports = router;

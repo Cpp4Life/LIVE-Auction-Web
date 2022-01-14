@@ -464,3 +464,27 @@ exports.postAuctionProduct = async (req, res) => {
 
 
 
+exports.getsellerpage = async (req, res) => {
+    // console.log(req.params.id)
+    dbModel.Product.find({ _id: req.params.id }, (err, ProductList) => {
+            if (err)
+                console.log(err);
+            else {
+                dbModel.Category.find({}, (err, CategoryList) => {
+                    if (err)
+                        console.log(err);
+                    else {
+                        res.render('view-product-seller', {
+
+                            topOwner: ProductList[0].topOwner,
+                            owner: ProductList[0].owner,
+                            Product: ProductList,
+                            Category: CategoryList[0].list
+                        });
+                    }
+                })
+
+            }
+        }
+    );
+}
