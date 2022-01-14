@@ -11,8 +11,8 @@ const transporter = nodemailer.createTransport({
     secure: true,
     service: 'Gmail',
     auth: {
-        user: 'auctionboi@gmail.com',
-        pass: 'Auctionboi123'
+        user: 'boiauction@gmail.com',
+        pass: 'Boiauction123'
     }
 });
 
