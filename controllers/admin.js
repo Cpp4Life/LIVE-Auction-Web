@@ -32,8 +32,8 @@ exports.postAdminLogin = async (req, res) => {
 
 exports.getAdminSettings = async (req, res) => {
     const categoryList = await Category.find({});
-    const userList = await User.find({});
     const productList = await Product.find({});
+    const userList = await User.find({});
     res.render('viewAdmin/settings', {
         Category: categoryList[0].list,
         Product: productList,
@@ -43,6 +43,7 @@ exports.getAdminSettings = async (req, res) => {
 
 exports.postCategory = async (req, res) => {
     const categoryList = await Category.find({});
+    const productList = await Product.find({});
     const userList = await User.find({});
     const submittedBrand = req.body.brand;
     const submittedSubBrand = req.body.subBrand;
@@ -61,6 +62,7 @@ exports.postCategory = async (req, res) => {
             res.render('viewAdmin/settings', {
                 errors,
                 Category: categoryList[0].list,
+                Product: productList,
                 User: userList
             });
         } else {
@@ -90,6 +92,7 @@ exports.postCategory = async (req, res) => {
 
 exports.getCategoryBrand = async (req, res) => {
     const categoryList = await Category.find({});
+    const productList = await Product.find({});
     const userList = await User.find({});
     const brandList = await Brand.find({});
     const submittedBrand = req.params.brand;
@@ -108,6 +111,7 @@ exports.getCategoryBrand = async (req, res) => {
 
     res.render('viewAdmin/settings', {
         Category: categoryList[0].list,
+        Product: productList,
         User: userList
     });
 }

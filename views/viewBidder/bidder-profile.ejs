@@ -1,461 +1,467 @@
 <%- include('../partials/header'); -%>
-<link rel="stylesheet" href="css/profilebidder.css" xmlns="http://www.w3.org/1999/html">
-<script src="js/product.js"></script>
-<link rel="stylesheet" type="text/css" href="https://hocwebgiare.com/cpadmin/css/xzoom.css" media="all">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="css/profilebidder.css" xmlns="http://www.w3.org/1999/html">
+    <script src="js/product.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://hocwebgiare.com/cpadmin/css/xzoom.css" media="all">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<!------ Include the above in your HEAD tag ---------->
-</head>
+    <!------ Include the above in your HEAD tag ---------->
+    </head>
 
-<body>
-<script>
-    $('#fuMain').fileinput({
-        dropZoneEnabled: false,
-        maxFileCount: 5,
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
-        theme: 'fa',
-        language: 'vi',
-    });
-    var currentPrice;
-    var buyPrice;
-    var endTime;
-    function convertTime(str) {
-        var date = str.split(" ");
-        return [[date[5]], date[6], date[7], date[8]].join(" ");
-    }
-    function formatMoney(money) {
-        const formatter = new Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND'
-        });
-        return formatter.format(money);
-    }
-</script>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <a class="navbar-brand" href="/"><img src="/images/auction-logo.png" alt="logo" class="d-inline-block align-top">Auct Boi</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
-        <ul class="nav navbar-nav" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Profile</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="profile" aria-selected="false">Review</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="contact" aria-selected="false">Favorites</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#biddings" role="tab" aria-controls="contact" aria-selected="false">Bidding</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#wonbids" role="tab" aria-controls="contact" aria-selected="false">Successful bids</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#upgrade" role="tab" aria-controls="contact" aria-selected="false">Upgrade</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+    <body>
+        <script>
+            $('#fuMain').fileinput({
+                dropZoneEnabled: false,
+                maxFileCount: 5,
+                allowedFileExtensions: ['jpg', 'png', 'gif'],
+                theme: 'fa',
+                language: 'vi',
+            });
+            var currentPrice;
+            var buyPrice;
+            var endTime;
+            function convertTime(str) {
+                var date = str.split(" ");
+                return [[date[5]], date[6], date[7], date[8]].join(" ");
+            }
+            function formatMoney(money) {
+                const formatter = new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                });
+                return formatter.format(money);
+            }
+        </script>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" href="/"><img src="/images/auction-logo.png" alt="logo" class="d-inline-block align-top">Auct Boi</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavbar">
+                <ul class="nav navbar-nav" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Profile</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="profile" aria-selected="false">Review</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="contact" aria-selected="false">Favorites</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#biddings" role="tab" aria-controls="contact" aria-selected="false">Bidding</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#wonbids" role="tab" aria-controls="contact" aria-selected="false">Successful bids</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#upgrade" role="tab" aria-controls="contact" aria-selected="false">Upgrade</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-<hr>
-<div class="container-fluid bootstrap snippet">
+        <hr>
+        <div class="container-fluid bootstrap snippet">
 
-    <div class="row" style="margin-bottom: 200px;">
-        <div class="col-sm-3">
-            <img src="/images/Profile/<%= user.image %> " alt="avatar" class="img-thumbnail" style="border-radius: 29px;margin-right: 20px;">
+            <div class="row" style="margin-bottom: 200px;">
+                <div class="col-sm-3">
+                    <img src="/images/Profile/<%= user.image %> " alt="avatar" class="img-thumbnail" style="border-radius: 29px;margin-right: 20px;">
 
-            <h1 style="text-align: center;">
-                <%= user.name %>
-            </h1>
-            </hr><br>
+                    <h1 style="text-align: center;">
+                        <%= user.name %>
+                    </h1>
+                    </hr><br>
 
-<!--           -->
-<!--                <li class="list-group-item text-muted" style="font-size: 15px;">Activity <i class="fa fa-dashboard fa-1x"></i></li>-->
-<!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
-<!--                    Bidding-->
-<!--                    <span class="badge  badge-pill">125</span>-->
-<!--                </li>-->
-<!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
-<!--                    Items bought-->
-<!--                    <span class="badge  badge-pill">2</span>-->
-<!--                </li>-->
-<!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
-<!--                    Reviews-->
-<!--                    <span class="badge  badge-pill">1</span>-->
-<!--                </li>-->
-<!--            </ul>-->
-        </div>
-        <div class="col-sm-9">
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <!--           -->
+                    <!--                <li class="list-group-item text-muted" style="font-size: 15px;">Activity <i class="fa fa-dashboard fa-1x"></i></li>-->
+                    <!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
+                    <!--                    Bidding-->
+                    <!--                    <span class="badge  badge-pill">125</span>-->
+                    <!--                </li>-->
+                    <!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
+                    <!--                    Items bought-->
+                    <!--                    <span class="badge  badge-pill">2</span>-->
+                    <!--                </li>-->
+                    <!--                <li class="list-group-item d-flex justify-content-between align-items-center">-->
+                    <!--                    Reviews-->
+                    <!--                    <span class="badge  badge-pill">1</span>-->
+                    <!--                </li>-->
+                    <!--            </ul>-->
+                </div>
+                <div class="col-sm-9">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-                    <form action="/bidder/profile/<%= user._id %>" method="POST" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;margin-top: 20px;">
-                                <!--                                src="public/marcos-llorente-mu-removebg-preview (3).png"-->
-                                <img src="/images/Profile/<%= user.image %>" alt="avatar" class="img-thumbnail" style="width: 139.981132px;height: 123.981132px;border-radius: 29px;margin-right: 20px;">
-                                <label for="first_name" class="font_size1"><span>
+                            <form action="/bidder/profile/<%= user._id %>" method="POST" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;margin-top: 20px;">
+                                        <!--                                src="public/marcos-llorente-mu-removebg-preview (3).png"-->
+                                        <img src="/images/Profile/<%= user.image %>" alt="avatar" class="img-thumbnail" style="width: 139.981132px;height: 123.981132px;border-radius: 29px;margin-right: 20px;">
+                                        <label for="first_name" class="font_size1"><span>
                                                 <%= user.name %>
                                             </span></label>
-                                <input type="file" class="text-center center-block file-upload" id="fuMain" name="fuMain" style="margin-left: 0px; margin-top: 10px;">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;margin-top: 20px;">
-                                <label for="first_name" class="font_size1"><span>Name</span></label>
-                                <input style="font-size: 14px;" type="text" class="form-control" id="name" name="name" value="<%= user.name %>" title="enter your first name if any.">
-                            </div>
+                                        <input type="file" class="text-center center-block file-upload" id="fuMain" name="fuMain" style="margin-left: 0px; margin-top: 10px;">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;margin-top: 20px;">
+                                        <label for="first_name" class="font_size1"><span>Name</span></label>
+                                        <input style="font-size: 14px;" type="text" class="form-control" id="name" name="name" value="<%= user.name %>" title="enter your first name if any.">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
+                                        <label for="email" class="font_size1"><span>Email</span></label>
+                                        <input style="font-size: 14px;" type="email" class="form-control" name="email" id="email" value="<%= user.email %>" title="enter your email.">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
+                                        <label for="last_name" class="font_size1"><span>Phone number</span></label>
+                                        <input style="font-size: 14px;" type="text" class="form-control" name="mobile" id="mobile" value="<%= user.phone %>" title="enter mobile if any.">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
+                                        <label for="last_name" class="font_size1"><span>Address</span></label>
+                                        <input style="font-size: 14px;" type="text" class="form-control" name="address" id="address" value="<%= user.address %>" title="enter address if any.">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
+                                        <label for="last_name" class="font_size1"><span>Password</span></label>
+                                        <input style="font-size: 14px;" type="text" class="form-control" value="*******" title="enter mobile if any.">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
+                                        <div class="row text-center">
+                                            <a style="margin-left: 15px;" href="/bidder/profile/changepassword" class="btn btn-lg btn-danger">change password</a>
+                                            <!--                                        data-toggle="modal" data-target="#smallModal"-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <!--                                                                        <button type="button" class="btn btn-lg btn-success" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-ok-sign"></i>Save</button>-->
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: green;">Save</button>
+                                    </div>
+
+                                </div>
+                            </form>
 
                         </div>
-                        <div class="form-group">
-                            <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
-                                <label for="email" class="font_size1"><span>Email</span></label>
-                                <input style="font-size: 14px;" type="email" class="form-control" name="email" id="email" value="<%= user.email %>" title="enter your email.">
+
+
+
+                        <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="profile-tab">
+                            <hr>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <!--                                <strong class="font_size2">350</strong>-->
+                                        <br>
+                                        <!--                                <span class="color_note">Tốt</span>-->
+                                    </div>
+                                    <div class="col-md-4">
+                                        <strong class="font_size2">Review Point</strong>
+                                        <br>
+                                        <% if(true){ %>
+                                            <% var total=0%>
+                                                <% var count=0%>
+                                                    <% user.review.forEach(element=>{ %>
+                                                        <% total=total+1%>
+                                                            <% if(element.point==1){%>
+                                                                <% count=count +1%>
+                                                                    <% } %>
+                                                                        <% })%>
+                                                                            <span class="color_note" style="size: 1.5rem; ">
+                                                                                <%= Math.floor(count/total) * 100%> %
+                                                                            </span>
+                                                                            <% } %>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <!--                                <strong class="font_size2">25</strong>-->
+                                        <br>
+                                        <!--                                <span class="color_note">Không tốt</span>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container" style="margin-top: 40px;">
+
+                                <table class="table table-hover table-bordered">
+
+                                    <thead>
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Rating</th>
+                                            <th>Review</th>
+                                        </tr>
+                                    </thead>
+                                    <script>
+                                        var m = user.review.length
+                                        for (let i = 0; i < user.review.length; i++) {
+                                            user = await User.find({ _id: user.review[i].user_id })
+                                        }
+                                    </script>
+                                    <tbody>
+                                        <% user.review.forEach(element=> { %>
+                                            <tr>
+                                                <td><a class="info_ava" href="/viewprofile/<%= element.user_id%> "> </a>
+                                                    <%= element.name_rv%>
+                                                </td>
+                                                <td>
+                                                    <%= element.point %>
+                                                </td>
+                                                <td>
+                                                    <%= element.comment %>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
-                                <label for="last_name" class="font_size1"><span>Phone number</span></label>
-                                <input style="font-size: 14px;" type="text" class="form-control" name="mobile" id="mobile" value="<%= user.phone %>" title="enter mobile if any.">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
-                                <label for="last_name" class="font_size1"><span>Address</span></label>
-                                <input style="font-size: 14px;" type="text" class="form-control" name="address" id="address" value="<%= user.address %>" title="enter address if any.">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
-                                <label for="last_name" class="font_size1"><span>Password</span></label>
-                                <input style="font-size: 14px;" type="text" class="form-control" value="*******" title="enter mobile if any.">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-6" style="width: 100%;margin-bottom: 20px;">
-                                <div class="row text-center">
-                                    <a style="margin-left: 15px;" href="/bidder/profile/changepassword" class="btn btn-lg btn-danger">change password</a>
-                                    <!--                                        data-toggle="modal" data-target="#smallModal"-->
+
+                        <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="contact-tab">
+
+                            <h4 class="card-header " style="text-align: center;">
+                                Favorites product
+                            </h4>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <% Product.forEach(element1=> {%>
+                                        <% user.favorites.forEach(element=> { %>
+                                            <% if((element1._id ).equals(element.id_product) ){ %>
+                                                <% if(element1.status){ %>
+                                                    <div class="col-sm-4 mb-4">
+                                                        <div class="card">
+                                                            <img src="/images/<%= element.id_product %>/3.jpg" style="height: 100px;" class="card-img-top" alt="...">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">
+                                                                    <%= element.name_product%>
+                                                                </h5>
+                                                                <p class="card-text">Giá hiện tại: <%= element.currentPrice_product%> VND</p>
+                                                                <p class="card-text">Ngày/giờ đăng: <%= element.timeStart_product%>
+                                                                </p>
+                                                                <p class="card-text">Ngày/giờ Kết thúc: <%= element.timeEnd_product%>
+                                                                </p>
+                                                            </div>
+                                                            <div class="card-footer text-muted">
+                                                                <a class="btn btn-sm btn-outline-primary" href="/view-product-list/view-product/<%= element.id_product %>" role="button">
+                                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                                    Details
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+                                                        <% } %>
+                                                            <% }) %>
+                                                                <% }) %>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <!--                                                                        <button type="button" class="btn btn-lg btn-success" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-ok-sign"></i>Save</button>-->
-                                <button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: green;">Save</button>
-                            </div>
 
-                        </div>
-                    </form>
-
-                </div>
-
-
-
-                <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="profile-tab">
-                    <hr>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <!--                                <strong class="font_size2">350</strong>-->
-                                <br>
-                                <!--                                <span class="color_note">Tốt</span>-->
-                            </div>
-                            <div class="col-md-4">
-                                <strong class="font_size2">Review Point</strong>
-                                <br>
-                                <% if(true){ %>
-                                    <% var total = 0%>
-                                    <% var count =0%>
-                                    <% user.review.forEach(element =>{ %>
-                                        <% total=total+1%>
-                                        <% if(element.point == 1){%>
-                                            <% count =count +1%>
-                                        <% } %>
-                                    <% })%>
-                                    <span class="color_note" style="size: 1.5rem; "> <%= Math.floor(count/total) * 100%> % </span>
-                                <% } %>
-                            </div>
-                            <div class="col-md-4">
-                                <!--                                <strong class="font_size2">25</strong>-->
-                                <br>
-                                <!--                                <span class="color_note">Không tốt</span>-->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container" style="margin-top: 40px;">
-
-                        <table class="table table-hover table-bordered">
-
-                            <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Rating</th>
-                                <th>Review</th>
-                            </tr>
-                            </thead>
-                            <script>
-                                var m = user.review.length
-                                for (let i = 0; i < user.review.length; i++) {
-                                    user = await User.find({ _id: user.review[i].user_id })
-                                }
-                            </script>
-                            <tbody>
-                            <% user.review.forEach(element=> { %>
-                                <tr>
-                                    <td><a class="info_ava" href="/viewprofile/<%= element.user_id%> ">  </a>
-                                        <%= element.name_rv%>
-                                    </td>
-                                    <td>
-                                        <%= element.point %>
-                                    </td>
-                                    <td>
-                                        <%= element.comment %>
-                                    </td>
-                                </tr>
-                            <% }) %>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="contact-tab">
-
-                    <h4 class="card-header " style="text-align: center;">
-                        Favorites product
-                    </h4>
-
-                    <div class="card-body">
-                        <div class="row">
-                            <% Product.forEach(element1=> {%>
-                                <% user.favorites.forEach(element=> { %>
-                                    <% if((element1._id ).equals(element.id_product) ){ %>
-                                        <% if(element1.status){ %>
-                                            <div class="col-sm-4 mb-4">
-                                                <div class="card">
-                                                    <img src="/images/<%= element.id_product %>/3.jpg" style="height: 100px;" class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">
-                                                            <%= element.name_product%>
-                                                        </h5>
-                                                        <p class="card-text">Giá hiện tại: <%= element.currentPrice_product%> VND</p>
-                                                        <p class="card-text">Ngày/giờ đăng: <%= element.timeStart_product%>
-                                                        </p>
-                                                        <p class="card-text">Ngày/giờ Kết thúc: <%= element.timeEnd_product%>
-                                                        </p>
-                                                    </div>
-                                                    <div class="card-footer text-muted">
-                                                        <a class="btn btn-sm btn-outline-primary" href="/view-product-list/view-product/<%= element.id_product %>" role="button">
-                                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                                            Details
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <% } %>
-                                    <% } %>
-                                <% }) %>
-                            <% }) %>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tab-pane fade" id="biddings" role="tabpanel" aria-labelledby="contact-tab">
-                    <hr>
-                    <h4 class="card-header " style="text-align: center;">
-                        Bidding
-                    </h4>
-                    <div class="card-body">
-                        <div class="row">
-                            <% Product.forEach(element1=> {%>
-                                <% if( element1.status) { %>
-                                    <% var found=false%>
-                                    <% element1.bidders.forEach(element2=> { %>
-                                        <% if(( element2.user._id).equals( user._id) && !found) { %>
-                                            <div class="col-sm-4 mb-3">
-                                                <div class="card">
-                                                    <img src="/images/<%= element1._id %>/1.jpg" class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">
-                                                            <%= element1.name%>
-                                                        </h5>
-                                                        <p class="card-text" id="currentPrice<%= element1.name %>">Giá hiện tại: <%= element1.currentPrice%>
-                                                        </p>
-                                                        <p class="card-text" id="buyPrice<%= element1.name %>">Giá mua ngay: <%= element1.boughtPrice%>
-                                                        </p>
-                                                        <p class="card-text">Người bán: <span class="text-dark font-weight-bold">
+                        <div class="tab-pane fade" id="biddings" role="tabpanel" aria-labelledby="contact-tab">
+                            <hr>
+                            <h4 class="card-header " style="text-align: center;">
+                                Bidding
+                            </h4>
+                            <div class="card-body">
+                                <div class="row">
+                                    <% Product.forEach(element1=> {%>
+                                        <% if( element1.status) { %>
+                                            <% var found=false%>
+                                                <% element1.bidders.forEach(element2=> { %>
+                                                    <% if(( element2.user._id).equals( user._id) && !found) { %>
+                                                        <div class="col-sm-4 mb-3">
+                                                            <div class="card">
+                                                                <img src="/images/<%= element1._id %>/1.jpg" class="card-img-top" alt="...">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title">
+                                                                        <%= element1.name%>
+                                                                    </h5>
+                                                                    <p class="card-text" id="currentPrice<%= element1.name %>">Giá hiện tại: <%= element1.currentPrice%>
+                                                                    </p>
+                                                                    <p class="card-text" id="buyPrice<%= element1.name %>">Giá mua ngay: <%= element1.boughtPrice%>
+                                                                    </p>
+                                                                    <p class="card-text">Người bán: <span class="text-dark font-weight-bold">
                                                                             <%= element1.owner.name%>
                                                                         </span></p>
-                                                        <p class="card-text" id="time<%= element1.name %>">Thời gian kết thúc: <%= element1.timeEnd %>
-                                                        </p>
-                                                    </div>
-                                                    <script>
-                                                        currentPrice = document.getElementById("currentPrice<%=element1.name%>").innerHTML;
-                                                        document.getElementById("currentPrice<%=element1.name%>").innerHTML = 'Giá hiện tại: <span class="text-dark font-weight-bold">' + formatMoney(currentPrice.split(" ")[3]) + '</span>';
-                                                        buyPrice = document.getElementById("buyPrice<%=element1.name%>").innerHTML;
-                                                        document.getElementById("buyPrice<%=element1.name%>").innerHTML = 'Giá mua ngay: <span class="text-dark font-weight-bold">' + formatMoney(buyPrice.split(" ")[3]) + '</span>';
-                                                        startTime = document.getElementById("time<%=element1.name%>").innerHTML;
-                                                        document.getElementById("time<%=element1.name%>").innerHTML = 'Thời gian kết thúc: <span class="text-dark font-weight-bold">' + convertTime(startTime) + '</span>';
-                                                    </script>
-                                                    <div class="card-footer text-muted">
-                                                        <a class="btn btn-sm btn-outline-primary" href="/view-product-list/view-product/<%= element1._id %>" role="button">
-                                                            <i class="fa fa-eye" aria-hidden="true"></i>
-                                                            Details
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <% found=true%>
-                                        <% } %>
-                                    <% }) %>
-                                <% } %>
-                            <% }) %>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="wonbids" role="tabpanel" aria-labelledby="contact-tab">
-                    <hr>
-                    <div class="container">
-                        <table class="table table-hover table-bordered">
-                            <thead>
-                            <tr>
-                                <th>Item</th>
-                                <th>Category</th>
-                                <th>Seller</th>
-                                <th>Bid for</th>
-                                <th>Upvote</th>
-                                <th>Downvote</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <% Product.forEach(element1=> {%>
-                                <% if((element1.topOwner._id ).equals(user._id) ){ %>
-                                    <% if(!element1.status){ %>
-                                        <tr>
-                                            <td style="width:9%">
-
-                                                <a  href="/view-product-list/view-product/view-seller/<%= element1._id %>" role="button">
-                                                    <%= element1.name %>
-                                                </a>
-
-                                            </td>
-                                            <td style="width:9%">
-                                                <%= element1.brand %>
-                                            </td>
-                                            <td style="width:9%">
-                                                <%= element1.owner.name %>
-                                            </td>
-                                            <td style="width:9%">
-                                                <%= element1.topPrice %>
-                                            </td>
-                                            <% User.forEach(user1=> {%>
-                                                <% if((user1.id)==(element1.owner.id)){ %>
-                                                    <% var found=true%>
-                                                    <% user1.review.forEach(rv1=> {%>
-                                                        <% if((rv1.user_id)==(user.id) && (rv1.product_id)==(element1.id) ){ %>
-                                                            <% if(rv1.point==1){ %>
-                                                                <td style="width:9%">
-                                                                    <%= rv1.comment %>
-                                                                </td>
-                                                                <td style="width:9%"></td>
+                                                                    <p class="card-text" id="time<%= element1.name %>">Thời gian kết thúc: <%= element1.timeEnd %>
+                                                                    </p>
+                                                                </div>
+                                                                <script>
+                                                                    currentPrice = document.getElementById("currentPrice<%=element1.name%>").innerHTML;
+                                                                    document.getElementById("currentPrice<%=element1.name%>").innerHTML = 'Giá hiện tại: <span class="text-dark font-weight-bold">' + formatMoney(currentPrice.split(" ")[3]) + '</span>';
+                                                                    buyPrice = document.getElementById("buyPrice<%=element1.name%>").innerHTML;
+                                                                    document.getElementById("buyPrice<%=element1.name%>").innerHTML = 'Giá mua ngay: <span class="text-dark font-weight-bold">' + formatMoney(buyPrice.split(" ")[3]) + '</span>';
+                                                                    startTime = document.getElementById("time<%=element1.name%>").innerHTML;
+                                                                    document.getElementById("time<%=element1.name%>").innerHTML = 'Thời gian kết thúc: <span class="text-dark font-weight-bold">' + convertTime(startTime) + '</span>';
+                                                                </script>
+                                                                <div class="card-footer text-muted">
+                                                                    <a class="btn btn-sm btn-outline-primary" href="/view-product-list/view-product/<%= element1._id %>" role="button">
+                                                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                                                        Details
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <% found=true%>
                                                             <% } %>
-                                                            <% if(rv1.point==-1){ %>
-                                                                <td style="width:9%"></td>
-                                                                <td style="width:9%">
-                                                                    <%= rv1.comment %>
-                                                                </td>
-                                                            <% } %>
-                                                            <% found=false%>
-                                                        <% } else { %>
-                                                        <% } %>
-                                                    <% }) %>
-                                                    <% if(found){ %>
-                                                    <td style="width: 250px;">
-                                                    </td>
-                                                    <td style="width: 250px;">
-                                                        <form action="/bidder/profile/evaluateseller/-1/<%=element1.owner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value="" style="margin-top: 10px;" method="post">
-                                                            <input style="font-size: 14px;margin-bottom: 10px;" class="form-control" name="rate1" id="rate1" title="enter your .">
-                                                            <button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: orangered;">-1</button>
-                                                        </form>
-                                                    </td>
-                                                    <% } %>
-                                                <% } %>
-                                            <% }) %>
-                                        </tr>
-                                    <% } %>
-                                <% } %>
-                            <% }) %>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="upgrade" role="tabpanel" aria-labelledby="contact-tab">
-                    <hr>
-                    <h2>Xin Thăng cấp bidder thành seller.</h2>
-                    <% if((user.role=="bidder" ) && (user.status==false) ){ %>
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <br>
-                                <button type="button" class="btn btn-primary btn-lg btn-block" style="background-color: green;" data-toggle="modal" data-target="#request">Send request.</button>
+                                                                <% }) %>
+                                                                    <% } %>
+                                                                        <% }) %>
+                                </div>
                             </div>
                         </div>
-                    <% } else if((user.role=="bidder" ) && (user.status==true) ){ %>
-                        <h3> Đang chờ admin xử lí....</h3>
-                        <div></div>
-                    <% } else { %>
-                        <h3> Hệ thống đá chấp nhận yêu cầu của bạn , bạn đã nâng cấp lên thành seller .Yêu cầu bạn đăng nhập lại .</h3>
-                        <div></div>
-                    <% }%>
+                        <div class="tab-pane fade" id="wonbids" role="tabpanel" aria-labelledby="contact-tab">
+                            <hr>
+                            <div class="container">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Category</th>
+                                            <th>Seller</th>
+                                            <th>Bid for</th>
+                                            <th>Upvote</th>
+                                            <th>Downvote</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% Product.forEach(element1=> {%>
+                                            <% if((element1.topOwner._id ).equals(user._id) ){ %>
+                                                <% if(!element1.status){ %>
+                                                    <tr>
+                                                        <td style="width:9%">
+
+                                                            <a href="/view-product-list/view-product/view-seller/<%= element1._id %>" role="button">
+                                                                <%= element1.name %>
+                                                            </a>
+
+                                                        </td>
+                                                        <td style="width:9%">
+                                                            <%= element1.brand %>
+                                                        </td>
+                                                        <td style="width:9%">
+                                                            <%= element1.owner.name %>
+                                                        </td>
+                                                        <td style="width:9%">
+                                                            <%= element1.topPrice %>
+                                                        </td>
+                                                        <% User.forEach(user1=> {%>
+                                                            <% if((user1.id)==(element1.owner.id)){ %>
+                                                                <% var found=true%>
+                                                                    <% user1.review.forEach(rv1=> {%>
+                                                                        <% if((rv1.user_id)==(user.id) && (rv1.product_id)==(element1.id) ){ %>
+                                                                            <% if(rv1.point==1){ %>
+                                                                                <td style="width:9%">
+                                                                                    <%= rv1.comment %>
+                                                                                </td>
+                                                                                <td style="width:9%"></td>
+                                                                                <% } %>
+                                                                                    <% if(rv1.point==-1){ %>
+                                                                                        <td style="width:9%"></td>
+                                                                                        <td style="width:9%">
+                                                                                            <%= rv1.comment %>
+                                                                                        </td>
+                                                                                        <% } %>
+                                                                                            <% found=false%>
+                                                                                                <% } else { %>
+                                                                                                    <% } %>
+                                                                                                        <% }) %>
+                                                                                                            <% if(found){ %>
+                                                                                                                <td style="width: 250px;">
+                                                                                                                    <form action="/bidder/profile/evaluateseller/<%=element1.owner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value="" style="margin-top: 10px;" method="post">
+                                                                                                                        <input style="font-size: 14px;margin-bottom: 10px;" class="form-control" name="rate" id="rate" title="enter your .">
+                                                                                                                        <button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: green;">+1</button>
+                                                                                                                    </form>
+                                                                                                                </td>
+                                                                                                                <td style="width: 250px;">
+                                                                                                                    <form action="/bidder/profile/evaluateseller/-1/<%=element1.owner.id%>+<%= user.id%>+<%= element1.id%>" id="btnAuction" name="price" value="" style="margin-top: 10px;" method="post">
+                                                                                                                        <input style="font-size: 14px;margin-bottom: 10px;" class="form-control" name="rate1" id="rate1" title="enter your .">
+                                                                                                                        <button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: orangered;">-1</button>
+                                                                                                                    </form>
+                                                                                                                </td>
+                                                                                                                <% } %>
+                                                                                                                    <% } %>
+                                                                                                                        <% }) %>
+                                                    </tr>
+                                                    <% } %>
+                                                        <% } %>
+                                                            <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="upgrade" role="tabpanel" aria-labelledby="contact-tab">
+                            <hr>
+                            <h2>Xin Thăng cấp bidder thành seller.</h2>
+                            <% if((user.role=="bidder" ) && (user.status==false) ){ %>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <br>
+                                        <button type="button" class="btn btn-primary btn-lg btn-block" style="background-color: green;" data-toggle="modal" data-target="#request">Send request.</button>
+                                    </div>
+                                </div>
+                                <% } else if((user.role=="bidder" ) && (user.status==true) ){ %>
+                                    <h3> Đang chờ admin xử lí....</h3>
+                                    <div></div>
+                                    <% } else { %>
+                                        <h3> Hệ thống đá chấp nhận yêu cầu của bạn , bạn đã nâng cấp lên thành seller .Yêu cầu bạn đăng nhập lại .</h3>
+                                        <div></div>
+                                        <% }%>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
 
-<div class="modal fade" id="request">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title mx-auto" style="text-align: center;"> Chúng tôi sẽ phản hồi yêu cầu của bạn sau ít nhất 7 ngày </h3>
+        <div class="modal fade" id="request">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title mx-auto" style="text-align: center;"> Chúng tôi sẽ phản hồi yêu cầu của bạn sau ít nhất 7 ngày </h3>
+                    </div>
+                    <div class="form-group">
+
+                        <form action="/bidder/profile/request/<%= user.id%>" id="btnAuction" name="price" value="" style="margin-top: 10px;" method="post">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">OK</button>
+                        </form>
+                        <button style="padding-top: 0px;margin-top: 20px;" class="btn btn-primary btn-lg btn-block" data-dismiss="modal">Cancel</button>
+                    </div>
+
+                </div>
             </div>
-            <div class="form-group">
+        </div>
 
-                <form action="/bidder/profile/request/<%= user.id%>" id="btnAuction" name="price" value="" style="margin-top: 10px;" method="post">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">OK</button>
-                </form>
-                <button style="padding-top: 0px;margin-top: 20px;" class="btn btn-primary btn-lg btn-block" data-dismiss="modal">Cancel</button>
+        <div class="modal fade" id="review">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form>
+                        <div class="modal-header">
+                            <h3 class="modal-title mx-auto">We need your password to make these changes!</h3>
+                        </div>
+                        <div class="modal-body">
+                            <td><input placeholder="Write your review here" style="width:100%;max-width: 473px;"></input></td>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" name="submit_review" class="btn btn-lg">Ok</button>
+                            <button class="btn btn-lg" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-
         </div>
-    </div>
-</div>
 
-<div class="modal fade" id="review">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form>
-                <div class="modal-header">
-                    <h3 class="modal-title mx-auto">We need your password to make these changes!</h3>
-                </div>
-                <div class="modal-body">
-                    <td><input placeholder="Write your review here" style="width:100%;max-width: 473px;"></input></td>
-                </div>
-                <div class="form-group">
-                    <button type="submit" name="submit_review" class="btn btn-lg">Ok</button>
-                    <button class="btn btn-lg" data-dismiss="modal">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<script>
-    function getInfo() {
-        document.getElementById("registrationForm").innerHTML = 1
-    }
-</script>
-<%- include('../partials/footer'); -%>
+        <script>
+            function getInfo() {
+                document.getElementById("registrationForm").innerHTML = 1
+            }
+        </script>
+        <%- include('../partials/footer'); -%>
